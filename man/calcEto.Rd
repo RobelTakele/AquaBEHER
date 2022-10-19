@@ -15,7 +15,7 @@ calcEto(data)
           Elev: elevation above sea level [m]
           Year: year in YYYY format
           Month: month in MM format
-          Day: day in DD format
+          Day: day of record
           Tmax: daily maximum temperature at 2m height [°C]
           Tmin: daily minimum temperature at 2m height [°C]
 }\if{html}{\out{</div>}}}
@@ -23,11 +23,11 @@ calcEto(data)
 \value{
 The function generates a list containing the following components:
 
-\code{ET.Daily:} {Daily estimations of reference crop evapotranspiration \link{mm/day}}
+\code{ET.Daily:} {Daily estimations of reference crop evapotranspiration (mm/day)}
 
-\code{Ra.Daily:} {Daily estimations of extraterristrial radiation \link{MJ/m2/day}}
+\code{Ra.Daily:} {Daily estimations of extraterristrial radiation (MJ/m2/day)}
 
-\code{Slope.Daily:} {Daily estimations of slope of vapour pressure curve \link{kPa/°C}}
+\code{Slope.Daily:} {Daily estimations of slope of vapour pressure curve (kPa/°C)}
 
 \code{ET.type:} {Type of the estimation obtained}
 }
@@ -37,7 +37,7 @@ using the method described by Allen et al, (1998)
 }
 \examples{
 
-calcEto(data)
+calcEto(climateData)
 
 
 }

@@ -11,18 +11,18 @@
 #'               Elev: elevation above sea level [m]
 #'               Year: year in YYYY format
 #'               Month: month in MM format
-#'               Day: day in DD format
+#'               Day: day of record
 #'               Tmax: daily maximum temperature at 2m height [°C]
 #'               Tmin: daily minimum temperature at 2m height [°C]
 #'
 #'
 #' @return The function generates a list containing the following components:
 #'
-#' \code{ET.Daily:} {Daily estimations of reference crop evapotranspiration [mm/day]}
+#' \code{ET.Daily:} {Daily estimations of reference crop evapotranspiration (mm/day)}
 #'
-#' \code{Ra.Daily:} {Daily estimations of extraterristrial radiation [MJ/m2/day]}
+#' \code{Ra.Daily:} {Daily estimations of extraterristrial radiation (MJ/m2/day)}
 #'
-#' \code{Slope.Daily:} {Daily estimations of slope of vapour pressure curve [kPa/°C]}
+#' \code{Slope.Daily:} {Daily estimations of slope of vapour pressure curve (kPa/°C)}
 #'
 #' \code{ET.type:} {Type of the estimation obtained}
 #'
@@ -31,7 +31,7 @@
 #'
 #' @examples
 #'
-#' calcEto(data)
+#' calcEto(climateData)
 #'
 #'
 #' @export
@@ -43,7 +43,8 @@
    # ***** universal constants *****
 
    lambda = 2.45   # ***** latent heat of evaporation = 2.45 MJ.kg^-1 at 20 degree Celsius
-   lat_rad = udunits2::ud.convert(unique(data$Lat), "degree", "radians")   # ?????????????????????
+#   lat_rad = udunits2::ud.convert(unique(data$Lat), "degree", "radians")   # ?????????????????????
+   lat_rad = data$Lat * (pi/180)
    Gsc = 0.082  # ***** solar constant = 0.0820 MJ.m^-2.min^-1
 
 

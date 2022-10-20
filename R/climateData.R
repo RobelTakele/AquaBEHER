@@ -7,7 +7,7 @@
 #'
 #' @usage data(climateData)
 #'
-#' @format A data frame with 1827 rows and 10 variables:
+#' @format A data frame with 1827 rows and 11 variables:
 #' \describe{
 #'   \item{\code{Station_ID}}{weather station ID}
 #'   \item{\code{Station_Name}}{weather station name}
@@ -17,7 +17,8 @@
 #'   \item{\code{Year}}{year of record "yyyy"}
 #'   \item{\code{Month}}{month of record "mm"}
 #'   \item{\code{Day}}{day of record "dd"}
-#'   \item{\code{Tmax}}{aily maximum temperature at 2m height in (°C)}
+#'   \item{\code{Rain}}{daily rainfall in (mm)}
+#'   \item{\code{Tmax}}{daily maximum temperature at 2m height in (°C)}
 #'   \item{\code{Tmin}}{daily minimum temperature at 2m height in (°C)}
 #'}
 #' @source INAM - Instituto Nacional de Meteorologia, Mozambique

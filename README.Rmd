@@ -1,0 +1,96 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# AquaBEHER
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+ The goal of AquaBEHER is to computes and integrates daily reference evapotranspiration (Eto) into FAO56 water balance model. 
+ The AquaBEHER package can estimate daily parameters of crop and soil water balances parameters for agricultural crops. The package can also 
+    estimate rainy season calandar (Onset, Cessation and Duration) based on agroclimatic approach. 
+
+Specifically, the package can perform the following functions:
+
++   Estimation of daily evapotranspiration
++   Estimation of daily soil water balance
++   Estimation of rainy season calandar:
+    +   Onset of the rainy season
+    +   Cessation of the rainy season
+    +   Duration of the rainy season
+
+## Installation
+
+You can install the development version of AquaBEHER from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("RobelTakele/AquaBEHER")
+```
+
+## Example
+
+This is a basic example which shows you how to estimate daily water balance:
+
+```{r example}
+library(AquaBEHER)
+## basic example code
+```
+
+What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+
+```{r climateData}
+data(climateData)
+
+head(climateData)
+ 
+```
+
+```{r watBal.daily}
+
+Eto.daily <- calcEto(climateData)
+climateData$Eto <- Eto.daily$ET.Daily
+soilWHC = 100
+watBal.daily <- calcWatBal(climateData, soilWHC)
+
+```
+
+The output of daily soil water balance can be ploted:
+
+```{r plot water balance, echo = FALSE}
+
+plot(watBal.daily$ERATIO*100, ty="l")
+lines(watBal.daily$Eto, col="red")
+lines(watBal.daily$Rain, col="blue")
+```
+
+
+<img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
+
+
+
+[![projects](https://img.shields.io/badge/projects-eu-003399)](profile/projects.md#International) 
+
+The **Center of Plant Sciences Group** is a geographically and culturally diverse research team working on climate and crop genetics 
+at **Scuola Superiore Sant’Anna**, Pisa, Italy. 
+
+You can contact us sending an email to Matteo Dell'Acqua (mailto:m.dellacqua@santannapisa.it) or Mario Enrico Pè (mailto:m.pe@santannapisa.it).
+You can also visit the crop genetics (http://www.capitalisegenetics.santannapisa.it/) web page.
+
+We are committed to the 
+[free software](https://www.fsf.org/about/what-is-free-software) and 
+[FAIR](https://www.go-fair.org/fair-principles/) principles.
+This set of repositories collects our latest developments and provide reusable code.
+

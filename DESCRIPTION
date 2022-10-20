@@ -1,12 +1,17 @@
 Package: AquaBEHER
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Estimation of rainy season calandar and soil water balance for agriculture 
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: MIT + file LICENSE
+Authors@R: c(
+     person("Robel", "Takele", email = "takelerobel@gmail.com", role = "cre"),
+     person("Matteo", "Dell'Acqua", email = "matteo.dellacqua@santannapisa.it", role = "aut"))
+Maintainer: Robel Takele <takelerobel@gmail.com>
+Description: This R package computes and integrates daily reference evapotranspiration (Eto) 
+    into FAO56 water balance model. The AquaBEHER package can estimate daily parameters of
+    crop and soil water balances parameters for agricultural crops. The package can also 
+    estimate rainy season calandar (Onset, Cessation and Duration) based on agroclimatic
+    approach. 
+License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.2.1

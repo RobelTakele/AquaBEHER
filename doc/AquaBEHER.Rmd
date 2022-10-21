@@ -1,0 +1,196 @@
+---
+title: "Estimation of rainy season calandar and soil water balance for agricultural crops using AquaBEHER"
+author: "Robel Takele and Matteo Dell'Acqua"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    fig_caption: false
+    toc: true
+    toc_depth: 1
+    css: tools/vignette.css
+    df_print: default
+vignette: >
+  %\VignetteIndexEntry{AquaBEHER}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# 1. Introduction {#Introduction}
+
+This vignette aims to introduce how to computes and integrates daily reference evapotranspiration (Eto) into FAO56 water balance model. 
+The AquaBEHER package can estimate daily parameters of crop and soil water balances parameters for agricultural crops. 
+The package can also  estimate rainy season calandar (Onset, Cessation and Duration) based on agroclimatic approach. 
+
+
+# 2. Installation and Loading
+
+ Install the development version from GitHub:
+
+```{r AquaBEHER setup}
+
+# install.packages("devtools")
+# devtools::install_github("RobelTakele/AquaBEHER")
+
+library(AquaBEHER)
+library(ggplot2)
+
+```
+
+# 3. Required Climate Data
+
+The methods for calculating evapotranspiration from meteorological data require various
+climatological and physical parameters. Some of the data are measured directly in weather
+stations. Other parameters are related to commonly measured data and can be derived with the
+help of a direct or empirical relationship.
+
+The meteorological factors determining evapotranspiration are weather parameters which
+provide energy for vaporization and remove water vapour from the evaporating surface. The
+principal weather parameters to consider are presented below.
+
+ * Rainfall
+ * Maximum temperature
+ * Minimum temperature
+ * Solar radiation
+ 
+In addition, georeferenced information on the location of the climate record is required:
+
+ * Latitude 
+ * Longitude
+ * Elevation
+
+```{r climateData}
+
+ data(climateData)
+ str(climateData)
+ head(climateData)
+ 
+```
+
+# 4. Potential Evapotranspiration
+
+For many agricultural applications, it is relevant to get an estimate on the potential evapotranspiration (PET).
+At the moment, the AquaBEHER package contains the Hargreaves-Samani formulation for the estimate of PET. 
+Hargreaves method is a temperature based method and it was derived to overcome non availability of solar radiation 
+data at many locations Hargreaves and Samani (1985).
+
+When calculate PET using Hargreaves and Samani, only two variables (Tmax and Tmin) are needed.
+
+### Usage
+calcEto(climateData)
+
+* This function give a list of 
+** daily estimations of PET in (mm/day)
+** daily estimations of extraterristrial radiation (MJ/m2/day)
+** daily estimations of slope of vapour pressure curve (kPa/°C)
+
+### Example
+The calcEto compute with inputs of dataframe containing daily values of Tmax and Tmin:
+
+```{r}
+
+PET.daily <- calcEto(data = climateData)
+
+str(PET.daily)
+
+```
+
+# 5. Soil Water Balance
+
+This function calculates a daily water balance computation for the root zone according to algorithms described in the FAO Irrigation and drainage paper 56
+
+### Usage
+calcWatBal(data, soilWHC)
+
+### Example
+The calcWatBal compute with inputs of dataframe containing daily values of climate data, Rain, Tmax and Tmin; soil water holding capacity and PET
+
+```{r}
+
+climateData$Eto <- PET.daily$ET.Daily
+
+soilWHC = 100
+ 
+watBal.daily <- calcWatBal(climateData, soilWHC)
+
+str(watBal.daily )
+
+```
+
+
+# 6. Rainy Season Calandar
+
+The onset and cessation dates of a rainy season deﬁned using agro-climatic approaches
+
+### Example
+The calcSeasCal compute ...........
+
+```{r}
+
+
+soilWHC = 100
+ onsetWind.start = "1980-09-01"
+ onsetWind.end = "1981-01-31"
+
+seasCal.dF <- calcSeasCal(watBal.daily, onsetWind.start, onsetWind.end,
+                          e_thresh = 0.25, AW_thr = 10, soilWHC)
+
+str(seasCal.dF)
+
+
+ watBal.daily.81 <- watBal.daily[watBal.daily$Year %in% c(1980, 1981),]
+ date.vec <- as.Date.character(paste0(watBal.daily.81$Year, "-", watBal.daily.81$Month, "-", watBal.daily.81$Day))
+
+ ggplot() +
+         geom_line(aes(y = watBal.daily.81$AVAIL, x = date.vec), size = 0.8, color = "grey30") +
+         geom_area(aes(y = watBal.daily.81$Rain, x = date.vec), fill = "blue", size = 0.8, alpha = 0.7) +
+
+         scale_x_date(date_breaks = "1 month", date_labels =  "%b-%Y") +
+   
+         scale_y_continuous(expand = c(0, 2))  +
+         labs(y="Moisture (mm)", x=NULL) +
+   
+         theme_linedraw()  +
+   
+   theme(axis.title = element_text(size = 14, colour = "black", family = "Times New Roman"),
+         axis.text = element_text(size = 10, colour = "black", family = "Times New Roman"),
+         axis.text.x = element_text(size = 10, colour = "black", family = "Times New Roman", angle = 45, vjust = 0.5))
+
+```
+
+
+# 7. References
+
+Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop Evapotranspiration: Guidelines for Computing Crop Water Requirements; FAO Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998; ISBN 92-5-104219-5.
+
+Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water requirements, Irrigation and Drainage Paper 24, Food and Agriculture Organization of the United Nations, Rome, 179 p.
+
+Hargreaves, G.H. and Samani, Z.A. (1985) Reference Crop Evapotranspiration from Temperature. Applied Engineering in Agriculture, 1, 96-99.
+http://dx.doi.org/10.13031/2013.26773 
+
+
+$$\\[0.2in]$$
+
+
+<img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
+
+
+
+[![projects](https://img.shields.io/badge/projects-eu-003399)](profile/projects.md#International) 
+
+The **Center of Plant Sciences Group** is a geographically and culturally diverse research team working on climate and crop genetics 
+at **Scuola Superiore Sant’Anna**, Pisa, Italy. 
+
+You can contact us sending an email to Matteo Dell'Acqua (mailto:m.dellacqua@santannapisa.it) or Mario Enrico Pè (mailto:m.pe@santannapisa.it).
+You can also visit the crop genetics (http://www.capitalisegenetics.santannapisa.it/) web page.
+
+We are committed to the 
+[free software](https://www.fsf.org/about/what-is-free-software) and 
+[FAIR](https://www.go-fair.org/fair-principles/) principles.
+This set of repositories collects our latest developments and provide reusable code.

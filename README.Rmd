@@ -69,7 +69,7 @@ watBal.daily <- calcWatBal(climateData, soilWHC)
 
 The output of daily soil water balance can be ploted:
 
-```{r plot water balance, echo = FALSE}
+```{r }
 
 plot(watBal.daily$ERATIO*100, ty="l")
 lines(watBal.daily$Eto, col="red")

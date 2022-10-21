@@ -73,7 +73,14 @@ watBal.daily <- calcWatBal(climateData, soilWHC)
 
 The output of daily soil water balance can be ploted:
 
-<img src="man/figures/README-plot water balance-1.png" width="100%" />
+``` r
+
+plot(watBal.daily$ERATIO*100, ty="l")
+lines(watBal.daily$Eto, col="red")
+lines(watBal.daily$Rain, col="blue")
+```
+
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 <img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
 

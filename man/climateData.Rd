@@ -3,38 +3,55 @@
 \docType{data}
 \name{climateData}
 \alias{climateData}
-\title{Raw Climate Data Required for Calculating Evapotranspiration}
+\title{A dataframe containing raw climate data}
 \format{
 A data frame with 1827 rows and 11 variables:
-\describe{
-\item{\code{Station_ID}}{weather station ID}
-\item{\code{Station_Name}}{weather station name}
-\item{\code{Lat}}{latitude of the site in decimal degrees}
-\item{\code{Lon}}{longitude of the site in decimal degrees}
-\item{\code{Elev}}{elevation above sea level in (m)}
-\item{\code{Year}}{year of record "yyyy"}
-\item{\code{Month}}{month of record "mm"}
-\item{\code{Day}}{day of record "dd"}
-\item{\code{Rain}}{daily rainfall in (mm)}
-\item{\code{Tmax}}{daily maximum temperature at 2m height in (°C)}
-\item{\code{Tmin}}{daily minimum temperature at 2m height in (°C)}
-}
+
+\verb{    }\emph{\strong{\code{WMO_Code:}} World Meteorological Organization (WMO) station code.}
+
+\verb{    }\emph{\strong{\code{Station_Name:}} name of the weather station.}
+
+\verb{    }\emph{\strong{\code{Lat:}} latitude of the site in decimal degrees.}
+
+\verb{    }\emph{\strong{\code{Lon:}} longitude of the site in decimal degrees.}
+
+\verb{    }\emph{\strong{\code{Elev:}} elevation above sea level in (meters).}
+
+\verb{    }\emph{\strong{\code{Year:}} year of record "YYYY".}
+
+\verb{    }\emph{\strong{\code{Month:}} month of record "MM".}
+
+\verb{    }\emph{\strong{\code{Day:}} day of record "DD".}
+
+\verb{    }\emph{\strong{\code{Rain:}} daily rainfall in (mm).}
+
+\verb{    }\emph{\strong{\code{Tmax:}} daily maximum temperature at 2-m height in (°C).}
+
+\verb{    }\emph{\strong{\code{Tmin:}} daily minimum temperature at 2-m height in (°C).}
 }
 \source{
-INAM - Instituto Nacional de Meteorologia, Mozambique
+INAM - Instituto Nacional de Meteorologia, Mozambique \url{https://www.inam.gov.mz/}
 }
 \usage{
 data(climateData)
 }
 \description{
-A example data set contains the raw climate data including the variables required for calculating evapotranspiration in function calcEto
-over the period between 1/1/1980 and 12/31/1984 at Nampula station in Mozambique.
+The R data object was obtained from Instituto Nacional de Meteorologia (INAM). This example data set contains the raw climate data
+including the variables required for calculating evapotranspiration and soil water balance over the period between 1/1/1980 and 12/31/1984 at a
+weather station located in Nampula province of Mozambique.
 }
 \examples{
-
+# load example data:
 data(climateData)
 
+# Get the structure of the data frame:
+str(climateData)
+
+# Get the head of the data frame:
 head(climateData)
 
+}
+\seealso{
+\code{\link{calcEto}} for a daily estimation of potential evapotranspiration.
 }
 \keyword{datasets}

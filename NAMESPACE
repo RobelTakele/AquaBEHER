@@ -3,3 +3,5 @@
 export(calcEto)
 export(calcSeasCal)
 export(calcWatBal)
+importFrom(graphics,legend)
+importFrom(graphics,par)

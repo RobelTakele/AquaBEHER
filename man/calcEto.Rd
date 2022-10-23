@@ -7,17 +7,18 @@
 calcEto(data)
 }
 \arguments{
-\item{data}{= a dataframe containing the required climate variables: Columns must contain the following parameters:
+\item{data}{a dataframe containing the required climate variables: Columns must contain the following parameters:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{          Station_Name: weather station name
-          Lat: latitude of the site in decimal degrees [°]
-          Lon: longitude of the site in decimal degrees [°]
-          Elev: elevation above sea level [m]
-          Year: year in YYYY format
-          Month: month in MM format
-          Day: day of record
-          Tmax: daily maximum temperature at 2m height [°C]
-          Tmin: daily minimum temperature at 2m height [°C]
+\if{html}{\out{<div class="sourceCode">}}\preformatted{   Lat: latitude of the site in decimal degrees.
+   Lon: longitude of the site in decimal degrees.
+   Elev: elevation above sea level in (meters).
+   Year: year of record "YYYY".
+   Month: month of record "MM".
+   Day: day of record "DD".
+   Rain: daily rainfall in (mm).
+   Tmax: daily maximum temperature at 2-m height in (°C).
+   Tmin: daily minimum temperature at 2-m height in (°C).
+   Eto: daily potential evapotranspiration in (mm).
 }\if{html}{\out{</div>}}}
 }
 \value{
@@ -43,4 +44,7 @@ calcEto(climateData)
 }
 \references{
 Allen, R.G., L.S. Pereira, D. Raes, and M. Smith. 1998. ‘Crop evapotranspiration-Guidelines for Computing Crop Water requirements
+}
+\seealso{
+\code{\link{climateData}, \link{calcWatBal}, \link{calcSeasCal}}
 }

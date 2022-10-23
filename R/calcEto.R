@@ -3,18 +3,18 @@
 #' @description This function calculates Penman-Monteith, Priestley Taylor and Hargreaves-Samani Potential Evapotranspiration
 #' using the method described by Allen et al, (1998)
 #'
-#' @param data = a dataframe containing the required climate variables: Columns must contain the following parameters:
+#' @param data a dataframe containing the required climate variables: Columns must contain the following parameters:
 #'
-#'               Station_Name: weather station name
-#'               Lat: latitude of the site in decimal degrees [°]
-#'               Lon: longitude of the site in decimal degrees [°]
-#'               Elev: elevation above sea level [m]
-#'               Year: year in YYYY format
-#'               Month: month in MM format
-#'               Day: day of record
-#'               Tmax: daily maximum temperature at 2m height [°C]
-#'               Tmin: daily minimum temperature at 2m height [°C]
-#'
+#'        Lat: latitude of the site in decimal degrees.
+#'        Lon: longitude of the site in decimal degrees.
+#'        Elev: elevation above sea level in (meters).
+#'        Year: year of record "YYYY".
+#'        Month: month of record "MM".
+#'        Day: day of record "DD".
+#'        Rain: daily rainfall in (mm).
+#'        Tmax: daily maximum temperature at 2-m height in (°C).
+#'        Tmin: daily minimum temperature at 2-m height in (°C).
+#'        Eto: daily potential evapotranspiration in (mm).
 #'
 #' @return The function generates a list containing the following components:
 #'
@@ -29,14 +29,14 @@
 #' @references Allen, R.G., L.S. Pereira, D. Raes, and M. Smith. 1998. ‘Crop evapotranspiration-Guidelines for Computing Crop Water requirements
 # FAO Irrigation and Drainage Paper 56’. FAO, Rome 300: 6541.
 #'
+#' @seealso \code{\link{climateData}, \link{calcWatBal}, \link{calcSeasCal}}
+#'
 #' @examples
 #'
 #' calcEto(climateData)
 #'
 #'
 #' @export
-
-
 
  calcEto <- function(data) {
 

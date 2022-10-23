@@ -2,7 +2,7 @@
 % Please edit documentation in R/calcSeasCal.R
 \name{calcSeasCal}
 \alias{calcSeasCal}
-\title{Rainy Season Calandar}
+\title{Rainy Season Calendar}
 \usage{
 calcSeasCal(
   data,
@@ -14,57 +14,87 @@ calcSeasCal(
 )
 }
 \arguments{
-\item{data}{= a dataframe. It should bu an object as returned by calcWatBal}
+\item{data}{an object as returned by calcWatBal or a dataframe having similar parameters.}
 
-\item{onsetWind.start}{onset start}
+\item{onsetWind.start}{Earliest possible start data of the onset window.}
 
-\item{onsetWind.end}{onset end}
+\item{onsetWind.end}{The late possible date for end of the onset window.}
 
-\item{e_thresh}{thgreshold}
+\item{e_thresh}{Threshold value of actual-to-potential evapotranspiration (Ea/Ep); \emph{default value: e_thresh = 0.25}.}
 
-\item{AW_thr}{PAW}
+\item{AW_thr}{Threshold value of plant available water (PAW); \emph{default value: AW_thr = 10mm}.}
 
-\item{soilWHC}{Whater holding capacity of the soil}
+\item{soilWHC}{Water holding capacity of the soil in (mm).}
 }
 \value{
 The function generates a data frame containing the following components:
 
-\code{Year:} { year }
+\emph{\code{Year: year of the rainy season in "YYYY".}}
 
-\code{Onset.DOY:} { onset in DOY }
+\emph{\code{Onset.DOY: onset date of the rainy season in julian day.}}
 
-\code{Onset.index:} {onset index  }
+\emph{\code{Cesation.DOY: cessation date of the rainy season in julian day.}}
 
-\code{Cesation.DOY:} {  ce in DOY }
-
-\code{Cesation.index:} { ce in index  }
-
-\code{SeasDur:} {  durtion of the season }
+\emph{\code{SeasDur: durtion of the season in days.}}
 }
 \description{
-This function calculates rainy season calander based on Agroclimatic approach
+This function estimates the rainy season calendar, i.e onset date, cessation data and duration of the rainy season based on
+Agroclimatic approach. The agroclimatic approach defines the onset of the rainy season as the optimal date that ensures sufficient soil moisture
+during planting and early growing periods to avoid crop failure after sowing and requires information on rainfall and temperature as well as
+the soil water balance at daily time scale.
+}
+\details{
+As per agroclimatic approach, a normal rainy season (growing season) is defined as one when there is an excess of precipitation over
+potential evapotranspiration (PET). Such a period meets the evapotransiration demands of crops and recharge the moisture of the soil profile
+(FAO 1977; 1978; 1986). Thus, the rainy season calendar defined accordingly:
+
+\strong{Onset}
+
+The \emph{onset} of the rainy season will start on the first day after \emph{onsetWind.start}, when the actual-to-potential evapotranspiration
+ratio \emph{(e_thresh)} is greater than 0.25 and is followed by a 20-day period in which plant available water \emph{(AW_thr)} remains above 10mm.
+
+\strong{Cesation}
+
+The rainy season will end, \emph{cessation}, on the first day after \emph{onsetWind.end}, when the actual-to-potential evapotranspiration ratio
+\emph{(e_thresh)} is less than or equal to 0.25 and followed 12 consecutive non-growing days \emph{(AW_thr <= 10mm)}.
+
+\strong{Duration}
+
+The \emph{duration} of the rainy season is taken as the difference between the Julian day numbers of the determined cessation date and the
+determined onset date for that season, i.e. the number of days from onset to cessation.
 }
 \examples{
-
+# load example data:
 data(climateData)
 
-Eto.daily <- calcEto(climateData)
+# estimate daily PET:
+PET <- calcEto(climateData)
 
-climateData$Eto <- Eto.daily$ET.Daily
+# Add the estimated PET 'ET.Daily' to a new column in climateData:
+climateData$Eto <- PET$ET.Daily
 
- soilWHC = 100
+# estimate daily water balance for the soil having 100mm of WHC:
+watBal<- calcWatBal(climateData, soilWHC = 100)
 
-watBal.daily <- calcWatBal(climateData, soilWHC)
+# estimate the rainy season calandar (Onset, Cessation and Duration):
 
-onsetWind.start = "1980-09-01"
-onsetWind.end = "1981-01-31"
+onsetWind.start = "1980-09-01"  # earliest possible start data of the onset window
+onsetWind.end = "1981-01-31"   # the late possible date for end of the onset window
 
-seasCal.dF <- calcSeasCal(watBal.daily, onsetWind.start, onsetWind.end,
-                          e_thresh = 0.25, AW_thr = 10, soilWHC)
+seasCal.dF <- calcSeasCal(watBal, onsetWind.start, onsetWind.end,
+                          e_thresh = 0.25, AW_thr = 10, soilWHC = 100)
+
+str(seasCal.dF)
 
 }
 \references{
-Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop Evapotranspiration: Guidelines for Computing Crop Water Requirements; FAO Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998; ISBN 92-5-104219-5.
+FAO, 1977. Crop water requirements. FAO Irrigation and Drainage Paper No. 24, by Doorenbos J and W.O. Pruitt. FAO, Rome, Italy.
 
-Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water requirements, Irrigation and Drainage Paper 24, Food and Agriculture Organization of the United Nations, Rome, 179 p.
+FAO 1978. Forestry for Local Community Development Food and Agriculture Organization of the United Nation (FAO), FAO Forestry paper, No 7, Rome.
+
+FAO, 1986. Early Agrometeorological crop yield forecasting. FAO Plant Production and Protection paper No. 73, by M. Frère and G.F. Popov.
+FAO, Rome, Italy
+}
+\seealso{
+\code{\link{calcEto}, \link{calcWatBal}}
 }

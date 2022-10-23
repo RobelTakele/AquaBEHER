@@ -1,56 +1,72 @@
 #' @title Soil Water Balance
 #'
-#' @description This function calculates a daily water balance computation for the root zone according to algorithms described in the FAO Irrigation
-#' and drainage paper 56
+#' @description Calculates a daily soil water balance computation for the root zone according to methods described in the FAO Irrigation
+#' and drainage paper 56 (Doorenbos et al, 1975; Allen et al, 1998)
 #'
-#' @param data = a dataframe containing the required climate variables: Columns must contain the following parameters:
+#' @param data a dataframe containing the required climate variables: Columns must contain the following parameters:
 #'
-#'               Station_Name: weather station name
-#'               Lat: latitude of the site in decimal degrees
-#'               Lon: longitude of the site in decimal degrees
-#'               Elev: elevation above sea level (m)
-#'               Year: year in YYYY format
-#'               Month: month in MM format
-#'               Day: day of record
-#'               Rain:
-#'               Tmax: daily maximum temperature at 2m height (°C)
-#'               Tmin: daily minimum temperature at 2m height (°C)
-#'               Eto:
+#'        Lat: latitude of the site in decimal degrees.
+#'        Lon: longitude of the site in decimal degrees.
+#'        Elev: elevation above sea level in (meters).
+#'        Year: year of record "YYYY".
+#'        Month: month of record "MM".
+#'        Day: day of record "DD".
+#'        Rain: daily rainfall in (mm).
+#'        Tmax: daily maximum temperature at 2-m height in (°C).
+#'        Tmin: daily minimum temperature at 2-m height in (°C).
+#'        Eto: daily potential evapotranspiration in (mm).
 #'
-#' @param soilWHC Whater holding capacity of the soil
+#' @param soilWHC Water holding capacity of the soil in (mm).
 #'
 #'
 #' @return The function generates a data frame containing the following components:
 #'
-#' \code{cumRAIN:} {  }
+#' \emph{\code{cumRAIN: accumulated rainfall since the begning of the calculation in (mm).}}
 #'
-#' \code{DEMAND:} {  }
+#' \emph{\code{DEMAND: aamospheric water demand (total moisture flux to atmospher) in (mm).}}
 #'
-#' \code{RUNOFF:} {  }
+#' \emph{\code{RUNOFF: surface runoff in (mm).}}
 #'
-#' \code{ERATIO:} {  }
+#' \emph{\code{ERATIO: actual-to-potential evapotranspiration ratio.}}
 #'
-#' \code{AVAIL:} {   }
+#' \emph{\code{AVAIL: available soil moisture storage in (mm).}}
 #'
-#' @references Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop Evapotranspiration: Guidelines for Computing Crop Water Requirements; FAO Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998; ISBN 92-5-104219-5.
+#' @references Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop Evapotranspiration: Guidelines for Computing Crop Water Requirements; FAO
+#' Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998; ISBN 92-5-104219-5.
 #'
-#' Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water requirements, Irrigation and Drainage Paper 24, Food and Agriculture Organization of the United Nations, Rome, 179 p.
+#' Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water requirements, Irrigation and Drainage Paper 24, Food and Agriculture
+#' Organization of the United Nations, Rome, 179 p.
+#'
+#' @seealso \code{\link{calcEto}, \link{calcSeasCal}}
+#'
+#' @importFrom graphics legend par
 #'
 #' @examples
-#'
+#' # load example data:
 #' data(climateData)
 #'
-#' Eto.daily <- calcEto(climateData)
+#' # Estimate daily PET:
+#' PET <- calcEto(climateData)
 #'
-#' climateData$Eto <- Eto.daily$ET.Daily
+#' # Add the estimated PET 'ET.Daily' to a new column in climateData:
+#' climateData$Eto <- PET$ET.Daily
 #'
-#'  soilWHC = 100
+#' # Estimate daily water balance for the soil having 100mm of WHC:
+#' watBal<- calcWatBal(climateData, soilWHC = 100)
 #'
-#' watBal.daily <- calcWatBal(climateData, soilWHC)
+#' # Visualizing water balance parameters for 1982/83 season
+#' watBal.82T83 <- watBal[watBal$Year %in% c(1982, 1983),]
+#' date.vec <- as.Date.character(paste0(watBal.82T83$Year, "-",
+#'                                      watBal.82T83$Month, "-", watBal.82T83$Day))
 #'
-#' plot(watBal.daily$ERATIO*100, ty="l")
-#' lines(watBal.daily$Eto, col="red")
-#' lines(watBal.daily$Rain, col="blue")
+#'  plot(y = watBal.82T83$Rain, x = date.vec, ty="l", col="blue", xlab="", ylab=" Water (mm)",
+#'       main="Daily Water Balance Parameters")
+#'  lines(y = watBal.82T83$Eto, x = date.vec, col="red", lwd = 3)
+#'  lines(y = watBal.82T83$AVAIL, x = date.vec, col="black", lwd = 1, lty = 2)
+#'
+#'   legend("bottomright",c("Rain","Eto","Available Moisture"),
+#'         horiz=FALSE, bty='n', cex=1.2,lty=c(1,1,2),lwd=c(2,2,2), inset=c(0,1),
+#'         xpd=TRUE, col=c("blue","red","black"))
 #'
 #' @export
 

@@ -4,6 +4,10 @@
 # AquaBEHER
 
 <!-- badges: start -->
+
+[![Travis build
+status](https://travis-ci.com/RobelTakele/AquaBEHER.svg?branch=main)](https://travis-ci.com/RobelTakele/AquaBEHER)
+[![R-CMD-check](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of AquaBEHER is to computes and integrates daily reference
@@ -39,6 +43,7 @@ balance:
 
 ``` r
 library(AquaBEHER)
+library(ggplot2)
 ## basic example code
 ```
 
@@ -46,38 +51,52 @@ What is special about using `README.Rmd` instead of just `README.md`?
 You can include R chunks like so:
 
 ``` r
-data(climateData)
+data(AgroClimateData)
 
-head(climateData)
-#>    Station_ID Station_Name   Lat    Lon Elev Year Month Day Rain Tmax Tmin
-#> 1 MZ000067237      NAMPULA -15.1 39.283  441 1980     1   1  0.8 30.7 21.6
-#> 2 MZ000067237      NAMPULA -15.1 39.283  441 1980     1   2  0.0 31.8 22.1
-#> 3 MZ000067237      NAMPULA -15.1 39.283  441 1980     1   3  0.0 30.3 22.7
-#> 4 MZ000067237      NAMPULA -15.1 39.283  441 1980     1   4 30.3 28.7 22.2
-#> 5 MZ000067237      NAMPULA -15.1 39.283  441 1980     1   5 11.3 24.8 22.0
-#> 6 MZ000067237      NAMPULA -15.1 39.283  441 1980     1   6 10.6 30.1 22.7
+head(AgroClimateData)
+#>       Source      Lat     Lon  Elev Year Month Day  Rain  Tmax  Tmin    Rs
+#> 1 NASAPOWER  -16.2163 39.9145 25.19 1996     1   1  4.27 32.76 24.39 27.03
+#> 2 NASAPOWER  -16.2163 39.9145 25.19 1996     1   2 26.59 30.76 24.85 25.20
+#> 3 NASAPOWER  -16.2163 39.9145 25.19 1996     1   3  9.63 31.33 24.66 24.61
+#> 4 NASAPOWER  -16.2163 39.9145 25.19 1996     1   4  4.50 31.37 24.36 22.64
+#> 5 NASAPOWER  -16.2163 39.9145 25.19 1996     1   5  2.85 29.88 23.66 23.92
+#> 6 NASAPOWER  -16.2163 39.9145 25.19 1996     1   6  5.88 29.81 23.16 22.64
+#>      RH  Tdew   U2
+#> 1 69.81 21.26 1.32
+#> 2 79.75 23.01 1.63
+#> 3 77.81 22.78 1.82
+#> 4 75.31 22.00 1.95
+#> 5 74.44 21.00 1.73
+#> 6 74.75 21.15 1.48
 ```
 
 ``` r
 
-Eto.daily <- calcEto(climateData)
-#> Hargreaves-Samani Reference Crop ET
-#> Evaporative surface: reference crop
+Eto.daily <- calcEto(AgroClimateData, method = "PM", crop = "short")
+#> Penman-Monteith FAO56 Reference Crop ET
+#> Evaporative surface: FAO-56 hypothetical short grass, albedo = 0.23 ; surface resistance = 70 sm^-1; crop height = 0.12  m; roughness height = 0.02 m
 #> Timestep: daily
 #> Units: mm
-#> Time duration: 1980-01-01 to 1984-12-31
-climateData$Eto <- Eto.daily$ET.Daily
+#> Time duration: 1996-01-01 to 2020-12-31
+AgroClimateData$Eto <- Eto.daily$ET.Daily
 soilWHC = 100
-watBal.daily <- calcWatBal(climateData, soilWHC)
+watBal <- calcWatBal(AgroClimateData, soilWHC)
 ```
 
 The output of daily soil water balance can be ploted:
 
 ``` r
 
-plot(watBal.daily$ERATIO*100, ty="l")
-lines(watBal.daily$Eto, col="red")
-lines(watBal.daily$Rain, col="blue")
+watBal <- watBal[watBal$Year %in% c(2010, 2020),]
+date.vec <- as.Date.character(paste0(watBal$Year, "-", watBal$Month, "-", watBal$Day))
+
+plot(watBal$AVAIL, ty="l", xlab="Days since 2010", ylab="Water (mm)", col="black", lwd = 1, lty = 2)
+lines(watBal$Eto, col="red", lwd = 3)
+lines(watBal$Rain, col="blue", lwd = 1)
+
+   legend("bottom",c("Rain","Eto","Available Moisture"),
+         horiz=TRUE, bty='n', cex=1,lty=c(1,1,2),lwd=c(2,2,2), inset=c(1,1),
+         xpd=TRUE, col=c("blue","red","black"))
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />

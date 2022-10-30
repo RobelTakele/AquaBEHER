@@ -4,7 +4,7 @@
 \alias{calcEto}
 \title{Potential Evapotranspiration}
 \usage{
-calcEto(data)
+calcEto(data, method = "PM", crop = "short", Zh = NULL)
 }
 \arguments{
 \item{data}{a dataframe containing the required climate variables: Columns must contain the following parameters:
@@ -18,8 +18,21 @@ calcEto(data)
    Rain: daily rainfall in (mm).
    Tmax: daily maximum temperature at 2-m height in (°C).
    Tmin: daily minimum temperature at 2-m height in (°C).
-   Eto: daily potential evapotranspiration in (mm).
+   Rs: daily surface solar radiation in (MJ/m^2/day).
+   RH or RHmax and RHmin: daily relative humidity at 2 Meters (\%).
+   Tdew: daily dew point temperature at 2 Meters (°C).
+   U2 or Uz: daily wind speed at 2 Meters (m/s).
 }\if{html}{\out{</div>}}}
+
+\item{method}{the formulation used to compute Eto; default is method = "PM" gives the the Penman-Monteith formulation (including the method for
+FAO-56 hypothetical short grass and the method for ASCE-EWRI Standardised crop) for estimating reference crop evapotranspiration; method ="PT"
+gives the Priestley-Taylor formulation for potential evaporation;  method = "HS" gives the Hargreaves-Samani formulation for estimating reference
+crop evapotranspiration Hargreaves-Samani equation.FAO Penman-Monteith (method_ETo="PM").}
+
+\item{crop}{either short (default) or tall; short indicates that the method for FAO-56 hypothetical short grass will be applied (Allen et al.1998),
+tall indicates that the method for ASCE-EWRI Standardised crop will be applied (ASCE, 2005).}
+
+\item{Zh}{height of wind speed measurement in m,}
 }
 \value{
 The function generates a list containing the following components:
@@ -36,9 +49,29 @@ The function generates a list containing the following components:
 This function calculates Penman-Monteith, Priestley Taylor and Hargreaves-Samani Potential Evapotranspiration
 using the method described by Allen et al, (1998)
 }
-\examples{
+\details{
+\strong{Penman-Monteith}
+If all variables of Tmax, Tmin, Rs, either U2 or Uz, and either RHmax and RHmin or RH or Tdew are available and crop surface is specified in
+argument the Penman-Monteith FAO56 formulation is used(Allen et al.1998).
 
-calcEto(climateData)
+\strong{Priestley-Taylor}
+If all variables of Tmax, Tmin, Rs and either RHmax and RHmin or RH or Tdew are available the Priestley-Taylor formulation is used
+(Priestley and Taylor, 1972).
+
+\strong{Hargreaves-Samani}
+If only Tmax and Tmin are available, the Hargreaves-Samani formulation is used or estimating reference crop evapotranspiration
+(Hargreaves and.Samani, 1985.
+}
+\examples{
+# load example data:
+data(climateData)
+
+calcEto(climateData, method = "HS")
+
+# load example data:
+data(AgroClimateData)
+
+calcEto(AgroClimateData, method = "PM", crop = "short")
 
 
 }

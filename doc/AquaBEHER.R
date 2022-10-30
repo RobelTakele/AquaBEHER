@@ -15,36 +15,38 @@ library(ggplot2)
 
 ## ----climateData--------------------------------------------------------------
 
- data(climateData)
- str(climateData)
- head(climateData)
+ data(AgroClimateData)
+ str(AgroClimateData)
+ head(AgroClimateData)
  
 
 ## -----------------------------------------------------------------------------
 
-PET.daily <- calcEto(data = climateData)
+PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
 
-str(PET.daily)
+str(PET)
 
 
 ## -----------------------------------------------------------------------------
 
-climateData$Eto <- PET.daily$ET.Daily
+# Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
+ AgroClimateData$Eto <- PET$ET.Daily
 
+# Estimate daily water balance for the soil having 100mm of WHC:
 soilWHC = 100
  
-watBal.daily <- calcWatBal(climateData, soilWHC)
+watBal<- calcWatBal(AgroClimateData, soilWHC)
 
-str(watBal.daily )
+str(watBal )
 
-# Plotting the water balance output for the climatological year from 1980 to 1981 using ggplot2:
+# Plotting the water balance output for the climatological year from 2019 to 2020 using ggplot2:
 
- watBal.daily.81 <- watBal.daily[watBal.daily$Year %in% c(1980, 1981),]
- date.vec <- as.Date.character(paste0(watBal.daily.81$Year, "-", watBal.daily.81$Month, "-", watBal.daily.81$Day))
+ watBal.19T20 <- watBal[watBal$Year %in% c(2019, 2020),]
+ date.vec <- as.Date.character(paste0(watBal.19T20$Year, "-", watBal.19T20$Month, "-", watBal.19T20$Day))
 
  ggplot() +
-         geom_line(aes(y = watBal.daily.81$AVAIL, x = date.vec), size = 0.8, color = "grey30") +
-         geom_area(aes(y = watBal.daily.81$Rain, x = date.vec), fill = "blue", size = 0.8, alpha = 0.7) +
+         geom_line(aes(y = watBal.19T20$AVAIL, x = date.vec), size = 0.8, color = "grey30") +
+         geom_area(aes(y = watBal.19T20$Rain, x = date.vec), fill = "blue", size = 0.8, alpha = 0.7) +
 
          scale_x_date(date_breaks = "1 month", date_labels =  "%b-%Y") +
    
@@ -60,11 +62,11 @@ str(watBal.daily )
 
 ## -----------------------------------------------------------------------------
 # seasonal calndar is estimated for the onset window ranges from 01-September to 31-January having a soil with 100mm of WHC
-soilWHC = 100
- onsetWind.start = "1980-09-01"
- onsetWind.end = "1981-01-31"
+ soilWHC = 100
+ onsetWind.start = "2019-09-01"
+ onsetWind.end = "2020-01-31"
 
-seasCal.dF <- calcSeasCal(watBal.daily, onsetWind.start, onsetWind.end,
+seasCal.dF <- calcSeasCal(watBal, onsetWind.start, onsetWind.end,
                           e_thresh = 0.25, AW_thr = 10, soilWHC)
 
 str(seasCal.dF)

@@ -75,19 +75,18 @@
 #' # load example data:
 #' data(climateData)
 #'
-#' # estimate daily PET:
-#' PET <- calcEto(climateData)
+#' # Estimate daily PET:
+#' PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
 #'
-#' # Add the estimated PET 'ET.Daily' to a new column in climateData:
-#' climateData$Eto <- PET$ET.Daily
+#' # Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
+#' AgroClimateData$Eto <- PET$ET.Daily
 #'
-#' # estimate daily water balance for the soil having 100mm of WHC:
-#' watBal<- calcWatBal(climateData, soilWHC = 100)
+#' # Estimate daily water balance for the soil having 100mm of WHC:
+#' watBal<- calcWatBal(AgroClimateData, soilWHC = 100)
 #'
 #' # estimate the rainy season calandar (Onset, Cessation and Duration):
-#'
-#' onsetWind.start = "1980-09-01"  # earliest possible start data of the onset window
-#' onsetWind.end = "1981-01-31"   # the late possible date for end of the onset window
+#' onsetWind.start = "2019-09-01"  # earliest possible start data of the onset window
+#' onsetWind.end = "2020-01-31"   # the late possible date for end of the onset window
 #'
 #' seasCal.dF <- calcSeasCal(watBal, onsetWind.start, onsetWind.end,
 #'                           e_thresh = 0.25, AW_thr = 10, soilWHC = 100)

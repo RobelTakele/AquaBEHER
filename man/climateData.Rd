@@ -5,9 +5,7 @@
 \alias{climateData}
 \title{A dataframe containing raw climate data}
 \format{
-A data frame with 1827 rows and 11 variables:
-
-\verb{    }\emph{\strong{\code{WMO_Code:}} World Meteorological Organization (WMO) station code.}
+A data frame containing daily observations of climate parameters:
 
 \verb{    }\emph{\strong{\code{Station_Name:}} name of the weather station.}
 
@@ -36,9 +34,8 @@ INAM - Instituto Nacional de Meteorologia, Mozambique \url{https://www.inam.gov.
 data(climateData)
 }
 \description{
-The R data object was obtained from Instituto Nacional de Meteorologia (INAM). This example data set contains the raw climate data
-including the variables required for calculating evapotranspiration and soil water balance over the period between 1/1/1980 and 12/31/1984 at a
-weather station located in Nampula province of Mozambique.
+The R data object was obtained from Instituto Nacional de Meteorologia (INAM). This example data set contains the daily raw climate
+data over the period between 1/1/1996 and 12/31/2020 from a weather station located in Angochen, Nampula province of Mozambique.
 }
 \examples{
 # load example data:
@@ -52,6 +49,6 @@ head(climateData)
 
 }
 \seealso{
-\code{\link{calcEto}} for a daily estimation of potential evapotranspiration.
+\code{\link{AgroClimateData}, \link{calcEto}}
 }
 \keyword{datasets}

@@ -42,30 +42,31 @@ and drainage paper 56 (Doorenbos et al, 1975; Allen et al, 1998)
 }
 \examples{
 # load example data:
-data(climateData)
+data(AgroClimateData)
 
 # Estimate daily PET:
-PET <- calcEto(climateData)
+PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
 
-# Add the estimated PET 'ET.Daily' to a new column in climateData:
-climateData$Eto <- PET$ET.Daily
+# Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
+AgroClimateData$Eto <- PET$ET.Daily
 
 # Estimate daily water balance for the soil having 100mm of WHC:
-watBal<- calcWatBal(climateData, soilWHC = 100)
+watBal<- calcWatBal(AgroClimateData, soilWHC = 100)
 
-# Visualizing water balance parameters for 1982/83 season
-watBal.82T83 <- watBal[watBal$Year \%in\% c(1982, 1983),]
-date.vec <- as.Date.character(paste0(watBal.82T83$Year, "-",
-                                     watBal.82T83$Month, "-", watBal.82T83$Day))
+# Visualizing water balance parameters for 2019/20 season
+watBal.19T20 <- watBal[watBal$Year \%in\% c(2019, 2020),]
+date.vec <- as.Date.character(paste0(watBal.19T20$Year, "-",
+                                     watBal.19T20$Month, "-", watBal.19T20$Day))
 
- plot(y = watBal.82T83$Rain, x = date.vec, ty="l", col="blue", xlab="", ylab=" Water (mm)",
+plot(y = watBal.19T20$Rain, x = date.vec, ty="l", col="blue", xlab="", ylab=" Water (mm)",
       main="Daily Water Balance Parameters")
- lines(y = watBal.82T83$Eto, x = date.vec, col="red", lwd = 3)
- lines(y = watBal.82T83$AVAIL, x = date.vec, col="black", lwd = 1, lty = 2)
+ lines(y = watBal.19T20$Eto, x = date.vec, col="red", lwd = 3)
+ lines(y = watBal.19T20$AVAIL, x = date.vec, col="black", lwd = 1, lty = 2)
 
   legend("bottomright",c("Rain","Eto","Available Moisture"),
         horiz=FALSE, bty='n', cex=1.2,lty=c(1,1,2),lwd=c(2,2,2), inset=c(0,1),
         xpd=TRUE, col=c("blue","red","black"))
+
 
 }
 \references{

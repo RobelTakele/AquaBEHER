@@ -101,8 +101,6 @@ lines(watBal$Rain, col="blue", lwd = 1)
 
 <img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
 
-[![projects](https://img.shields.io/badge/projects-eu-003399)](profile/projects.md#International)
-
 The **Center of Plant Sciences Group** is a geographically and
 culturally diverse research team working on climate and crop genetics at
 **Scuola Superiore Sant’Anna**, Pisa, Italy.

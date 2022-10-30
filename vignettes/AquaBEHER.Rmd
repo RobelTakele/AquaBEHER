@@ -21,6 +21,7 @@ output:
 vignette: >
   %\VignetteIndexEntry{AquaBEHER} 
   %\VignetteEngine{knitr::rmarkdown} 
+  %\VignetteDepends{prettydoc}
   %\VignetteDepends{ggplot2}
   %\VignetteEncoding{UTF-8}
 ---

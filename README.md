@@ -5,8 +5,6 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.com/RobelTakele/AquaBEHER.svg?branch=main)](https://travis-ci.com/RobelTakele/AquaBEHER)
 [![R-CMD-check](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 

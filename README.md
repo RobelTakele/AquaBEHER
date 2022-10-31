@@ -5,9 +5,12 @@
 
 <!-- badges: start -->
 
-[![Travis build
-status](https://travis-ci.com/RobelTakele/AquaBEHER.svg?branch=main)](https://travis-ci.com/RobelTakele/AquaBEHER)
 [![R-CMD-check](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml)
+[![Project Status: Active – The project has reached a stable, usable
+state and is being actively
+developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![Gitter
+chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/r-hub/community)
 <!-- badges: end -->
 
 The goal of AquaBEHER is to computes and integrates daily reference
@@ -43,6 +46,7 @@ balance:
 
 ``` r
 library(AquaBEHER)
+#> Loading required package: soiltexture
 library(ggplot2)
 ## basic example code
 ```
@@ -102,8 +106,6 @@ lines(watBal$Rain, col="blue", lwd = 1)
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
 
 <img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
-
-[![projects](https://img.shields.io/badge/projects-eu-003399)](profile/projects.md#International)
 
 The **Center of Plant Sciences Group** is a geographically and
 culturally diverse research team working on climate and crop genetics at

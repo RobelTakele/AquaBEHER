@@ -15,6 +15,8 @@ output:
     number_sections: no
 #    css: tools/vignette.css
     df_print: default
+    keep_tex: yes
+
   pdf_document:
     toc: yes
     toc_depth: 1
@@ -86,20 +88,19 @@ In addition, georeferenced information on the location of the climate record is 
 
 # 4. Potential Evapotranspiration
 
-For many agricultural applications, it is relevant to get an estimate on the potential evapotranspiration (PET).
-At the moment, the AquaBEHER package contains the Hargreaves-Samani formulation for the estimate of PET. 
-Hargreaves method is a temperature based method and it was derived to overcome non availability of solar radiation 
-data at many locations Hargreaves and Samani (1985).
+For many agricultural applications, it is relevant to get an estimate on the potential evapotranspiration (PET). Different methods are developed for estimating Eto. Most of them use emprical equations to determine the value of Eto from weather variables. The AquaBEHER package provides opsions for estimating Eto using the FAO Penman-Monteith, Priestley Taylor and Hargreaves-Samani formulations.
 
-When calculate PET using Hargreaves and Samani, only two variables (Tmax and Tmin) are needed.
+<img align="right" width="300" src=tools/Evapotranspiration.gif>
+
+
 
 ### Usage
 calcEto(AgroClimateData, method = "PM", crop = "short")
 
-* This function give a list of 
-** daily estimations of PET in (mm/day)
-** daily estimations of extraterristrial radiation (MJ/m2/day)
-** daily estimations of slope of vapour pressure curve (kPa/°C)
+ * The function give a list of 
+    + daily estimations of Eto in (mm/day)
+    + daily estimations of extraterristrial radiation (MJ/m2/day)
+    + daily estimations of slope of vapor pressure curve (kPa/°C)
 
 ### Example
 The calcEto compute with inputs of dataframe containing daily values of Tmax and Tmin:
@@ -111,6 +112,35 @@ PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
 str(PET)
 
 ```
+
+Graphical comparison of the evapotranspiration (mm/day) calculated using the FAO Penman–Monteith formulation and the Hargreaves-Samani formulation:
+
+
+
+```{r}
+# Compute Eto using hargreves-samani formulation using the example data from 'AgroClimateData':
+
+data(AgroClimateData)
+
+Eto.HS <- calcEto(AgroClimateData, method = "HS")
+
+# Now compute Eto using Penman-Monteith formulation for hypothetical grass (short crop):
+
+Eto.PM <- calcEto(AgroClimateData, method = "PM", crop = "short")
+
+plot(Eto.PM$ET.Daily[1:1000], ty="l", xlab="Days since 1996", ylab="Eto (mm/day)", col="black", lwd = 1, lty = 2)
+lines(Eto.HS$ET.Daily[1:1000], col="blue", lwd = 2, lty = 1)
+
+   legend("bottom",c("Eto: Penman–Monteith ","Eto: Hargreaves-Samani"),
+         horiz=TRUE, bty='n', cex=1,lty=c(2,1),lwd=c(2,2), inset=c(1,1),
+         xpd=TRUE, col=c("black","blue"))
+
+```
+
+
+It appears that the FAO Penman–Monteith formulation presents enhanced day-to-day variations of evapotranspiration than the the Hargreaves-Samani formulation.
+
+
 
 # 5. Soil Water Balance
 

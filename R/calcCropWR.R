@@ -33,7 +33,7 @@
 #'
 #' @return The function generates a data frame containing the following components:
 #'
-#' \emph{\code{Crop: the crop name that water requirement estimated for .}}
+#' \emph{\code{Crop: the name of the crop that water requirement is estimated.}}
 #'
 #' \emph{\code{Eto: .daily estimations of reference crop evapotranspiration (mm/day).}}
 #'

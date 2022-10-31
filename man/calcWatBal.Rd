@@ -65,8 +65,7 @@ plot(y = watBal.19T20$Rain, x = date.vec, ty="l", col="blue", xlab="", ylab=" Wa
 
   legend("bottomright",c("Rain","Eto","Available Moisture"),
         horiz=FALSE, bty='n', cex=1.2,lty=c(1,1,2),lwd=c(2,2,2), inset=c(0,1),
-        xpd=TRUE, col=c("blue","red","black"))
-
+        xpd=TRUE, col=c("blue","red","black"))#'
 
 }
 \references{

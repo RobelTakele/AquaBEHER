@@ -2,8 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
-pkgdowntravis.Rproj
 .Rproj*
 /doc/
 /Meta/
-docs
+

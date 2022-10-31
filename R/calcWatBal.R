@@ -1,3 +1,22 @@
+#     calcWatBal.R Soil Water Balance
+#
+#     Copyright (C) 2022 Center of Plant Sciences, Scuola Superiore Sant’Anna (http://www.capitalisegenetics.santannapisa.it)
+#
+#     This program is free software: you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License as published by
+#     the Free Software Foundation, either version 3 of the License, or
+#     (at your option) any later version.
+#
+#     This program is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU General Public License for more details.
+#
+#     You should have received a copy of the GNU General Public License
+#     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+######################################################################################################################################################
+
 #' @title Soil Water Balance
 #'
 #' @description Calculates a daily soil water balance computation for the root zone according to methods described in the FAO Irrigation
@@ -40,6 +59,7 @@
 #' @seealso \code{\link{calcEto}, \link{calcSeasCal}}
 #'
 #' @importFrom graphics legend par
+#' @importFrom graphics lines
 #'
 #' @examples
 #' # load example data:
@@ -66,10 +86,9 @@
 #'
 #'   legend("bottomright",c("Rain","Eto","Available Moisture"),
 #'         horiz=FALSE, bty='n', cex=1.2,lty=c(1,1,2),lwd=c(2,2,2), inset=c(0,1),
-#'         xpd=TRUE, col=c("blue","red","black"))
+#'         xpd=TRUE, col=c("blue","red","black"))#'
 #'
-#'
-#' @export
+#'@export
 
 ######################################################################################################################################################
 # ***** function to estimate Rindex: actual to potential evapotranspiration ratio based on Jones (1987)

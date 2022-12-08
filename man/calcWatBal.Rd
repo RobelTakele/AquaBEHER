@@ -7,7 +7,7 @@
 calcWatBal(data, soilWHC)
 }
 \arguments{
-\item{data}{a dataframe containing the required climate variables: Columns must contain the following parameters:
+\item{data}{a dataframe containing the required variables: Columns must contain the following parameters:
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{   Lat: latitude of the site in decimal degrees.
    Lon: longitude of the site in decimal degrees.
@@ -16,29 +16,27 @@ calcWatBal(data, soilWHC)
    Month: month of record "MM".
    Day: day of record "DD".
    Rain: daily rainfall in (mm).
-   Tmax: daily maximum temperature at 2-m height in (°C).
-   Tmin: daily minimum temperature at 2-m height in (°C).
    Eto: daily potential evapotranspiration in (mm).
 }\if{html}{\out{</div>}}}
 
-\item{soilWHC}{Water holding capacity of the soil in (mm).}
+\item{soilWHC}{\verb{  }Water holding capacity of the soil in (mm).}
 }
 \value{
 The function generates a data frame containing the following components:
 
-\emph{\code{cumRAIN: accumulated rainfall since the begning of the calculation in (mm).}}
+\emph{\code{DRAIN: amount of deep drainage in (mm).}}
 
-\emph{\code{DEMAND: aamospheric water demand (total moisture flux to atmospher) in (mm).}}
+\emph{\code{TRAN: amount of water lost by transpiration (after drainage) in (mm).}}
 
 \emph{\code{RUNOFF: surface runoff in (mm).}}
 
-\emph{\code{ERATIO: actual-to-potential evapotranspiration ratio.}}
-
 \emph{\code{AVAIL: available soil moisture storage in (mm).}}
+
+\emph{\code{R: actual-to-potential evapotranspiration ratio.}}
 }
 \description{
-Calculates a daily soil water balance computation for the root zone according to methods described in the FAO Irrigation
-and drainage paper 56 (Doorenbos et al, 1975; Allen et al, 1998)
+Function to estimate a budget-based daily soil water balance. It calculates the amount of water present in the
+root zone of a homogeneous grass canopy growing on a well-drained and homogeneous soil.
 }
 \examples{
 # load example data:
@@ -58,22 +56,23 @@ watBal.19T20 <- watBal[watBal$Year \%in\% c(2019, 2020),]
 date.vec <- as.Date.character(paste0(watBal.19T20$Year, "-",
                                      watBal.19T20$Month, "-", watBal.19T20$Day))
 
-plot(y = watBal.19T20$Rain, x = date.vec, ty="l", col="blue", xlab="", ylab=" Water (mm)",
-      main="Daily Water Balance Parameters")
- lines(y = watBal.19T20$Eto, x = date.vec, col="red", lwd = 3)
- lines(y = watBal.19T20$AVAIL, x = date.vec, col="black", lwd = 1, lty = 2)
+plot(y = watBal.19T20$AVAIL, x = date.vec, ty="l", col="black", xlab="", ylab=" Water (mm)",
+       main="Daily Water Balance Parameters", lwd = 1, lty = 2)
+ lines(y = watBal.19T20$Eto, x = date.vec, col="red", lwd = 3, lty = 1)
+ lines(y = watBal.19T20$Rain, x = date.vec, col="blue", lwd = 1, lty = 1)
 
   legend("bottomright",c("Rain","Eto","Available Moisture"),
-        horiz=FALSE, bty='n', cex=1.2,lty=c(1,1,2),lwd=c(2,2,2), inset=c(0,1),
-        xpd=TRUE, col=c("blue","red","black"))#'
+        horiz=FALSE, bty='n', cex=1.2,lty=c(1,1,2),lwd=c(1,3,1), inset=c(0,0.7),
+        xpd=TRUE, col=c("blue","red","black"))
 
 }
 \references{
-Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop Evapotranspiration: Guidelines for Computing Crop Water Requirements; FAO
+Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop Evapotranspiration: Guidelines for Computing Crop Water
+Requirements; FAO
 Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998; ISBN 92-5-104219-5.
 
-Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water requirements, Irrigation and Drainage Paper 24, Food and Agriculture
-Organization of the United Nations, Rome, 179 p.
+Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water requirements, Irrigation and Drainage Paper 24, Food
+and Agriculture Organization of the United Nations, Rome, 179 p.
 }
 \seealso{
 \code{\link{calcEto}, \link{calcSeasCal}}

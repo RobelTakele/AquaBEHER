@@ -7,7 +7,8 @@ knitr::opts_chunk$set(
 ## ----AquaBEHER setup----------------------------------------------------------
 
 # install.packages("devtools")
-# devtools::install_github("RobelTakele/AquaBEHER")
+# devtools::install_github("RobelTakele/AquaBEHER", dependencies = TRUE, type = "source",
+#                           build_manual = TRUE, build_vignettes = TRUE)
 
 library(AquaBEHER)
 library(ggplot2)
@@ -63,11 +64,15 @@ str(watBal )
  watBal.19T20 <- watBal[watBal$Year %in% c(2019, 2020),]
  date.vec <- as.Date.character(paste0(watBal.19T20$Year, "-", watBal.19T20$Month, "-", watBal.19T20$Day))
 
- ggplot() +
-         geom_line(aes(y = watBal.19T20$AVAIL, x = date.vec), size = 0.8, color = "grey30") +
-         geom_area(aes(y = watBal.19T20$Rain, x = date.vec), fill = "blue", size = 0.8, alpha = 0.7) +
+ ggplot(data = watBal.19T20) +
+         geom_line(aes(y = AVAIL, x = date.vec, fill = "AVAIL"), size = 0.8, color = "red") +
+         geom_col(aes(y = Rain, x = date.vec, fill = "Rain"), size = 1) +
+        
+         
 
          scale_x_date(date_breaks = "1 month", date_labels =  "%b-%Y") +
+   
+         scale_fill_manual(name = " ", values = c('AVAIL' = "red", 'Rain' = "blue")) +
    
          scale_y_continuous(expand = c(0, 2))  +
          labs(y="Moisture (mm)", x=NULL) +
@@ -81,25 +86,28 @@ str(watBal )
 
 ## -----------------------------------------------------------------------------
 # seasonal calndar is estimated for the onset window ranges from 01-September to 31-January having a soil with 100mm of WHC
- soilWHC = 100
- onsetWind.start = "2019-09-01"
- onsetWind.end = "2020-01-31"
+soilWHC = 100
+onsetWind.start = "1996-09-01"  # earliest possible start date of the onset window
+onsetWind.end = "1997-01-31"    # the latest possible date for end of the onset window
+cessaWind.end = "1997-06-30"    # the latest possible date for end of the cessation window
 
-seasCal.dF <- calcSeasCal(watBal, onsetWind.start, onsetWind.end,
-                          e_thresh = 0.25, AW_thr = 10, soilWHC)
+seasCal.lst <- calcSeasCal(watBal, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC = 100)
 
-str(seasCal.dF)
+str(seasCal.lst)
 
 # plotting year to year variation of onset cessation and seasonal duration
 
- ggplot(data = seasCal.dF) +
-   geom_line(aes(y = Onset.DOY, x = Year, color = "Onset.DOY"), size = 2) +
-   geom_line(aes(y = Cesation.DOY, x = Year, color = "Cesation.DOY"), size = 2) +
-   geom_col(aes(y = SeasDur, x = Year, color = "SeasDur"), size = 0.8, alpha = 0.4) +
+seasCal.dF <- data.frame(Year = seasCal.lst[[1]][,c("Year")],
+                         Onset = seasCal.lst[[1]][,c("JD")],
+                         Cessation = seasCal.lst[[2]][,c("JD")],
+                         Duration = seasCal.lst[[3]][,c("Duration")])
 
-   scale_color_manual(name = "Calendar", values = c('Onset.DOY' = "blue",
-                                                    'Cesation.DOY' = "red",
-                                                    'SeasDur' = "grey"))  +
+ ggplot(data = seasCal.dF) +
+   geom_line(aes(y = Onset, x = Year, color = "Onset"), size = 1) +
+   geom_line(aes(y = Cessation, x = Year, color = "Cessation"), size = 1) +
+   geom_area(aes(y = Duration, x = Year, color = "Duration⁠"), size = 0.8, alpha = 0.4)+
+ 
+   scale_color_manual(name = "Calendar", values = c('Onset' = "blue", 'Cessation' = "red", 'Duration' = "grey"))  +
 
  labs(y="Day of a year (DOY)", x=NULL) +
 

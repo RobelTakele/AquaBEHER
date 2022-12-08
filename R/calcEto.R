@@ -15,76 +15,86 @@
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-######################################################################################################################################################
+##################################################################################################################################
 #' @title Potential Evapotranspiration
 #'
 #' @description This function calculates Penman-Monteith, Priestley Taylor and Hargreaves-Samani Potential Evapotranspiration
 #' using the method described by Allen et al, (1998)
 #'
-#' @param data a dataframe containing the required climate variables: Columns must contain the following parameters:
+#' @param data a dataframe containing the required climate variables: columns must contain the following parameters:
 #'
-#'        Lat: latitude of the site in decimal degrees.
-#'        Lon: longitude of the site in decimal degrees.
-#'        Elev: elevation above sea level in (meters).
-#'        Year: year of record "YYYY".
-#'        Month: month of record "MM".
-#'        Day: day of record "DD".
-#'        Rain: daily rainfall in (mm).
-#'        Tmax: daily maximum temperature at 2-m height in (°C).
-#'        Tmin: daily minimum temperature at 2-m height in (°C).
-#'        Rs: daily surface solar radiation in (MJ/m^2/day).
-#'        RH or RHmax and RHmin: daily relative humidity at 2 Meters (%).
-#'        Tdew: daily dew point temperature at 2 Meters (°C).
-#'        U2 or Uz: daily wind speed at 2 Meters (m/s).
+#' \verb{      }\emph{\strong{\code{Lat:}} latitude of the site in decimal degrees.}
 #'
+#' \verb{      }\emph{\strong{\code{Lon:}} longitude of the site in decimal degrees.}
 #'
-#' @param method the formulation used to compute Eto; default is method = "PM" gives the the Penman-Monteith formulation (including the method for
-#' FAO-56 hypothetical short grass and the method for ASCE-EWRI Standardised crop) for estimating reference crop evapotranspiration; method ="PT"
-#'  gives the Priestley-Taylor formulation for potential evaporation;  method = "HS" gives the Hargreaves-Samani formulation for estimating reference
-#'  crop evapotranspiration Hargreaves-Samani equation.FAO Penman-Monteith (method_ETo="PM").
+#' \verb{      }\emph{\strong{\code{Elev:}} elevation above sea level in (meters).}
 #'
-#' @param crop either short (default) or tall; short indicates that the method for FAO-56 hypothetical short grass will be applied (Allen et al.1998),
-#'              tall indicates that the method for ASCE-EWRI Standardised crop will be applied (ASCE, 2005).
+#' \verb{      }\emph{\strong{\code{Year:}} year of record "YYYY".}
 #'
-#' @param Zh height of wind speed measurement in m,
+#' \verb{      }\emph{\strong{\code{Month:}} month of record "MM".}
 #'
-#' @return The function generates a list containing the following components:
+#' \verb{      }\emph{\strong{\code{Day:}} day of record "DD".}
 #'
-#' \code{ET.Daily:} {Daily estimations of reference crop evapotranspiration (mm/day)}
+#' \verb{      }\emph{\strong{\code{Tmax:}} daily maximum temperature at 2-m height in (°C).}
 #'
-#' \code{Ra.Daily:} {Daily estimations of extraterristrial radiation (MJ/m2/day)}
+#' \verb{      }\emph{\strong{\code{Tmin:}} daily minimum temperature at 2-m height in (°C).}
 #'
-#' \code{Slope.Daily:} {Daily estimations of slope of vapour pressure curve (kPa/°C)}
+#' \verb{      }\emph{\strong{\code{Rs:}} daily surface incoming solar radiation in (MJ/m^2/day).}
 #'
-#' \code{ET.type:} {Type of the estimation obtained}
+#' \verb{      }\emph{\strong{\code{RH or RHmax and RHmin:}} daily relative humidity at 2-m height.}
 #'
-#' @references Allen, R.G., L.S. Pereira, D. Raes, and M. Smith. 1998. ‘Crop evapotranspiration-Guidelines for Computing Crop Water requirements
-# FAO Irrigation and Drainage Paper 56’. FAO, Rome 300: 6541.
-#
-# Allen, R. G. 2005. The ASCE standardized reference evapotranspiration equation. Amer Society of Civil Engineers.
-#
-# Guo, Danlu & Westra, Seth & Maier, Holger. (2016). An R package for modelling actual, potential and reference evapotranspiration.
-# Environmental Modelling & Software. 78. 216-224. 10.1016/j.envsoft.2015.12.019.
-#
-# Hargreaves, G.H.Samani, Z.A. 1985, Reference crop evapotranspiration from ambient air temperature. American Society of Agricultural Engineers.
-#
-# Priestley, C. & Taylor, R. 1972, On the assessment of surface heat flux and evaporation using large-scale parameters'. Monthly Weather Review,
-# vol. 100, no. 2, pp. 81-92.
-#
+#' \verb{      }\emph{\strong{\code{Tdew:}} daily dew point temperature at 2-m height in (°C).}
+#'
+#' \verb{      }\emph{\strong{\code{U2 or Uz:}} daily wind speed at 2-m or Z-m(custom) height (m/s).}
+#'
+#' \verb{    }
+#' @param method \verb{  }the formulation used to compute Eto; default is \emph{method = "PM"} gives the the Penman-Monteith
+#' formulation; \emph{method = "PT"} gives \verb{  }the Priestley-Taylor formulation and \emph{method = "HS"} gives the Hargreaves
+#' Samani formulation.
+#'
+#' @param crop \verb{  }either \emph{crop = "short"} (default) or \emph{crop = "tall"}; short indicates that the method for FAO-56
+#' hypothetical short grass will be applied \verb{  }(Allen et al.1998); tall indicates that the method for ASCE-EWRI standard
+#' crop will be applied (ASCE, 2005).
+#'
+#' @param Zh \verb{  }height of wind speed measurement in meters,
+#'
+#' @return The function generates a list containing the following objects:
+#'
+#' \code{ET.Daily:} {daily estimations of reference crop evapotranspiration (mm/day)}
+#'
+#' \code{Ra.Daily:} {daily estimations of extraterristrial radiation (MJ/m2/day)}
+#'
+#' \code{Slope.Daily:} {daily estimations of slope of vapour pressure curve (kPa/°C)}
+#'
+#' \code{ET.type:} {type of the estimation obtained}
+#'
+#' @references Allen, R.G., L.S. Pereira, D. Raes, and M. Smith. 1998. ‘Crop evapotranspiration-Guidelines for Computing Crop
+#' Water requirements FAO Irrigation and Drainage Paper 56’. FAO, Rome 300: 6541.
+#'
+#' Allen, R. G. 2005. The ASCE standardized reference evapotranspiration equation. Amer Society of Civil Engineers.
+#'
+#' Guo, Danlu & Westra, Seth & Maier, Holger. (2016). An R package for modelling actual, potential and reference
+#' evapotranspiration. Environmental Modelling & Software. 78. 216-224. 10.1016/j.envsoft.2015.12.019.
+#'
+#' Hargreaves, G.H.Samani, Z.A. 1985, Reference crop evapotranspiration from ambient air temperature. American Society of
+#' Agricultural Engineers.
+#'
+#' Priestley, C. & Taylor, R. 1972, On the assessment of surface heat flux and evaporation using large-scale parameters'. Monthly
+#' Weather Review, vol. 100, no. 2, pp. 81-92.
+#'
 #' @details
 #'
-#'  \strong{Penman-Monteith}
-#'  If all variables of Tmax, Tmin, Rs, either U2 or Uz, and either RHmax and RHmin or RH or Tdew are available and crop surface is specified in
-#'  argument the Penman-Monteith FAO56 formulation is used(Allen et al.1998).
+#'  \strong{Penman-Monteith:}
+#'  If all variables of Tmax, Tmin, Rs, either U2 or Uz, and either RHmax and RHmin or RH or Tdew are available and crop surface
+#'  (short or tall) is specified in argument the Penman-Monteith FAO56 formulation is used (Allen et al.1998).
 #'
-#'   \strong{Priestley-Taylor}
-#'   If all variables of Tmax, Tmin, Rs and either RHmax and RHmin or RH or Tdew are available the Priestley-Taylor formulation is used
-#'   (Priestley and Taylor, 1972).
+#'   \strong{Priestley-Taylor:}
+#'   If all variables of Tmax, Tmin, Rs and either RHmax and RHmin or RH or Tdew are available the Priestley-Taylor formulation
+#'   is used (Priestley and Taylor, 1972).
 #'
-#'   \strong{Hargreaves-Samani}
-#'   If only Tmax and Tmin are available, the Hargreaves-Samani formulation is used or estimating reference crop evapotranspiration
-#'   (Hargreaves and.Samani, 1985.
-#'
+#'   \strong{Hargreaves-Samani:}
+#'   If only Tmax and Tmin are available, the Hargreaves-Samani formulation is used or estimating reference crop
+#'   evapotranspiration (Hargreaves and.Samani, 1985).
 #'
 #' @seealso \code{\link{climateData}, \link{calcWatBal}, \link{calcSeasCal}}
 #'
@@ -99,15 +109,14 @@
 #'
 #' calcEto(AgroClimateData, method = "PM", crop = "short")
 #'
-#'
 #' @export
-######################################################################################################################################################
+##################################################################################################################################
 
  calcEto  <- function(data, method = "PM", crop = "short", Zh = NULL) {
 
  if (method == "HS") {
 
-######################################################################################################################################################
+##################################################################################################################################
  # ***** Hargreaves-Samani
 
         # ***** universal constants *****
@@ -184,8 +193,8 @@
    ET.formulation <- "Hargreaves-Samani"
    ET.type <- "Reference Crop ET"
 
-   message(ET.formulation, " ", ET.type)
-   message("Evaporative surface: reference crop")
+   # message(ET.formulation, " ", ET.type)
+   # message("Evaporative surface: reference crop")
 
    results <- list(ET.Daily = ET.Daily,
                    Ra.Daily = Ra,
@@ -194,14 +203,14 @@
                    ET.type = ET.type)
 
 
-   message("Timestep: ", ts)
-   message("Units: mm")
-   message("Time duration: ", date.vec[1], " to ", date.vec[length(date.vec)])
+   # message("Timestep: ", ts)
+   # message("Units: mm")
+   # message("Time duration: ", date.vec[1], " to ", date.vec[length(date.vec)])
 
 
  return(results)
 
-#####################################################################################################################################################
+##################################################################################################################################
 
  } else if (method == "PT") {
 
@@ -386,23 +395,25 @@
      Surface <- paste("water, albedo =", alpha)
    }
 
-   message(ET.formulation, " ", ET.type)
-   message("Evaporative surface: ", Surface)
-
-   message("Timestep: ", ts)
-   message("Units: mm")
-   message("Time duration: ", date.vec[1], " to ", date.vec[length(date.vec)])
+   # message(ET.formulation, " ", ET.type)
+   # message("Evaporative surface: ", Surface)
+   #
+   # message("Timestep: ", ts)
+   # message("Units: mm")
+   # message("Time duration: ", date.vec[1], " to ", date.vec[length(date.vec)])
 
    results <- list(ET.Daily = ET.Daily,
                    Ra.Daily = Ra,
                    Slope.Daily = delta,
+                   Ea.Daily = Ea,
+                   Es.Daily = Es,
                    ET.formulation = ET.formulation,
                    ET.type = ET.type)
 
    return(results)
 
 
-####################################################################################################################################################
+##################################################################################################################################
 
  } else if (method == "PM") {
 
@@ -629,12 +640,12 @@
                    ET.formulation = ET.formulation,
                    ET.type = ET.type)
 
-   message(ET.formulation, " ", ET.type)
-   message("Evaporative surface: ", Surface)
-
-   message("Timestep: ", ts)
-   message("Units: mm")
-   message("Time duration: ", date.vec[1], " to ", date.vec[length(date.vec)])
+   # message(ET.formulation, " ", ET.type)
+   # message("Evaporative surface: ", Surface)
+   #
+   # message("Timestep: ", ts)
+   # message("Units: mm")
+   # message("Time duration: ", date.vec[1], " to ", date.vec[length(date.vec)])
 
 
    return(results)
@@ -642,11 +653,11 @@
 
    }
 
-######################################################################################################################################################
+##################################################################################################################################
 
 }
 
-#####################################################################################################################################################
-#####################################################################################################################################################
-#####################################################################################################################################################
+##################################################################################################################################
+##################################################################################################################################
+##################################################################################################################################
 

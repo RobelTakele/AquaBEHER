@@ -22,12 +22,12 @@ approach.
 
 Specifically, the package can perform the following functions:
 
--   Estimation of daily evapotranspiration
--   Estimation of daily soil water balance
--   Estimation of rainy season calandar:
-    -   Onset of the rainy season
-    -   Cessation of the rainy season
-    -   Duration of the rainy season
+- Estimation of daily evapotranspiration
+- Estimation of daily soil water balance
+- Estimation of rainy season calandar:
+  - Onset of the rainy season
+  - Cessation of the rainy season
+  - Duration of the rainy season
 
 ## Installation
 
@@ -47,6 +47,23 @@ balance:
 ``` r
 library(AquaBEHER)
 #> Loading required package: soiltexture
+#> Loading required package: ggplot2
+#> Loading required package: dplyr
+#> 
+#> Attaching package: 'dplyr'
+#> The following objects are masked from 'package:stats':
+#> 
+#>     filter, lag
+#> The following objects are masked from 'package:base':
+#> 
+#>     intersect, setdiff, setequal, union
+#> Loading required package: lubridate
+#> Loading required package: timechange
+#> 
+#> Attaching package: 'lubridate'
+#> The following objects are masked from 'package:base':
+#> 
+#>     date, intersect, setdiff, union
 library(ggplot2)
 ## basic example code
 ```
@@ -77,11 +94,6 @@ head(AgroClimateData)
 ``` r
 
 Eto.daily <- calcEto(AgroClimateData, method = "PM", crop = "short")
-#> Penman-Monteith FAO56 Reference Crop ET
-#> Evaporative surface: FAO-56 hypothetical short grass, albedo = 0.23 ; surface resistance = 70 sm^-1; crop height = 0.12  m; roughness height = 0.02 m
-#> Timestep: daily
-#> Units: mm
-#> Time duration: 1996-01-01 to 2020-12-31
 AgroClimateData$Eto <- Eto.daily$ET.Daily
 soilWHC = 100
 watBal <- calcWatBal(AgroClimateData, soilWHC)

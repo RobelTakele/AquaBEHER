@@ -13,12 +13,16 @@ Description: This R package computes and integrates daily reference evapotranspi
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.2
+RoxygenNote: 7.2.3
 Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
     rmarkdown,
     prettydoc
 VignetteBuilder: knitr
-Depends: soiltexture, ggplot2, dplyr, lubridate,
-    R (>= 2.10)
+Depends: soiltexture,lubridate,raster,
+    R (>= 3.5.0)
+Imports: 
+    dplyr,
+    ggplot2,
+    sp

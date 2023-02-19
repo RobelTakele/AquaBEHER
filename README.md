@@ -47,23 +47,14 @@ balance:
 ``` r
 library(AquaBEHER)
 #> Loading required package: soiltexture
-#> Loading required package: ggplot2
-#> Loading required package: dplyr
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 #> Loading required package: lubridate
-#> Loading required package: timechange
 #> 
 #> Attaching package: 'lubridate'
 #> The following objects are masked from 'package:base':
 #> 
 #>     date, intersect, setdiff, union
+#> Loading required package: raster
+#> Loading required package: sp
 library(ggplot2)
 ## basic example code
 ```

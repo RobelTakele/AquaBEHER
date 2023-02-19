@@ -60,6 +60,8 @@
 #' @importFrom graphics legend par
 #' @importFrom graphics lines
 #' @importFrom soiltexture TT.points.in.classes
+#' @importFrom raster raster extract
+#' @importFrom sp coordinates CRS proj4string
 #'
 #' @examples
 #' # load example data:
@@ -104,11 +106,27 @@ calcWatBal <- function(data, soilWHC) {
   # WATwp : Water content at wilting Point (mm)
   # WATwp = WP*z
 
+  data(rcn, envir=environment())
+  pts.dF <- data.frame(Lat = as.numeric(data$Lat[1]), Lon = as.numeric(data$Lon[1]))
+  pts.sp <- pts.dF
+  sp::coordinates(pts.sp) <- ~Lon+Lat
+  sp::proj4string(pts.sp) <- sp::CRS("+proj=longlat")
+  rcn.pts <- raster::extract(rcn, pts.sp)
+
+  if (!is.null(rcn.pts) & !is.na(rcn.pts)) {
+
+    CN <- rcn.pts
+
+  } else {
+
+    CN = 65  # *** well managed grass
+
+  }
+
   DC = 0.55 #
-  CN = 65  # *** well managed grass
+
   MUF = 0.1
   WATwp = 0.1 * soilWHC
-
   # Maximum abstraction (for run off)
   S = 25400/CN-254
   # Initial Abstraction (for run off)

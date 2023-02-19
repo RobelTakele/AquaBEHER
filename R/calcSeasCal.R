@@ -153,11 +153,11 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end, cessaWind.end, soi
 
   }
 
-  if (is.null(data$Rain) | length(which(is.na(data$Rain)))> 0) {
-
-    stop("Required data column for daily rainfall amount [Rain] is missing! ")
-
-  }
+  # if (is.null(data$Rain) | length(which(is.na(data$Rain)))> 0) {
+  #
+  #   stop("Required data column for daily rainfall amount [Rain] is missing! ")
+  #
+  # }
 
   if (is.null(data$R) | length(which(is.na(data$R)))> 0) {
 
@@ -197,8 +197,8 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end, cessaWind.end, soi
   year.vec <- as.numeric(sort(unique(data$Year)))
 
   Rindex.thr = 0.5
-  PAW.thr = min(max((0.2 * soilWHC), 10), 20)
-  data$Rain[data$Rain < 1] <- 0
+  PAW.thr = min(max((0.2 * soilWHC), 10), 25)
+#  data$Rain[data$Rain < 1] <- 0
 
  if (lubridate::as_date(onsetWind.start) < lubridate::as_date(onsetWind.end) |
      lubridate::as_date(onsetWind.start) < lubridate::as_date(cessaWind.end)) {
@@ -217,15 +217,15 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end, cessaWind.end, soi
                         onset.Year = rep(NA, year.len),
                         onset.Month = rep(NA, year.len),
                         onset.Day = rep(NA, year.len),
-                        JD = rep(NA, year.len),
-                        YYYYDOY = rep(NA, year.len))
+                        onset.JD = rep(NA, year.len),
+                        onset.Value = rep(NA, year.len))
 
  Cessation.dF <- data.frame(Year = rep(NA, year.len),
                             cessation.Year = rep(NA, year.len),
                             cessation.Month = rep(NA, year.len),
                             cessation.Day = rep(NA, year.len),
-                            JD  = rep(NA, year.len),
-                            YYYYDOY = rep(NA, year.len))
+                            cessation.JD  = rep(NA, year.len),
+                            cessation.Value = rep(NA, year.len))
 
  Duration.dF <- data.frame(Year = rep(NA, year.len),
                            onset.YYYYDOY = rep(NA, year.len),
@@ -258,12 +258,14 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end, cessaWind.end, soi
 
      onset <- NA
 
-     for (day in 1:(nrow(data.onset.yr)- 20)) {
+     for (day in 1:(nrow(data.onset.yr)- 30)) {
 
        if (is.na(onset) & (length(which(is.na(data.onset.yr$R))) < 1) & (data.onset.yr$R[day] >= Rindex.thr) &
            (data.onset.yr$R[day+1] >= Rindex.thr) & (data.onset.yr$R[day+2] >= Rindex.thr) &
-           (data.onset.yr$R[day+3] >= Rindex.thr) & (data.onset.yr$R[day+4] >= Rindex.thr)&
-           (data.onset.yr$R[day+5] >= Rindex.thr)& (data.onset.yr$R[day+6] >= Rindex.thr)) {
+           (data.onset.yr$R[day+3] >= Rindex.thr) & (data.onset.yr$R[day+4] >= Rindex.thr) &
+           (data.onset.yr$R[day+5] >= Rindex.thr)& (data.onset.yr$R[day+6] >= Rindex.thr) &
+           (data.onset.yr$R[day+7] >= Rindex.thr)& (data.onset.yr$R[day+8] >= Rindex.thr) &
+           (data.onset.yr$R[day+9] >= Rindex.thr)& (data.onset.yr$R[day+10] >= Rindex.thr)) {
 
          avail.vec <- data.onset.yr$AVAIL[day:(day+20)]
          avail.grDay <- length(which(avail.vec  > PAW.thr))
@@ -286,8 +288,8 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end, cessaWind.end, soi
                                onset.Year = onset.Year,
                                onset.Month = onset.Month,
                                onset.Day = onset.Day,
-                               JD = as.numeric(substr(onset.index, 6, 8)),
-                               YYYYDOY = onset.index)
+                               onset.JD = as.numeric(substr(onset.index, 6, 8)),
+                               onset.Value = onset)
 
      Onset.dF[yr,] <- onset.yr.dF
 
@@ -314,11 +316,11 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end, cessaWind.end, soi
 
      cessaWind.end.yr <- lubridate::as_date(paste0(year.vec[yr], "-12-15"))
 
-     data.cessation.yr = data[which(cessaWind.start.yr == data$date):which((cessaWind.end.yr + 15) == data$date), ]
+     data.cessation.yr = data[which(cessaWind.start.yr == data$date):which((cessaWind.end.yr + 20) == data$date), ]
 
    } else if (!is.na(onset) & (yr < year.len)) {
 
-     data.cessation.yr = data[which(cessaWind.start.yr == data$date):which((cessaWind.end.yr + 15) == data$date), ]
+     data.cessation.yr = data[which(cessaWind.start.yr == data$date):which((cessaWind.end.yr + 20) == data$date), ]
 
    }
 
@@ -327,17 +329,19 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end, cessaWind.end, soi
 
  if (!is.na(onset)) {
 
-  for (day in 1:(nrow(data.cessation.yr)- 15)) {
+  for (day in 1:(nrow(data.cessation.yr)- 20)) {
 
     if (is.na(cessation) & (length(which(is.na(data.cessation.yr$R))) < 1) & (data.cessation.yr$R[day] < Rindex.thr) &
         (data.cessation.yr$R[day+1] < Rindex.thr) & (data.cessation.yr$R[day+2] < Rindex.thr) &
-        (data.cessation.yr$R[day+3] < Rindex.thr) & (data.cessation.yr$R[day+4] < Rindex.thr)&
-        (data.cessation.yr$R[day+5] < Rindex.thr)& (data.cessation.yr$R[day+6] < Rindex.thr)) {
+        (data.cessation.yr$R[day+3] < Rindex.thr) & (data.cessation.yr$R[day+4] < Rindex.thr) &
+        (data.cessation.yr$R[day+5] < Rindex.thr)& (data.cessation.yr$R[day+6] < Rindex.thr) &
+        (data.cessation.yr$R[day+7] < Rindex.thr)& (data.cessation.yr$R[day+8] < Rindex.thr) &
+        (data.cessation.yr$R[day+9] < Rindex.thr)& (data.cessation.yr$R[day+10] < Rindex.thr)) {
 
-      avail.vec <- data.cessation.yr$AVAIL[(day):(day+15)]
+      avail.vec <- data.cessation.yr$AVAIL[(day):(day+20)]
       avail.grDay <- length(which(avail.vec <= PAW.thr))
 
-      if (avail.grDay > 11) {
+      if (avail.grDay > 14) {
 
         cessation <- day+1
 
@@ -359,8 +363,8 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end, cessaWind.end, soi
                                cessation.Year = cessation.Year,
                                cessation.Month = cessation.Month,
                                cessation.Day = cessation.Day,
-                               JD = as.numeric(substr(cessation.index, 6, 8)),
-                               YYYYDOY = cessation.index)
+                               cessation.JD = as.numeric(substr(cessation.index, 6, 8)),
+                               cessation.Value = cessation + (Onset.dF$onset.Value[yr] + 30))
 
    Cessation.dF[yr,] <- cessation.yr.dF
 
@@ -392,6 +396,8 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end, cessaWind.end, soi
 # *******************************************************************************************************************************
   } # for yr
 
+
+ # Cessation.dF$cessation.Value <- Cessation.dF$cessation.Value + Onset.dF$onset.Value + 30
 
  seasCal.lst <- list(Onset.dF, Cessation.dF, Duration.dF )
 

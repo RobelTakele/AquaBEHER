@@ -230,8 +230,8 @@ str(seasCal.lst)
 # plotting year to year variation of onset cessation and seasonal duration
 
 seasCal.dF <- data.frame(Year = seasCal.lst[[1]][,c("Year")],
-                         Onset = seasCal.lst[[1]][,c("JD")],
-                         Cessation = seasCal.lst[[2]][,c("JD")],
+                         Onset = seasCal.lst[[1]][,c("onset.JD")],
+                         Cessation = seasCal.lst[[2]][,c("cessation.JD")],
                          Duration = seasCal.lst[[3]][,c("Duration")])
 
  ggplot(data = seasCal.dF) +

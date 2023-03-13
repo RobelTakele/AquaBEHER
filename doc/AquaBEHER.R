@@ -37,7 +37,7 @@ Eto.HS <- calcEto(AgroClimateData, method = "HS")
 
 # Now compute Eto using Penman-Monteith formulation for hypothetical grass (short crop):
 
-Eto.PM <- calcEto(AgroClimateData, method = "PM", crop = "short")
+Eto.PM <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
 plot(Eto.PM$ET.Daily[1:1000], ty="l", xlab="Days since 1996", ylab="Eto (mm/day)", col="black", lwd = 1, lty = 2)
 lines(Eto.HS$ET.Daily[1:1000], col="blue", lwd = 2, lty = 1)
@@ -48,6 +48,8 @@ lines(Eto.HS$ET.Daily[1:1000], col="blue", lwd = 2, lty = 1)
 
 
 ## -----------------------------------------------------------------------------
+
+PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
 # Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
  AgroClimateData$Eto <- PET$ET.Daily

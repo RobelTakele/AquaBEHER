@@ -43,7 +43,7 @@ root zone of a homogeneous grass canopy growing on a well-drained and homogeneou
 data(AgroClimateData)
 
 # Estimate daily PET:
-PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
+PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
 # Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 AgroClimateData$Eto <- PET$ET.Daily

@@ -64,7 +64,7 @@ head(AgroClimateData)
 
 ```{r watBal.daily}
 
-Eto.daily <- calcEto(AgroClimateData, method = "PM", crop = "short")
+Eto.daily <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 AgroClimateData$Eto <- Eto.daily$ET.Daily
 soilWHC = 100
 watBal <- calcWatBal(AgroClimateData, soilWHC)

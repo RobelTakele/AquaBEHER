@@ -46,15 +46,6 @@ balance:
 
 ``` r
 library(AquaBEHER)
-#> Loading required package: soiltexture
-#> Loading required package: lubridate
-#> 
-#> Attaching package: 'lubridate'
-#> The following objects are masked from 'package:base':
-#> 
-#>     date, intersect, setdiff, union
-#> Loading required package: raster
-#> Loading required package: sp
 library(ggplot2)
 ## basic example code
 ```
@@ -66,25 +57,25 @@ You can include R chunks like so:
 data(AgroClimateData)
 
 head(AgroClimateData)
-#>       Source      Lat     Lon  Elev Year Month Day  Rain  Tmax  Tmin    Rs
-#> 1 NASAPOWER  -16.2163 39.9145 25.19 1996     1   1  4.27 32.76 24.39 27.03
-#> 2 NASAPOWER  -16.2163 39.9145 25.19 1996     1   2 26.59 30.76 24.85 25.20
-#> 3 NASAPOWER  -16.2163 39.9145 25.19 1996     1   3  9.63 31.33 24.66 24.61
-#> 4 NASAPOWER  -16.2163 39.9145 25.19 1996     1   4  4.50 31.37 24.36 22.64
-#> 5 NASAPOWER  -16.2163 39.9145 25.19 1996     1   5  2.85 29.88 23.66 23.92
-#> 6 NASAPOWER  -16.2163 39.9145 25.19 1996     1   6  5.88 29.81 23.16 22.64
-#>      RH  Tdew   U2
-#> 1 69.81 21.26 1.32
-#> 2 79.75 23.01 1.63
-#> 3 77.81 22.78 1.82
-#> 4 75.31 22.00 1.95
-#> 5 74.44 21.00 1.73
-#> 6 74.75 21.15 1.48
+#>       GridID       Lat     Lon     Elev      WHC Year Month Day     Rain
+#> 1 MOZ0007149 -15.09238 39.2519 392.1337 97.84914 1982     1   1 0.000000
+#> 2 MOZ0007149 -15.09238 39.2519 392.1337 97.84914 1982     1   2 0.000000
+#> 3 MOZ0007149 -15.09238 39.2519 392.1337 97.84914 1982     1   3 0.000000
+#> 4 MOZ0007149 -15.09238 39.2519 392.1337 97.84914 1982     1   4 1.907393
+#> 5 MOZ0007149 -15.09238 39.2519 392.1337 97.84914 1982     1   5 0.000000
+#> 6 MOZ0007149 -15.09238 39.2519 392.1337 97.84914 1982     1   6 0.000000
+#>       Tmax     Tmin       Rs     Tdew       Uz
+#> 1 32.24396 23.11500 23.86698 20.21160 4.723783
+#> 2 33.07202 23.12585 26.38375 20.48284 4.279407
+#> 3 33.49679 23.12602 25.00704 20.45689 3.622179
+#> 4 32.76818 23.60351 24.16475 20.83896 2.535047
+#> 5 32.65872 22.79294 23.44483 21.36882 1.477617
+#> 6 31.80630 22.43975 21.99277 21.29297 1.953415
 ```
 
 ``` r
 
-Eto.daily <- calcEto(AgroClimateData, method = "PM", crop = "short")
+Eto.daily <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 AgroClimateData$Eto <- Eto.daily$ET.Daily
 soilWHC = 100
 watBal <- calcWatBal(AgroClimateData, soilWHC)

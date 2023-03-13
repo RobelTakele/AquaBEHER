@@ -59,7 +59,6 @@
 #'
 #' @importFrom graphics legend par
 #' @importFrom graphics lines
-#' @importFrom soiltexture TT.points.in.classes
 #' @importFrom raster raster extract
 #' @importFrom sp coordinates CRS proj4string
 #'
@@ -68,7 +67,7 @@
 #' data(AgroClimateData)
 #'
 #' # Estimate daily PET:
-#' PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
+#' PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 #'
 #' # Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 #' AgroClimateData$Eto <- PET$ET.Daily
@@ -126,7 +125,7 @@ calcWatBal <- function(data, soilWHC) {
   DC = 0.55 #
 
   MUF = 0.1
-  WATwp = 0.1 * soilWHC
+  WATwp = 0.15 * soilWHC
   # Maximum abstraction (for run off)
   S = 25400/CN-254
   # Initial Abstraction (for run off)
@@ -136,7 +135,7 @@ calcWatBal <- function(data, soilWHC) {
 
   data$RUNOFF <- data$DRAIN <- data$TRAN <- data$AVAIL <- data$R <- NA
 
-  data$Rain[data$Rain < 1] <- 0
+  data$Rain[data$Rain < 2] <- 0
 
   for (day in 1:length(date.vec)) {
 
@@ -218,6 +217,11 @@ calcWatBal <- function(data, soilWHC) {
 
   }
 
+  data$R <- round(data$R, 3)
+  data$AVAIL <- round(data$AVAIL, 3)
+  data$TRAN <- round(data$TRAN, 3)
+  data$DRAIN <- round(data$DRAIN, 3)
+  data$RUNOFF <- round(data$RUNOFF, 3)
 
   return(data)
 

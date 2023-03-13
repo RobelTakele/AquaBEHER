@@ -20,9 +20,11 @@ Suggests:
     rmarkdown,
     prettydoc
 VignetteBuilder: knitr
-Depends: soiltexture,lubridate,raster,
+Depends:
     R (>= 3.5.0)
 Imports: 
     dplyr,
     ggplot2,
+    lubridate,
+    raster,
     sp

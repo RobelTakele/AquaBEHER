@@ -18,7 +18,9 @@ Roxygen: list(markdown = TRUE)
 Suggests: 
     knitr,
     rmarkdown,
-    prettydoc
+    prettydoc,
+    covr,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends:
     R (>= 3.5.0)
@@ -28,3 +30,6 @@ Imports:
     lubridate,
     raster,
     sp
+URL: https://github.com/RobelTakele/AquaBEHER
+BugReports: https://github.com/RobelTakele/AquaBEHER/issues
+Config/testthat/edition: 3

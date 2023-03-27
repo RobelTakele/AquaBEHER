@@ -120,18 +120,18 @@ calcWatBal <- function(data, soilWHC) {
 
   } else {
 
-    CN = 65  # *** well managed grass
+    CN <- 65  # *** well managed grass
 
   }
 
-  DC = 0.55 #
+  DC <- 0.55 #
 
-  MUF = 0.1
-  WATwp = 0.15 * soilWHC
+  MUF <- 0.1
+  WATwp <- 0.15 * soilWHC
   # Maximum abstraction (for run off)
-  S = 25400/CN-254
+  S <- 25400/CN-254
   # Initial Abstraction (for run off)
-  IA = 0.2*S
+  IA <- 0.2*S
 
   date.vec <- as.Date(paste0(data$Year, "-", data$Month, "-", data$Day))
 
@@ -139,11 +139,11 @@ calcWatBal <- function(data, soilWHC) {
 
   data$Rain[data$Rain < 2] <- 0
 
-  for (day in 1:length(date.vec)) {
+  for (day in seq_along(date.vec)) {
 
     if (day == 1) {
 
-      WAT0 = 0
+      WAT0 <- 0
 
       # Change in water before drainage (Precipitation - Runoff)
 

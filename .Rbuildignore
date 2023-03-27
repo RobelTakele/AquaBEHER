@@ -10,3 +10,6 @@
 ^pkgdown$
 ^\.github$
 
+^codecov\.yml$
+^Makefile$
+^Jenkinsfile$

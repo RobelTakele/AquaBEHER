@@ -157,7 +157,7 @@ PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
  AgroClimateData$Eto <- PET$ET.Daily
 
 # Estimate daily water balance for the soil having 100mm of WHC:
-soilWHC = 100
+soilWHC <- 100
  
 watBal<- calcWatBal(AgroClimateData, soilWHC)
 
@@ -220,10 +220,10 @@ Using the example climate data provided by the AquaBEHER package, compute the ra
 
 ```{r}
 # seasonal calndar is estimated for the onset window ranges from 01-September to 31-January having a soil with 100mm of WHC
-soilWHC = 100
-onsetWind.start = "1996-09-01"  # earliest possible start date of the onset window
-onsetWind.end = "1997-01-31"    # the latest possible date for end of the onset window
-cessaWind.end = "1997-06-30"    # the latest possible date for end of the cessation window
+soilWHC <- 100
+onsetWind.start <- "1996-09-01"  # earliest possible start date of the onset window
+onsetWind.end <- "1997-01-31"    # the latest possible date for end of the onset window
+cessaWind.end <- "1997-06-30"    # the latest possible date for end of the cessation window
 
 seasCal.lst <- calcSeasCal(watBal, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC = 100)
 

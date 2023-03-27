@@ -11,6 +11,8 @@ state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 [![Gitter
 chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/r-hub/community)
+[![Codecov test
+coverage](https://codecov.io/gh/RobelTakele/AquaBEHER/branch/master/graph/badge.svg)](https://app.codecov.io/gh/RobelTakele/AquaBEHER?branch=master)
 <!-- badges: end -->
 
 The goal of AquaBEHER is to computes and integrates daily reference

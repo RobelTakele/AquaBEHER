@@ -1,0 +1,79 @@
+---
+title: "Tests and Coverage"
+date: "`r format(Sys.time(), '%d %B, %Y %H:%M:%S')`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Tests and Coverage}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+<!--- Placeholder for tests/README.md Do Not Edit--->
+- <a href="#coverage" id="toc-coverage">Coverage</a>
+- <a href="#unit-tests" id="toc-unit-tests">Unit Tests</a>
+
+This output is created by
+[covrpage](https://github.com/yonicd/covrpage).
+
+## Coverage
+
+Coverage summary is created using the
+[covr](https://github.com/r-lib/covr) package.
+
+| Object                                | Coverage (%) |
+|:--------------------------------------|:------------:|
+| AquaBEHER                             |      0       |
+| [R/calcEto.R](https://github.com/RobelTakele/AquaBEHER/blob/master/R/calcEto.R)         |      0       |
+| [R/calcSeasCal.R](https://github.com/RobelTakele/AquaBEHER/blob/master/R/calcSeasCal.R) |      0       |
+| [R/calcWatBal.R](https://github.com/RobelTakele/AquaBEHER/blob/master/R/calcWatBal.R)   |      0       |
+
+<br>
+
+## Unit Tests
+
+Unit Test summary is created using the
+[testthat](https://github.com/r-lib/testthat) package.
+
+| file                                          |   n |  time | error | failed | skipped | warning |
+|:----------------------------------------------|----:|------:|------:|-------:|--------:|--------:|
+| [test-AquaBEHER.R](https://github.chttps://github.com/RobelTakele/AquaBEHER/blob/master/RobelTakele/AquaBEHER/blob/master/tests/testthat/test-AquaBEHER.R) |   1 | 0.002 |     0 |      0 |       0 |       0 |
+
+<details closed>
+<summary>
+Show Detailed Test Results
+</summary>
+
+| file                                             | context   | test                 | status |   n |  time |
+|:-------------------------------------------------|:----------|:---------------------|:-------|----:|------:|
+| [test-AquaBEHER.R](https://github.chttps://github.com/RobelTakele/AquaBEHER/blob/master/RobelTakele/AquaBEHER/blob/master/tests/testthat/test-AquaBEHER.R#L2) | AquaBEHER | multiplication works | PASS   |   1 | 0.002 |
+
+</details>
+<details>
+<summary>
+Session Info
+</summary>
+
+| Field    | Value                        |
+|:---------|:-----------------------------|
+| Version  | R version 4.2.3 (2023-03-15) |
+| Platform | x86_64-pc-linux-gnu (64-bit) |
+| Running  | Kali GNU/Linux Rolling       |
+| Language | en_US                        |
+| Timezone | Africa/Addis_Ababa           |
+
+| Package  | Version |
+|:---------|:--------|
+| testthat | 3.1.6   |
+| covr     | 3.6.1   |
+| covrpage | 0.2     |
+
+</details>
+<!--- Final Status : pass --->

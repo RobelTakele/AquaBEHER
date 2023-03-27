@@ -121,17 +121,17 @@
 
         # ***** universal constants *****
 
-   lambda = 2.45       # ***** latent heat of evaporation = 2.45 MJ.kg^-1 at 20 degree Celsius
-   Cp =1.013 * 10^-3   # ***** specific heat at constant pressure = MJ kg^-1 °C^-1
-   e = 0.622           # ***** ratio molecular weight of water vapour/dry air
-   lat.rad = data$Lat * (pi/180)
-   Gsc = 0.082  # ***** solar constant = 0.0820 MJ.m^-2.min^-1
+   lambda <- 2.45       # ***** latent heat of evaporation = 2.45 MJ.kg^-1 at 20 degree Celsius
+   Cp <-1.013 * 10^-3   # ***** specific heat at constant pressure = MJ kg^-1 °C^-1
+   e <- 0.622           # ***** ratio molecular weight of water vapour/dry air
+   lat.rad <- data$Lat * (pi/180)
+   Gsc <- 0.082  # ***** solar constant = 0.0820 MJ.m^-2.min^-1
     date.vec <- as.Date.character(paste0(data$Year, "-", data$Month, "-", data$Day))
     data$J <- strftime(as.POSIXlt(date.vec), "%j") # *****  julian day of the year
     Elev <- unique(data$Elev)
 
-   ts="daily"
-   message = "yes"
+   ts<-"daily"
+   message <- "yes"
 
    # ***** Check of specific data requirement
 
@@ -215,25 +215,25 @@
  } else if (method == "PT") {
 
 
-   alpha=0.23
+   alpha <- 0.23
 
 
    # ***** universal constants *****
 
-   lambda = 2.45       # ***** latent heat of evaporation = 2.45 MJ.kg^-1 at 20 degree Celsius
-   Cp =1.013 * 10^-3   # ***** specific heat at constant pressure = MJ kg^-1 °C^-1
-   e = 0.622           # ***** ratio molecular weight of water vapour/dry air
-   Sigma = 4.903e-09  # Stefan-Boltzmann constant = 4.903*10^-9 MJ.K^-4.m^-2.day^-1
-   lat.rad = data$Lat * (pi/180)
-   Gsc = 0.082  # ***** solar constant = 0.0820 MJ.m^-2.min^-1
-   G = 0  # soil heat flux negligible for daily time-step = 0 (Allen et al., 1998, page 68)
-   alphaPT = 1.26  # Priestley-Taylor coefficient
+   lambda <- 2.45       # ***** latent heat of evaporation = 2.45 MJ.kg^-1 at 20 degree Celsius
+   Cp <- 1.013 * 10^-3   # ***** specific heat at constant pressure = MJ kg^-1 °C^-1
+   e <- 0.622           # ***** ratio molecular weight of water vapour/dry air
+   Sigma <- 4.903e-09  # Stefan-Boltzmann constant = 4.903*10^-9 MJ.K^-4.m^-2.day^-1
+   lat.rad <- data$Lat * (pi/180)
+   Gsc <- 0.082  # ***** solar constant = 0.0820 MJ.m^-2.min^-1
+   G <- 0  # soil heat flux negligible for daily time-step = 0 (Allen et al., 1998, page 68)
+   alphaPT <- 1.26  # Priestley-Taylor coefficient
    date.vec <- as.Date.character(paste0(data$Year, "-", data$Month, "-", data$Day))
    data$J <- strftime(as.POSIXlt(date.vec), "%j") # *****  julian day of the year
    Elev <- unique(data$Elev)
 
-   ts="daily"
-   message = "yes"
+   ts <- "daily"
+   message <- "yes"
 
 
 
@@ -420,19 +420,19 @@
 
    # ***** universal constants *****
 
-   lambda = 2.45       # ***** latent heat of evaporation = 2.45 MJ.kg^-1 at 20 degree Celsius
-   Cp =1.013 * 10^-3   # ***** specific heat at constant pressure = MJ kg^-1 °C^-1
-   e = 0.622           # ***** ratio molecular weight of water vapour/dry air
-   Sigma = 4.903e-09  # Stefan-Boltzmann constant = 4.903*10^-9 MJ.K^-4.m^-2.day^-1
-   lat.rad = data$Lat * (pi/180)
-   Gsc = 0.082  # ***** solar constant = 0.0820 MJ.m^-2.min^-1
-   G = 0  # soil heat flux negligible for daily time-step = 0 (Allen et al., 1998, page 68)
+   lambda <- 2.45       # ***** latent heat of evaporation = 2.45 MJ.kg^-1 at 20 degree Celsius
+   Cp <- 1.013 * 10^-3   # ***** specific heat at constant pressure = MJ kg^-1 °C^-1
+   e <- 0.622           # ***** ratio molecular weight of water vapour/dry air
+   Sigma <- 4.903e-09  # Stefan-Boltzmann constant = 4.903*10^-9 MJ.K^-4.m^-2.day^-1
+   lat.rad <- data$Lat * (pi/180)
+   Gsc <- 0.082  # ***** solar constant = 0.0820 MJ.m^-2.min^-1
+   G <- 0  # soil heat flux negligible for daily time-step = 0 (Allen et al., 1998, page 68)
    date.vec <- as.Date.character(paste0(data$Year, "-", data$Month, "-", data$Day))
    data$J <- strftime(as.POSIXlt(date.vec), "%j") # *****  julian day of the year
    Elev <- unique(data$Elev)
 
-   ts="daily"
-   message = "yes"
+   ts <- "daily"
+   message <- "yes"
 
    # ***** Check of specific data requirement
 

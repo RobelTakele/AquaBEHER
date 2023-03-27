@@ -30,6 +30,7 @@ Imports:
     lubridate,
     raster,
     sp
-URL: https://github.com/RobelTakele/AquaBEHER
+URL: https://github.com/RobelTakele/AquaBEHER,
+    https://robeltakele.github.io/AquaBEHER/
 BugReports: https://github.com/RobelTakele/AquaBEHER/issues
 Config/testthat/edition: 3

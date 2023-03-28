@@ -28,7 +28,7 @@ A data frame containing daily observations of climate parameters:
 \verb{    }\emph{\strong{\code{Tmin:}} daily minimum temperature at 2-m height in (°C).}
 }
 \source{
-INAM - Instituto Nacional de Meteorologia, Mozambique \url{https://www.inam.gov.mz/}
+INAM - Instituto Nacional de Meteorologia, Mozambique
 }
 \usage{
 data(climateData)

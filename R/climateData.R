@@ -48,7 +48,7 @@
 #'
 #'   \verb{    }\emph{\strong{\code{Tmin:}} daily minimum temperature at 2-m height in (°C).}
 #'
-#' @source INAM - Instituto Nacional de Meteorologia, Mozambique \url{https://www.inam.gov.mz/}
+#' @source INAM - Instituto Nacional de Meteorologia, Mozambique
 #'
 #' @keywords datasets
 #'

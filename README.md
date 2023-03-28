@@ -9,10 +9,9 @@
 [![Project Status: Active – The project has reached a stable, usable
 state and is being actively
 developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![pkgdown](https://github.com/RobelTakele/AquaBEHER/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/RobelTakele/AquaBEHER/actions/workflows/pkgdown.yaml)
 [![Gitter
 chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/r-hub/community)
-[![Codecov test
-coverage](https://codecov.io/gh/RobelTakele/AquaBEHER/branch/master/graph/badge.svg)](https://app.codecov.io/gh/RobelTakele/AquaBEHER?branch=master)
 <!-- badges: end -->
 
 The goal of AquaBEHER is to computes and integrates daily reference

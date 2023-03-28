@@ -13,3 +13,5 @@
 ^codecov\.yml$
 ^Makefile$
 ^Jenkinsfile$
+^revdep$
+^cran-comments\.md$

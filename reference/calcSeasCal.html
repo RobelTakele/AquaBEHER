@@ -239,7 +239,7 @@ Rome, Italy</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># \donttest{</span></span></span>
 <span class="r-in"><span><span class="co"># load example data:</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">AgroClimateData</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
@@ -260,8 +260,28 @@ Rome, Italy</p>
 <span class="r-in"><span><span class="va">seasCal.lst</span> <span class="op">&lt;-</span> <span class="fu">calcSeasCal</span><span class="op">(</span><span class="va">watBal</span>, <span class="va">onsetWind.start</span>, <span class="va">onsetWind.end</span>, <span class="va">cessaWind.end</span>, soilWHC <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">seasCal.lst</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List of 3</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ :'data.frame':	40 obs. of  6 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ Year       : num [1:40] 1982 1983 1984 1985 1986 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ onset.Year : num [1:40] 1982 1983 1984 1985 1986 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ onset.Month: num [1:40] 11 12 11 11 11 1 12 11 12 12 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ onset.Day  : num [1:40] 11 11 9 19 20 10 18 13 26 3 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ onset.JD   : num [1:40] 315 345 314 323 324 10 353 317 360 337 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ onset.Value: int [1:40] 72 102 70 80 81 132 109 74 117 94 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ :'data.frame':	40 obs. of  6 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ Year           : num [1:40] 1982 1983 1984 1985 1986 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cessation.Year : num [1:40] 1983 1984 1985 1986 1987 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cessation.Month: num [1:40] 5 4 5 5 4 4 5 3 5 5 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cessation.Day  : num [1:40] 12 18 9 10 22 21 6 15 6 21 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cessation.JD   : num [1:40] 132 109 129 130 112 112 126 74 126 142 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cessation.Value: num [1:40] 255 232 252 253 235 235 249 197 249 265 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ :'data.frame':	40 obs. of  4 variables:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ Year             : num [1:40] 1982 1983 1984 1985 1986 ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ onset.YYYYDOY    : chr [1:40] "1982-315" "1983-345" "1984-314" "1985-323" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cessation.YYYYDOY: chr [1:40] "1983-132" "1984-109" "1985-129" "1986-130" ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ Duration         : int [1:40] 183 130 182 173 154 103 140 123 132 171 ...</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -269,7 +289,7 @@ Rome, Italy</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Robel Takele.</p>
+  <p></p><p>Developed by Robel Takele, Matteo Dell’Acqua.</p>
 </div>
 
 <div class="pkgdown-footer-right">

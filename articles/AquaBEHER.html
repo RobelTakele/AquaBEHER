@@ -48,12 +48,6 @@
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Function Reference</a>
 </li>
-<li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/tests_and_coverage.html">Tests and Coverage</a>
-  </div>
-</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -82,7 +76,7 @@
                         <h4 data-toc-skip class="author">Robel Takele
 and Matteo Dell’Acqua</h4>
             
-            <h4 data-toc-skip class="date">2023-03-28</h4>
+            <h4 data-toc-skip class="date">2023-03-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/RobelTakele/AquaBEHER/blob/HEAD/vignettes/AquaBEHER.Rmd" class="external-link"><code>vignettes/AquaBEHER.Rmd</code></a></small>
       <div class="d-none name"><code>AquaBEHER.Rmd</code></div>
@@ -285,7 +279,7 @@ values of Rain, Eto and soil water holding capacity.</p>
 <span><span class="co"># Estimate daily water balance for the soil having 100mm of WHC:</span></span>
 <span><span class="va">soilWHC</span> <span class="op">&lt;-</span> <span class="fl">100</span></span>
 <span> </span>
-<span><span class="va">watBal</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcWatBal.html">calcWatBal</a></span><span class="op">(</span><span class="va">AgroClimateData</span>, <span class="va">soilWHC</span><span class="op">)</span></span>
+<span><span class="va">watBal</span><span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcWatBal.html">calcWatBal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">AgroClimateData</span>, <span class="va">soilWHC</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">watBal</span> <span class="op">)</span></span>
 <span><span class="co">#&gt; 'data.frame':    14975 obs. of  20 variables:</span></span>

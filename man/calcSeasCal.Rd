@@ -7,7 +7,8 @@
 calcSeasCal(data, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC)
 }
 \arguments{
-\item{data}{an R object of dataframe as returned by  \code{\link{calcWatBal}} or a dataframe having similar parameters.}
+\item{data}{an R object of dataframe as returned by \code{\link{calcWatBal}}
+or a dataframe having similar parameters.}
 
 \item{onsetWind.start}{Earliest possible start date of the onset window.}
 
@@ -18,7 +19,7 @@ calcSeasCal(data, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC)
 \item{soilWHC}{Water holding capacity of the soil at root zone depth in (mm).}
 }
 \value{
-The function generates list of data frames  with columns of variables:
+The function generates list of dataframes  with columns of variables:
 
 \strong{\code{Onset.dF:}} a data frame with columns of onset variables:
 
@@ -40,9 +41,11 @@ The function generates list of data frames  with columns of variables:
 
 \verb{    } \emph{Year:} year of the season under investigation, "YYYY".
 
-\verb{    } \emph{cessation.Year:} year of the season under investigation, "YYYY".
+\verb{    } \emph{cessation.Year:} year of the season under investigation,
+"YYYY".
 
-\verb{    } \emph{cessation.Month:} month of the cessation of the season in "MM".
+\verb{    } \emph{cessation.Month:} month of the cessation of the season in
+"MM".
 
 \verb{    } \emph{cessation.Day:} day of the cessation of the season in "DD".
 
@@ -56,38 +59,51 @@ The function generates list of data frames  with columns of variables:
 
 \verb{    } \emph{onset.YYYYDOY:} onset date of the season in "YYYY-DOY".
 
-\verb{    } \emph{cessation.YYYYDOY:} cessation date of the season in "YYYY-DOY".
+\verb{    } \emph{cessation.YYYYDOY:} cessation date of the season in
+"YYYY-DOY".
 
 \verb{    } \emph{Duration:} duration of the season in "days".
 }
 \description{
-This function estimates the rainy season calendar, i.e onset date, cessation date and duration of the rainy season
-based on Agroclimatic approach. The agroclimatic approach defines the onset of the rainy season as the optimal date that
-ensures sufficient soil moisture during planting and early growing periods to avoid crop failure after sowing and requires
-information on rainfall, reference evapotranspiration and accounting of the daily soil water balance parameters.
+This function estimates the rainy season calendar, i.e onset
+date, cessation date and duration of the rainy season based on Agroclimatic
+approach. The agroclimatic approach defines the onset of the rainy season as
+the optimal date that ensures sufficient soil moisture during planting and
+early growing periods to avoid crop failure after sowing and requires
+information on rainfall, reference evapotranspiration and accounting of the
+daily soil water balance parameters.
 }
 \details{
-As per agroclimatic approach, a normal rainy season (growing season) is defined as one when there is an excess of precipitation
-over potential evapotranspiration (PET). Such a period met the evapotransiration demands of crops and recharge the moisture
-of the soil profile (FAO 1977; 1978; 1986). Thus, the rainy season calendar defined accordingly:
+As per agroclimatic approach, a normal rainy season (growing season) is
+defined as one when there is an excess of precipitation over potential
+evapotranspiration (PET). Such a period met the evapotransiration demands of
+crops and recharge the moisture of the soil profile (FAO 1977; 1978; 1986).
+Thus, the rainy season calendar defined accordingly:
 
 \strong{Onset}
 
-The \emph{onset} of the rainy season will start on the first day after \emph{onsetWind.start}, when the actual-to-potential
-evapotranspiration ratio is greater than 0.5 for 7 consecutive days, followed by a 20-day period in which plant available
-water remains above wilting over the root zone of the soil layer.
+The \emph{onset} of the rainy season will start on the first day after
+\emph{onsetWind.start}, when the actual-to-potential evapotranspiration ratio
+is greater than 0.5 for 7 consecutive days, followed by a 20-day period in
+which plant available water remains above wilting over the root zone of the
+soil layer.
 
 \strong{Cesation}
 
-The rainy season will end, \emph{cessation}, on the first day after \emph{onsetWind.end}, when the actual-to-potential
-evapotranspiration ratio is less than 0.5 for 7 consecutive days, followed by 12 consecutive non-growing days in which plant
-available water remains below wilting over the root zone of the soil layer.
+The rainy season will end, \emph{cessation}, on the first day after
+\emph{onsetWind.end}, when the actual-to-potential evapotranspiration ratio
+is less than 0.5 for 7 consecutive days, followed by 12 consecutive
+non-growing days in which plant available water remains below wilting over
+the root zone of the soil layer.
 
 \strong{Duration}
 
-The \emph{duration} of the rainy season is the total number of days from onset to cessation of the season.
+The \emph{duration} of the rainy season is the total number of days from
+onset to cessation of the season.
 }
 \examples{
+
+\dontrun{
 # load example data:
 data(AgroClimateData)
 
@@ -110,15 +126,17 @@ seasCal.lst <- calcSeasCal(watBal, onsetWind.start, onsetWind.end, cessaWind.end
 str(seasCal.lst)
 
 }
+}
 \references{
-FAO, 1977. Crop water requirements. FAO Irrigation and Drainage Paper No. 24, by Doorenbos J and W.O. Pruitt. FAO,
-Rome, Italy.
+FAO, 1977. Crop water requirements. FAO Irrigation and Drainage
+Paper No. 24, by Doorenbos J and W.O. Pruitt. FAO, Rome, Italy.
 
-FAO 1978. Forestry for Local Community Development Food and Agriculture Organization of the United Nation (FAO), FAO Forestry
-paper, No 7, Rome.
+FAO 1978. Forestry for Local Community Development Food and Agriculture
+Organization of the United Nation (FAO), FAO Forestry paper, No 7, Rome.
 
-FAO, 1986. Early Agrometeorological crop yield forecasting. FAO Plant Production and Protection paper No. 73, by M. Frère and
-G.F. Popov. FAO, Rome, Italy
+FAO, 1986. Early Agrometeorological crop yield forecasting. FAO Plant
+Production and Protection paper No. 73, by M. Frère and G.F. Popov. FAO,
+Rome, Italy
 }
 \seealso{
 \code{\link{calcEto}, \link{calcWatBal}}

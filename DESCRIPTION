@@ -5,10 +5,10 @@ Version: 0.1.0
 Author: Robel Takele <takelerobel@gmail.com>
         Matteo Dell'Acqua <matteo.dellacqua@santannapisa.it> 
 Maintainer: Robel Takele <takelerobel@gmail.com>
-Description: This R package computes and integrates daily reference evapotranspiration (Eto) 
-    into a water balance model. The AquaBEHER package can estimate daily parameters of
+Description: This R package computes and integrates daily reference 'evapotranspiration' ('Eto') 
+    into a water balance model. The 'AquaBEHER' package can estimate daily parameters of
     crop and soil water balances parameters for agricultural crops. The package can also 
-    estimate rainy season calendar (Onset, Cessation and Duration) based on agroclimatic
+    estimate rainy season calendar (Onset, Cessation and Duration) based on 'agroclimatic'
     approach. 
 License: GPL (>= 3)
 Encoding: UTF-8

@@ -9,8 +9,6 @@
 ^docs$
 ^pkgdown$
 ^\.github$
-
-^codecov\.yml$
 ^Makefile$
 ^Jenkinsfile$
 ^revdep$

@@ -22,11 +22,6 @@ navbar:
     intro:
       text: User Guide
       href: articles/AquaBEHER.html
-    articles:
-      text: Articles
-      menu:
-      - text: Tests and Coverage
-        href: articles/tests_and_coverage.html
 reference:
 - title: All functions
   contents:
@@ -36,10 +31,6 @@ reference:
   - '`calcWatBal`'
   - '`climateData`'
   - '`rcn`'
-articles:
-- title: All vignettes
-  desc: ~
-  contents:
-  - '`AquaBEHER`'
-  - '`tests_and_coverage`'
+
+
 

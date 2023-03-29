@@ -100,17 +100,20 @@ lines(watBal$Rain, col="blue", lwd = 1)
 
 <img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
 
-The **Center of Plant Sciences Group** is a geographically and
-culturally diverse research team working on climate and crop genetics at
-**Scuola Superiore Sant’Anna**, Pisa, Italy.
+The Genetics Group at the **Center of Plant Sciences** is a
+geographically and culturally diverse research team working on
+data-drivem agicultural innovation combining crop genetics, climate, and
+participatory approaches. We are based at **Scuola Superiore
+Sant’Anna**, Pisa, Italy.
 
 You can contact us sending an email to Matteo Dell’Acqua
 (<a href="mailto:m.dellacqua@santannapisa.it"
 class="uri">mailto:m.dellacqua@santannapisa.it</a>) or Mario Enrico Pè
 (<a href="mailto:m.pe@santannapisa.it"
-class="uri">mailto:m.pe@santannapisa.it</a>). You can also visit the
-crop genetics (<http://www.capitalisegenetics.santannapisa.it/>) web
-page.
+class="uri">mailto:m.pe@santannapisa.it</a>). You can find out more
+about us visiting the group web page
+(<http://www.capitalisegenetics.santannapisa.it/>) and following us on
+Twitter [@GenLab_SSA](https://twitter.com/genlab_ssa?lang=en)
 
 We are committed to the [free
 software](https://www.fsf.org/about/what-is-free-software) and

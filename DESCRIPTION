@@ -10,7 +10,7 @@ Description: Computes and integrates daily reference 'evapotranspiration' ('Eto'
              approach, for further information please refer to Allen 'et al.' (1998, ISBN:92-5-104219-5),
              Allen (2005, ISBN:9780784408056), 'Doorenbos' and Pruitt (1975, ISBN:9251002797)
              'Guo et al.' (2016) <doi:10.1016/j.envsoft.2015.12.019>, Hargreaves and 'Samani' (1985) 
-             <doi:10.13031/2013.26773>, Priestley and Taylor (1972) <https://journals.ametsoc.org/view/journals/mwre/100/2/1520-0493_1972_100_0081_otaosh_2_3_co_2.xml>.
+             <doi:10.13031/2013.26773>, Priestley and Taylor (1972) <https://journals.ametsoc.org/downloadpdf/journals/mwre/100/2/1520-0493_1972_100_0081_otaosh_2_3_co_2.pdf>.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

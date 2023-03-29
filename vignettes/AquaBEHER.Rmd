@@ -258,8 +258,6 @@ Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop Evapotranspiration: Guideli
 Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water requirements, Irrigation and Drainage Paper 24, Food and Agriculture Organization of the United Nations, Rome, 179 p.
 
 Hargreaves, G.H. and Samani, Z.A. (1985) Reference Crop Evapotranspiration from Temperature. Applied Engineering in Agriculture, 1, 96-99.
-http://dx.doi.org/10.13031/2013.26773 
-
 
 $$\\[0.2in]$$
 
@@ -268,8 +266,6 @@ $$\\[0.2in]$$
 
 
 
-[![projects](https://img.shields.io/badge/projects-eu-003399)](profile/projects.md#International) 
-
 The **Center of Plant Sciences Group** is a geographically and culturally diverse research team working on climate and crop genetics 
 at **Scuola Superiore Sant’Anna**, Pisa, Italy. 
 
@@ -277,6 +273,6 @@ You can contact us sending an email to Matteo Dell'Acqua (mailto:m.dellacqua@san
 You can also visit the crop genetics (http://www.capitalisegenetics.santannapisa.it/) web page.
 
 We are committed to the 
-[free software](https://www.fsf.org/about/what-is-free-software) and 
+[free software](https://www.fsf.org/about/what-is-free-software/) and 
 [FAIR](https://www.go-fair.org/fair-principles/) principles.
 This set of repositories collects our latest developments and provide reusable code.

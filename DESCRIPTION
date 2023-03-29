@@ -1,15 +1,16 @@
 Package: AquaBEHER
-Type: Package
 Title: Estimation of Rainy Season Calendar and Soil Water Balance for Agriculture
 Version: 0.1.0
-Author: Robel Takele <takelerobel@gmail.com>
-        Matteo Dell'Acqua <matteo.dellacqua@santannapisa.it> 
-Maintainer: Robel Takele <takelerobel@gmail.com>
-Description: This R package computes and integrates daily reference 'evapotranspiration' ('Eto') 
-    into a water balance model. The 'AquaBEHER' package can estimate daily parameters of
-    crop and soil water balances parameters for agricultural crops. The package can also 
-    estimate rainy season calendar (Onset, Cessation and Duration) based on 'agroclimatic'
-    approach. 
+Authors@R: c(person("Robel", "Takele", role = c("aut", "cre"), email = "takelerobel@gmail.com", 
+            comment = c(ORCID = "0000-0003-0151-2537")),
+            person("Matteo", "Dell'Acqua", role = c("aut", "ctb"), email = "matteo.dellacqua@santannapisa.it",
+            comment = c(ORCID = "0000-0003-0151-2537")))
+Description: Computes and integrates daily reference 'evapotranspiration' ('Eto') into a water balance model, 
+             to estimate the calendar of wet-season (Onset, Cessation and Duration) based on 'agroclimatic' 
+             approach, for further information please refer to Allen 'et al.' (1998, ISBN:92-5-104219-5),
+             Allen (2005, ISBN:9780784408056), 'Doorenbos' and Pruitt (1975, ISBN:9251002797)
+             'Guo et al.' (2016) <doi:10.1016/j.envsoft.2015.12.019>, Hargreaves and 'Samani' (1985) 
+             <doi:10.13031/2013.26773>, Priestley and Taylor (1972) <https://journals.ametsoc.org/view/journals/mwre/100/2/1520-0493_1972_100_0081_otaosh_2_3_co_2.xml>.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -19,8 +20,6 @@ Suggests:
     knitr,
     rmarkdown,
     prettydoc,
-    covr,
-    testthat (>= 3.0.0)
 VignetteBuilder: knitr
 Depends:
     R (>= 3.5.0)
@@ -33,4 +32,4 @@ Imports:
 URL: https://github.com/RobelTakele/AquaBEHER,
     https://robeltakele.github.io/AquaBEHER/
 BugReports: https://github.com/RobelTakele/AquaBEHER/issues
-Config/testthat/edition: 3
+

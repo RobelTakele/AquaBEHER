@@ -103,7 +103,7 @@ onset to cessation of the season.
 }
 \examples{
 
-\dontrun{
+\donttest{
 # load example data:
 data(AgroClimateData)
 

@@ -126,7 +126,7 @@
 #'
 #' @examples
 #'
-#' \dontrun{
+#' \donttest{
 #' # load example data:
 #' data(AgroClimateData)
 #'

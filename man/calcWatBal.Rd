@@ -43,7 +43,7 @@ grass canopy growing on a well-drained and homogeneous soil.
 }
 \examples{
 
-\dontrun{
+\donttest{
 # load example data:
 data(AgroClimateData)
 

@@ -136,17 +136,6 @@
 #' # Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 #' AgroClimateData$Eto <- PET$ET.Daily
 #'
-#' # Estimate daily water balance for the soil having 100mm of WHC:
-#' watBal <- calcWatBal(AgroClimateData, soilWHC = 100)
-#'
-#' # estimate the rainy season calandar (Onset, Cessation and Duration):
-#' onsetWind.start = "1996-09-01"  # earliest possible start data of the onset window
-#' onsetWind.end = "1997-01-31"   # the late possible date for end of the onset window
-#' cessaWind.end = "1997-06-30"   # the late possible date for end of the cessation window
-#'
-#' seasCal.lst <- calcSeasCal(watBal, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC = 100)
-#'
-#' str(seasCal.lst)
 #'
 #' }
 #' @export
@@ -227,7 +216,7 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
   year.vec <- as.numeric(sort(unique(data$Year)))
 
   Rindex.thr = 0.5
-  PAW.thr = min(max((0.25 * soilWHC), 15), 30)
+  PAW.thr = min(max((0.25 * soilWHC), 10), 30)
 #  data$Rain[data$Rain < 1] <- 0
 
  if (lubridate::as_date(onsetWind.start) < lubridate::as_date(onsetWind.end) |
@@ -301,17 +290,12 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
        (data.onset.yr$R[day+2] >= Rindex.thr) &
        (data.onset.yr$R[day+3] >= Rindex.thr) &
        (data.onset.yr$R[day+4] >= Rindex.thr) &
-       (data.onset.yr$R[day+5] >= Rindex.thr) &
-       (data.onset.yr$R[day+6] >= Rindex.thr) &
-       (data.onset.yr$R[day+7] >= Rindex.thr) &
-       (data.onset.yr$R[day+8] >= Rindex.thr) &
-       (data.onset.yr$R[day+9] >= Rindex.thr) & (
-         data.onset.yr$R[day+10] >= Rindex.thr)) {
+       (data.onset.yr$R[day+5] >= Rindex.thr)) {
 
          avail.vec <- data.onset.yr$AVAIL[day:(day+20)]
          avail.grDay <- length(which(avail.vec  > PAW.thr))
 
-         if (avail.grDay > 15) {
+         if (avail.grDay > 12) {
 
            onset <- day
 
@@ -379,17 +363,12 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
         (data.cessation.yr$R[day+2] < Rindex.thr) &
         (data.cessation.yr$R[day+3] < Rindex.thr) &
         (data.cessation.yr$R[day+4] < Rindex.thr) &
-        (data.cessation.yr$R[day+5] < Rindex.thr) &
-        (data.cessation.yr$R[day+6] < Rindex.thr) &
-        (data.cessation.yr$R[day+7] < Rindex.thr) &
-        (data.cessation.yr$R[day+8] < Rindex.thr) &
-        (data.cessation.yr$R[day+9] < Rindex.thr)&
-        (data.cessation.yr$R[day+10] < Rindex.thr)) {
+        (data.cessation.yr$R[day+5] < Rindex.thr)) {
 
       avail.vec <- data.cessation.yr$AVAIL[(day):(day+20)]
       avail.grDay <- length(which(avail.vec <= (PAW.thr+10)))
 
-      if (avail.grDay > 12) {
+      if (avail.grDay > 15) {
 
         cessation <- day+1
 

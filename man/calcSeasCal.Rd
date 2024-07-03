@@ -113,17 +113,6 @@ PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 # Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 AgroClimateData$Eto <- PET$ET.Daily
 
-# Estimate daily water balance for the soil having 100mm of WHC:
-watBal <- calcWatBal(AgroClimateData, soilWHC = 100)
-
-# estimate the rainy season calandar (Onset, Cessation and Duration):
-onsetWind.start = "1996-09-01"  # earliest possible start data of the onset window
-onsetWind.end = "1997-01-31"   # the late possible date for end of the onset window
-cessaWind.end = "1997-06-30"   # the late possible date for end of the cessation window
-
-seasCal.lst <- calcSeasCal(watBal, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC = 100)
-
-str(seasCal.lst)
 
 }
 }

@@ -47,31 +47,7 @@ grass canopy growing on a well-drained and homogeneous soil.
 # load example data:
 data(AgroClimateData)
 
-# Estimate daily PET:
-PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
-# Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
-AgroClimateData$Eto <- PET$ET.Daily
-
-# Estimate daily water balance for the soil having 100mm of WHC:
-watBal<- calcWatBal(AgroClimateData, soilWHC = 100)
-
-# Visualizing water balance parameters for 2019/20 season
-watBal.19T20 <- watBal[watBal$Year \%in\% c(2019, 2020),]
-date.vec <- as.Date.character(paste0(watBal.19T20$Year, "-",
-                                     watBal.19T20$Month, "-",
-                                     watBal.19T20$Day))
-
-plot(y = watBal.19T20$AVAIL, x = date.vec, ty="l", col="black", xlab="",
-ylab=" Water (mm)",
-       main="Daily Water Balance Parameters", lwd = 1, lty = 2)
- lines(y = watBal.19T20$Eto, x = date.vec, col="red", lwd = 3, lty = 1)
- lines(y = watBal.19T20$Rain, x = date.vec, col="blue", lwd = 1, lty = 1)
-
-  legend("bottomright",c("Rain","Eto","Available Moisture"),
-        horiz=FALSE, bty='n', cex=1.2,lty=c(1,1,2),lwd=c(1,3,1),
-        inset=c(0,0.7),
-        xpd=TRUE, col=c("blue","red","black"))
 }
 }
 \references{

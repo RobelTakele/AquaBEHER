@@ -1,29 +1,29 @@
 Package: AquaBEHER
 Title: Estimation of Rainy Season Calendar and Soil Water Balance for Agriculture
 Version: 0.1.0
-Authors@R: c(person("Robel", "Takele", role = c("aut", "cre"), email = "takelerobel@gmail.com", 
-            comment = c(ORCID = "0000-0003-0151-2537")),
-            person("Matteo", "Dell'Acqua", role = c("aut", "ctb"), email = "matteo.dellacqua@santannapisa.it",
-            comment = c(ORCID = "0000-0003-0151-2537")))
-Description: Computes and integrates daily reference 'evapotranspiration' ('Eto') into a water balance model, 
-             to estimate the calendar of wet-season (Onset, Cessation and Duration) based on 'agroclimatic' 
-             approach, for further information please refer to Allen 'et al.' (1998, ISBN:92-5-104219-5),
-             Allen (2005, ISBN:9780784408056), 'Doorenbos' and Pruitt (1975, ISBN:9251002797)
-             'Guo et al.' (2016) <doi:10.1016/j.envsoft.2015.12.019>, Hargreaves and 'Samani' (1985) 
+Authors@R: c(person("Robel", "Takele", role = c("aut", "cre"), email = "takelerobel@gmail.com",
+             comment = c(ORCID = "0000-0003-0151-2537")),
+             person("Matteo", "Dell'Acqua", role = c("aut", "ctb"), email = "matteo.dellacqua@santannapisa.it",
+             comment = c(ORCID = "0000-0003-0151-2537")))
+Description: Computes and integrates daily reference 'evapotranspiration' ('Eto') into a water balance model,
+             to estimate the calendar of wet-season (Onset, Cessation, and Duration) based on 'agroclimatic'
+             approach. For further information, please refer to Allen et al. (1998, ISBN:92-5-104219-5),
+             Allen (2005, ISBN:9780784408056), Doorenbos and Pruitt (1975, ISBN:9251002797)
+             Guo et al. (2016) <doi:10.1016/j.envsoft.2015.12.019>, Hargreaves and Samani (1985)
              <doi:10.13031/2013.26773>, Priestley and Taylor (1972) <https://journals.ametsoc.org/downloadpdf/journals/mwre/100/2/1520-0493_1972_100_0081_otaosh_2_3_co_2.pdf>.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Roxygen: list(markdown = TRUE)
-Suggests: 
+Suggests:
     knitr,
     rmarkdown,
-    prettydoc,
+    prettydoc
 VignetteBuilder: knitr
 Depends:
     R (>= 3.5.0)
-Imports: 
+Imports:
     dplyr,
     ggplot2,
     lubridate,
@@ -32,4 +32,3 @@ Imports:
 URL: https://github.com/RobelTakele/AquaBEHER,
     https://robeltakele.github.io/AquaBEHER/
 BugReports: https://github.com/RobelTakele/AquaBEHER/issues
-

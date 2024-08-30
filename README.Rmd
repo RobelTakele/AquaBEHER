@@ -1,0 +1,104 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# AquaBEHER
+
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![pkgdown](https://github.com/RobelTakele/AquaBEHER/actions/workflows/pkgdown.yaml/badge.svg)](https://github.com/RobelTakele/AquaBEHER/actions/workflows/pkgdown.yaml)
+<!-- badges: end -->
+
+ The goal of AquaBEHER is to computes and integrates daily reference evapotranspiration (Eto) into FAO56 water balance model. 
+ The AquaBEHER package can estimate daily parameters of crop and soil water balances parameters for agricultural crops. The package can also 
+    estimate rainy season calandar (Onset, Cessation and Duration) based on agroclimatic approach. 
+
+Specifically, the package can perform the following functions:
+
++   Estimation of daily evapotranspiration
++   Estimation of daily soil water balance
++   Estimation of rainy season calandar:
+    +   Onset of the rainy season
+    +   Cessation of the rainy season
+    +   Duration of the rainy season
+
+## Installation
+
+You can install the development version of AquaBEHER from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("RobelTakele/AquaBEHER")
+```
+
+## Example
+
+This is a basic example which shows you how to estimate daily water balance:
+
+```{r example}
+library(AquaBEHER)
+library(ggplot2)
+## basic example code
+```
+
+What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+
+```{r climateData}
+data(AgroClimateData)
+
+head(AgroClimateData)
+ 
+```
+
+```{r watBal.daily}
+
+Eto.daily <- calcEto(AgroClimateData, method = "PM", Zh = 10)
+AgroClimateData$Eto <- Eto.daily$ET.Daily
+soilWHC = 100
+watBal <- calcWatBal(AgroClimateData, soilWHC)
+
+```
+
+The output of daily soil water balance can be ploted:
+
+```{r }
+
+watBal <- watBal[watBal$Year %in% c(2010, 2020),]
+date.vec <- as.Date.character(paste0(watBal$Year, "-", watBal$Month, "-", watBal$Day))
+
+plot(watBal$AVAIL, ty="l", xlab="Days since 2010", ylab="Water (mm)", col="black", lwd = 1, lty = 2)
+lines(watBal$Eto, col="red", lwd = 3)
+lines(watBal$Rain, col="blue", lwd = 1)
+
+   legend("bottom",c("Rain","Eto","Available Moisture"),
+         horiz=TRUE, bty='n', cex=1,lty=c(1,1,2),lwd=c(2,2,2), inset=c(1,1),
+         xpd=TRUE, col=c("blue","red","black"))
+
+```
+
+
+<img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
+
+
+The Genetics Group at the **Center of Plant Sciences** is a geographically and culturally diverse research team working on data-drivem agicultural innovation combining crop genetics, climate, and participatory approaches. We are based at **Scuola Superiore Sant’Anna**, Pisa, Italy. 
+
+You can contact us sending an email to Matteo Dell'Acqua (mailto:m.dellacqua@santannapisa.it) or Mario Enrico Pè (mailto:m.pe@santannapisa.it).
+You can find out more about us visiting the group web page (http://www.capitalisegenetics.santannapisa.it/) and following us on Twitter [@GenLab_SSA](https://twitter.com/genlab_ssa?lang=en)
+
+We are committed to the 
+[free software](https://www.fsf.org/about/what-is-free-software) and 
+[FAIR](https://www.go-fair.org/fair-principles/) principles.
+This set of repositories collects our latest developments and provide reusable code.
+

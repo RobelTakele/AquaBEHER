@@ -1,0 +1,36 @@
+url: https://robeltakele.github.io/AquaBEHER/
+template:
+  bootstrap: 5
+  bootswatch: cosmo
+navbar:
+  structure:
+    left:
+    - intro
+    - reference
+    - articles
+    - tutorials
+    - news
+    right: github
+  components:
+    reference:
+      text: Function Reference
+      href: reference/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/RobelTakele/AquaBEHER/
+      aria-label: github
+    intro:
+      text: User Guide
+      href: articles/AquaBEHER.html
+reference:
+- title: All functions
+  contents:
+  - '`AgroClimateData`'
+  - '`calcEto`'
+  - '`calcSeasCal`'
+  - '`calcWatBal`'
+  - '`climateData`'
+  - '`rcn`'
+
+
+

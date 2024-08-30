@@ -1,2 +1,16 @@
-^AquaBEHER\.Rproj$
+^.*\.Rproj$
 ^\.Rproj\.user$
+^data-raw$
+^LICENSE\.md$
+^README\.Rmd$
+^doc$
+^Meta$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
+^Makefile$
+^Jenkinsfile$
+^revdep$
+^cran-comments\.md$
+^CRAN-SUBMISSION$

@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -6,9 +6,11 @@ knitr::opts_chunk$set(
 
 ## ----AquaBEHER setup----------------------------------------------------------
 
-# install.packages("devtools")
-# devtools::install_github("RobelTakele/AquaBEHER", dependencies = TRUE, type = "source",
-#                           build_manual = TRUE, build_vignettes = TRUE)
+# Install packages if not already installed
+# if (!require("pacman")) install.packages("pacman")
+# pacman::p_load(knitr, rmarkdown, prettydoc, dplyr, ggplot2, lubridate, raster, sp, devtools)
+ 
+ # devtools::install_local("/path/to/AquaBEHER_0.1.0.tar.gz")
 
 library(AquaBEHER)
 library(ggplot2)
@@ -56,7 +58,7 @@ PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
 # Estimate daily water balance for the soil having 100mm of WHC:
 soilWHC <- 100
- 
+
 watBal<- calcWatBal(data = AgroClimateData, soilWHC)
 
 str(watBal )
@@ -69,18 +71,18 @@ str(watBal )
  ggplot(data = watBal.19T20) +
          geom_line(aes(y = AVAIL, x = date.vec, fill = "AVAIL"), size = 0.8, color = "red") +
          geom_col(aes(y = Rain, x = date.vec, fill = "Rain"), size = 1) +
-        
-         
+
+
 
          scale_x_date(date_breaks = "1 month", date_labels =  "%b-%Y") +
-   
+
          scale_fill_manual(name = " ", values = c('AVAIL' = "red", 'Rain' = "blue")) +
-   
+
          scale_y_continuous(expand = c(0, 2))  +
          labs(y="Moisture (mm)", x=NULL) +
-   
+
          theme_linedraw()  +
-   
+
    theme(axis.title = element_text(size = 14, colour = "black", family = "Times New Roman"),
          axis.text = element_text(size = 10, colour = "black", family = "Times New Roman"),
          axis.text.x = element_text(size = 10, colour = "black", family = "Times New Roman", angle = 45, vjust = 0.5))
@@ -108,7 +110,7 @@ seasCal.dF <- data.frame(Year = seasCal.lst[[1]][,c("Year")],
    geom_line(aes(y = Onset, x = Year, color = "Onset"), size = 1) +
    geom_line(aes(y = Cessation, x = Year, color = "Cessation"), size = 1) +
    geom_area(aes(y = Duration, x = Year, color = "Duration⁠"), size = 0.8, alpha = 0.4)+
- 
+
    scale_color_manual(name = "Calendar", values = c('Onset' = "blue", 'Cessation' = "red", 'Duration' = "grey"))  +
 
  labs(y="Day of a year (DOY)", x=NULL) +

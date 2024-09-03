@@ -1,5 +1,5 @@
 ---
-title: Estimation of rainy season calandar and soil water balance for agricultural
+title: Estimation and prediction of wet season calandar and soil water balance for agricultural
   crops using AquaBEHER
 author: "Robel Takele and Matteo Dell'Acqua"
 date: "`r Sys.Date()`"
@@ -37,7 +37,7 @@ knitr::opts_chunk$set(
 
 # 1. Introduction 
 
-This vignette is a short tutorial to the usage and functionalists of AquaBEHER R package. It is directed to first-time package users who are familiar with the basic concepts of R. The vignette presents the use of several key functions of the package, some useful hints and guidelines. AquaBEHER computes and integrates daily reference evapotranspiration (Eto) and a soil water balance model to estimate parameters of crop and soil water balances for agricultural crops. Using the computed daily soil water balance parameters, the package can estimates the rainy season calendar (Onset, Cessation and Duration) based on agroclimatic approach for a predefined window. 
+This vignette is a short tutorial to the usage and functionalists of AquaBEHER R package. It is directed to first-time package users who are familiar with the basic concepts of R. The vignette presents the use of several key functions of the package, some useful hints and guidelines. AquaBEHER computes and integrates daily reference evapotranspiration (Eto) and a soil water balance model to estimate parameters of crop and soil water balances for agricultural crops. Using the computed daily soil water balance parameters, the package can estimates and predicts the rainy season calendar (Onset, Cessation and Duration) based on agroclimatic approach for a predefined window. 
 
 
 # 2. Installation and Loading
@@ -46,9 +46,11 @@ This vignette is a short tutorial to the usage and functionalists of AquaBEHER R
 
 ```{r AquaBEHER setup}
 
-# install.packages("devtools")
-# devtools::install_github("RobelTakele/AquaBEHER", dependencies = TRUE, type = "source",
-#                           build_manual = TRUE, build_vignettes = TRUE)
+# Install packages if not already installed
+# if (!require("pacman")) install.packages("pacman")
+# pacman::p_load(knitr, rmarkdown, prettydoc, dplyr, ggplot2, lubridate, raster, sp, devtools)
+ 
+ # devtools::install_local("/path/to/AquaBEHER_0.1.0.tar.gz")
 
 library(AquaBEHER)
 library(ggplot2)
@@ -128,14 +130,11 @@ lines(Eto.HS$ET.Daily[1:1000], col="blue", lwd = 2, lty = 1)
 
 ```
 
-
 **Notice:** It appears that the FAO Penman–Monteith formulation presents enhanced day-to-day variations of evapotranspiration than the the Hargreaves-Samani formulation.
-
-
 
 # 5. Soil Water Balance
 
-This function perform daily computations of soil water balance parameters for the root zone. Soil water changes daily in response to rainfall, evapotranspiration, runoff and deep drainage. 
+This function perform daily computations of soil water balance parameters for the root zone. Soil water changes daily in response to rainfall, evapotranspiration, runoff and deep drainage.
 
 **Assumptions**
 
@@ -158,7 +157,7 @@ PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
 # Estimate daily water balance for the soil having 100mm of WHC:
 soilWHC <- 100
- 
+
 watBal<- calcWatBal(data = AgroClimateData, soilWHC)
 
 str(watBal )
@@ -171,24 +170,23 @@ str(watBal )
  ggplot(data = watBal.19T20) +
          geom_line(aes(y = AVAIL, x = date.vec, fill = "AVAIL"), size = 0.8, color = "red") +
          geom_col(aes(y = Rain, x = date.vec, fill = "Rain"), size = 1) +
-        
-         
+
+
 
          scale_x_date(date_breaks = "1 month", date_labels =  "%b-%Y") +
-   
+
          scale_fill_manual(name = " ", values = c('AVAIL' = "red", 'Rain' = "blue")) +
-   
+
          scale_y_continuous(expand = c(0, 2))  +
          labs(y="Moisture (mm)", x=NULL) +
-   
+
          theme_linedraw()  +
-   
+
    theme(axis.title = element_text(size = 14, colour = "black", family = "Times New Roman"),
          axis.text = element_text(size = 10, colour = "black", family = "Times New Roman"),
          axis.text.x = element_text(size = 10, colour = "black", family = "Times New Roman", angle = 45, vjust = 0.5))
 
 ```
-
 
 # 6. Rainy Season Calandar
 
@@ -240,7 +238,7 @@ seasCal.dF <- data.frame(Year = seasCal.lst[[1]][,c("Year")],
    geom_line(aes(y = Onset, x = Year, color = "Onset"), size = 1) +
    geom_line(aes(y = Cessation, x = Year, color = "Cessation"), size = 1) +
    geom_area(aes(y = Duration, x = Year, color = "Duration⁠"), size = 0.8, alpha = 0.4)+
- 
+
    scale_color_manual(name = "Calendar", values = c('Onset' = "blue", 'Cessation' = "red", 'Duration' = "grey"))  +
 
  labs(y="Day of a year (DOY)", x=NULL) +
@@ -249,7 +247,6 @@ seasCal.dF <- data.frame(Year = seasCal.lst[[1]][,c("Year")],
 
 
 ```
-
 
 # 7. References
 
@@ -265,13 +262,13 @@ $$\\[0.2in]$$
 <img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
 
 
-The Genetics Group at the **Center of Plant Sciences** is a geographically and culturally diverse research team working on data-drivem agicultural innovation combining crop genetics, climate, and participatory approaches. We are based at **Scuola Superiore Sant’Anna**, Pisa, Italy. 
+The Genetics Group at the **Center of Plant Sciences** is a geographically and culturally diverse research team working on data-drivem agicultural innovation combining crop genetics, climate, and participatory approaches. We are based at **Scuola Superiore Sant’Anna**, Pisa, Italy.
 
 You can contact us sending an email to Matteo Dell'Acqua (mailto:m.dellacqua@santannapisa.it) or Mario Enrico Pè (mailto:m.pe@santannapisa.it).
 You can find out more about us visiting the group web page (http://www.capitalisegenetics.santannapisa.it/) and following us on Twitter [@GenLab_SSA](https://twitter.com/genlab_ssa?lang=en)
 
-We are committed to the 
-[free software](https://www.fsf.org/about/what-is-free-software) and 
+We are committed to the
+[free software](https://www.fsf.org/about/what-is-free-software) and
 [FAIR](https://www.go-fair.org/fair-principles/) principles.
 This set of repositories collects our latest developments and provide reusable code.
 

@@ -47,8 +47,8 @@ This vignette is a short tutorial to the usage and functionalists of AquaBEHER R
 ```{r AquaBEHER setup}
 
 # Install packages if not already installed
-if (!require("pacman")) install.packages("pacman")
- pacman::p_load(knitr, rmarkdown, prettydoc, dplyr, ggplot2, lubridate, raster, sp, devtools)
+# if (!require("pacman")) install.packages("pacman")
+# pacman::p_load(knitr, rmarkdown, prettydoc, dplyr, ggplot2, lubridate, raster, sp, devtools)
  
  # devtools::install_local("/path/to/AquaBEHER_0.1.0.tar.gz")
 

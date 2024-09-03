@@ -3,58 +3,64 @@
 \docType{data}
 \name{AgroClimateData}
 \alias{AgroClimateData}
-\title{Example AgroClimate data from AgERA5}
+\title{Daily Surface Meteorological Data (1982-2022) Extracted from AgERA5}
 \format{
-A data frame containing daily observations of AgroClimate parameters:
-\describe{
-\item{\code{GridID}}{Grid id of the location.}
-\item{\code{Lat}}{latitude of the site in decimal degrees.}
-\item{\code{Lon}}{longitude of the site in decimal degrees.}
-\item{\code{Elev}}{elevation above sea level in (meters).}
-\item{\code{WHC}}{water holding capacity in (mm).}
-\item{\code{Year}}{year of record "YYYY".}
-\item{\code{Month}}{month of record "MM".}
-\item{\code{Day}}{day of record "DD".}
-\item{\code{Rain}}{Precipitation (mm/day).}
-\item{\code{Tmax}}{Temperature at 2 Meters Maximum (°C).}
-\item{\code{Tmin}}{Temperature at 2 Meters Minimum (°C).}
-\item{\code{Rs}}{CAll Sky Surface Shortwave Downward Irradiance
-(MJ/m^2/day).}
-\item{\code{Tdew}}{Dew/Frost Point at 2 Meters (°C).}
-\item{\code{Uz}}{Wind Speed at 2 Meters (m/s).}
+A data frame containing daily observations of weather variables:
+\itemize{
+\item \strong{GridID}: Grid ID of the location.
+\item \strong{Lat}: Latitude of the grid in decimal degrees.
+\item \strong{Lon}: Longitude of the grid in decimal degrees.
+\item \strong{Elev}: Elevation above sea level in meters.
+\item \strong{WHC}: Water holding capacity in millimeters (mm).
+\item \strong{Year}: Year of record ("YYYY").
+\item \strong{Month}: Month of record ("MM").
+\item \strong{Day}: Day of record ("DD").
+\item \strong{Rain}: Daily precipitation in millimeters (mm/day).
+\item \strong{Tmax}: Daily maximum temperature at 2 meters height in degrees Celsius (°C).
+\item \strong{Tmin}: Daily minimum temperature at 2 meters height in degrees Celsius (°C).
+\item \strong{Rs}: Total amount of energy provided by solar radiation at the surface over the period
+00-24h local time per unit area and time (MJ/m^2/day).
+\item \strong{Tdew}: Mean dewpoint temperature at a height of 2 metres above the surface over the period
+00h-24h local time (°C).
+\item \strong{Uz}: Mean wind speed at a height of 2 metres above the surface over the period 00h-24h
+local time (m/s).
 }
 }
 \source{
 \url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-agrometeorological-indicators?tab=overview}
 }
 \usage{
-AgroClimateData
+data(AgroClimateData)
 }
 \description{
-The AgERA5 dataset provides daily surface meteorological data
-for the period from 1979 to present as input for agriculture
-and agro-ecological studies. This dataset is based on the hourly ECMWF ERA5
-data at surface level, the data from 01/01/1982 through 12/31/2022 extracted
-for a grid located in located in Angochen, Nampula province of Mozambique.
+The AgERA5 dataset provides daily surface meteorological data for the period from
+1979 to present as input for agriculture and agro-ecological studies. This dataset is based on
+the hourly ECMWF ERA5 data at surface level, with data from January 1, 1982, through December
+31, 2022, extracted for a grid located in Angochen, Nampula province of Mozambique.
 }
 \examples{
-# load example data:
+## Load the agroclimate data
 data(AgroClimateData)
 
-# Get the structure of the data frame:
+## Get the structure of the data frame
 str(AgroClimateData)
 
-# Get the head of the data frame:
+## Get the head of the data frame
 head(AgroClimateData)
 
 }
 \references{
-AgERA5, 2021, Copernicus Climate Change Service (C3S), Fifth
-generation of ECMWF atmospheric reanalysis of the global
-climate for agriculture and ago-ecological studies. Copernicus Climate
-Change Service Climate Data Store (CDS), July-2021.
+AgERA5, 2021, Copernicus Climate Change Service (C3S), Fifth generation of ECMWF
+atmospheric reanalysis of the global climate for agriculture and agro-ecological studies.
+Copernicus Climate Change Service Climate Data Store (CDS), July 2021.
+\url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-agrometeorological-indicators?tab=overview}
 }
 \seealso{
-\code{\link{climateData}, \link{calcEto}}
+\code{\link{climateData}}, \code{\link{calcEto}}
 }
-\keyword{datasets}
+\keyword{Mozambique}
+\keyword{agriculture,}
+\keyword{agro-ecology,}
+\keyword{climate,}
+\keyword{datasets,}
+\keyword{meteorology,}

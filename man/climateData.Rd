@@ -3,35 +3,21 @@
 \docType{data}
 \name{climateData}
 \alias{climateData}
-\title{A dataframe containing raw climate data}
+\title{Daily Weather Data (1996-2020) from Angochen Weather Observing Station, Mozambique}
 \format{
-A data frame containing daily observations of climate parameters:
-
-\verb{    }\emph{\strong{\code{Station_Name:}} name of the weather
-station.}
-
-\verb{    }\emph{\strong{\code{Lat:}} latitude of the site in decimal
-degrees.}
-
-\verb{    }\emph{\strong{\code{Lon:}} longitude of the site in decimal
-degrees.}
-
-\verb{    }\emph{\strong{\code{Elev:}} elevation above sea level in
-(meters).}
-
-\verb{    }\emph{\strong{\code{Year:}} year of record "YYYY".}
-
-\verb{    }\emph{\strong{\code{Month:}} month of record "MM".}
-
-\verb{    }\emph{\strong{\code{Day:}} day of record "DD".}
-
-\verb{    }\emph{\strong{\code{Rain:}} daily rainfall in (mm).}
-
-\verb{    }\emph{\strong{\code{Tmax:}} daily maximum temperature at 2-m
-height in (°C).}
-
-\verb{    }\emph{\strong{\code{Tmin:}} daily minimum temperature at 2-m
-height in (°C).}
+A data frame containing daily values of weather variables:
+\itemize{
+\item \strong{Station_Name}: Name of the weather station.
+\item \strong{Lat}: Latitude of the site in decimal degrees.
+\item \strong{Lon}: Longitude of the site in decimal degrees.
+\item \strong{Elev}: Elevation above sea level in meters.
+\item \strong{Year}: Year of the record (YYYY).
+\item \strong{Month}: Month of the record (MM).
+\item \strong{Day}: Day of the record (DD).
+\item \strong{Rain}: Daily rainfall in millimeters (mm).
+\item \strong{Tmax}: Daily maximum temperature at 2 meters height in degrees Celsius (°C).
+\item \strong{Tmin}: Daily minimum temperature at 2 meters height in degrees Celsius (°C).
+}
 }
 \source{
 INAM - Instituto Nacional de Meteorologia, Mozambique
@@ -40,23 +26,26 @@ INAM - Instituto Nacional de Meteorologia, Mozambique
 data(climateData)
 }
 \description{
-The R data object was obtained from Instituto Nacional de
-Meteorologia (INAM). This example data set contains the daily raw climate
-data over the period between 1/1/1996 and 12/31/2020 from a weather station
-located in Angochen, Nampula province of Mozambique.
+This R data object contains daily weather data obtained from Instituto Nacional de
+Meteorologia (INAM). The sample data includes daily raw weather data from January 1, 1996, to
+December 31, 2020, from a weather station located in Angochen, Nampula province of Mozambique.
 }
 \examples{
-# load example data:
+## Load the climate data
 data(climateData)
 
-# Get the structure of the data frame:
+## Get the structure of the data frame
 str(climateData)
 
-# Get the head of the data frame:
+## Get the head of the data frame
 head(climateData)
 
 }
 \seealso{
-\code{\link{AgroClimateData}, \link{calcEto}}
+\code{\link{AgroClimateData}}, \code{\link{calcEto}}
 }
-\keyword{datasets}
+\keyword{Mozambique,}
+\keyword{climate,}
+\keyword{datasets,}
+\keyword{meteorology}
+\keyword{weather,}

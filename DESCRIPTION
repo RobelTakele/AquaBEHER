@@ -1,4 +1,5 @@
 Package: AquaBEHER
+<<<<<<< HEAD
 Title: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture
 Version: 1.0.0
 Authors@R: c(
@@ -25,12 +26,41 @@ VignetteBuilder: knitr
 Depends:
     R (>= 3.5.0)
 Imports:
+=======
+Type: Package
+Title: Estimation of rainy season calandar and soil water balance for agriculture 
+Version: 0.1.0
+Author: Robel Takele <takelerobel@gmail.com>
+        Matteo Dell'Acqua <matteo.dellacqua@santannapisa.it> 
+Maintainer: Robel Takele <takelerobel@gmail.com>
+Description: This R package computes and integrates daily reference evapotranspiration (Eto) 
+    into FAO56 water balance model. The AquaBEHER package can estimate daily parameters of
+    crop and soil water balances parameters for agricultural crops. The package can also 
+    estimate rainy season calandar (Onset, Cessation and Duration) based on agroclimatic
+    approach. 
+License: GPL (>= 3)
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
+Suggests: 
+    knitr,
+    rmarkdown,
+    prettydoc
+VignetteBuilder: knitr
+Depends:
+    R (>= 3.5.0)
+Imports: 
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
     dplyr,
     ggplot2,
     lubridate,
     raster,
     sp
+<<<<<<< HEAD
 URL: https://github.com/RobelTakele/AquaBEHER,
     https://robeltakele.github.io/AquaBEHER/
 BugReports: https://github.com/RobelTakele/AquaBEHER/issues
 Config/testthat/edition: 3
+=======
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a

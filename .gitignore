@@ -7,8 +7,11 @@
 /Meta/
 
 
+<<<<<<< HEAD
 .Rdata
 .httr-oauth
 .DS_Store
 inst/doc
 
+=======
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a

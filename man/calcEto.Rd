@@ -7,6 +7,7 @@
 calcEto(data, method = "PM", crop = "short", Zh = NULL)
 }
 \arguments{
+<<<<<<< HEAD
 \item{data}{A dataframe containing the required weather variables with
 the following columns:
 \itemize{
@@ -71,10 +72,88 @@ calcEto(climateData, method = "HS")
 
 # Load example data:
 data(AgroClimateData)
+=======
+\item{data}{a dataframe containing the required climate variables: columns must contain the following parameters:
+
+\verb{      }\emph{\strong{\code{Lat:}} latitude of the site in decimal degrees.}
+
+\verb{      }\emph{\strong{\code{Lon:}} longitude of the site in decimal degrees.}
+
+\verb{      }\emph{\strong{\code{Elev:}} elevation above sea level in (meters).}
+
+\verb{      }\emph{\strong{\code{Year:}} year of record "YYYY".}
+
+\verb{      }\emph{\strong{\code{Month:}} month of record "MM".}
+
+\verb{      }\emph{\strong{\code{Day:}} day of record "DD".}
+
+\verb{      }\emph{\strong{\code{Tmax:}} daily maximum temperature at 2-m height in (°C).}
+
+\verb{      }\emph{\strong{\code{Tmin:}} daily minimum temperature at 2-m height in (°C).}
+
+\verb{      }\emph{\strong{\code{Rs:}} daily surface incoming solar radiation in (MJ/m^2/day).}
+
+\verb{      }\emph{\strong{\code{RH or RHmax and RHmin:}} daily relative humidity at 2-m height.}
+
+\verb{      }\emph{\strong{\code{Tdew:}} daily dew point temperature at 2-m height in (°C).}
+
+\verb{      }\emph{\strong{\code{U2 or Uz:}} daily wind speed at 2-m or Z-m(custom) height (m/s).}
+
+\verb{    }}
+
+\item{method}{\verb{  }the formulation used to compute Eto; default is \emph{method = "PM"} gives the the Penman-Monteith
+formulation; \emph{method = "PT"} gives \verb{  }the Priestley-Taylor formulation and \emph{method = "HS"} gives the Hargreaves
+Samani formulation.}
+
+\item{crop}{\verb{  }either \emph{crop = "short"} (default) or \emph{crop = "tall"}; short indicates that the method for FAO-56
+hypothetical short grass will be applied \verb{  }(Allen et al.1998); tall indicates that the method for ASCE-EWRI standard
+crop will be applied (ASCE, 2005).}
+
+\item{Zh}{\verb{  }height of wind speed measurement in meters,}
+}
+\value{
+The function generates a list containing the following objects:
+
+\code{ET.Daily:} {daily estimations of reference crop evapotranspiration (mm/day)}
+
+\code{Ra.Daily:} {daily estimations of extraterristrial radiation (MJ/m2/day)}
+
+\code{Slope.Daily:} {daily estimations of slope of vapour pressure curve (kPa/°C)}
+
+\code{ET.type:} {type of the estimation obtained}
+}
+\description{
+This function calculates Penman-Monteith, Priestley Taylor and Hargreaves-Samani Potential Evapotranspiration
+using the method described by Allen et al, (1998)
+}
+\details{
+\strong{Penman-Monteith:}
+If all variables of Tmax, Tmin, Rs, either U2 or Uz, and either RHmax and RHmin or RH or Tdew are available and crop surface
+(short or tall) is specified in argument the Penman-Monteith FAO56 formulation is used (Allen et al.1998).
+
+\strong{Priestley-Taylor:}
+If all variables of Tmax, Tmin, Rs and either RHmax and RHmin or RH or Tdew are available the Priestley-Taylor formulation
+is used (Priestley and Taylor, 1972).
+
+\strong{Hargreaves-Samani:}
+If only Tmax and Tmin are available, the Hargreaves-Samani formulation is used or estimating reference crop
+evapotranspiration (Hargreaves and.Samani, 1985).
+}
+\examples{
+# load example data:
+data(climateData)
+
+calcEto(climateData, method = "HS")
+
+# load example data:
+data(AgroClimateData)
+
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 calcEto(AgroClimateData, method = "PM", crop = "short")
 
 }
 \references{
+<<<<<<< HEAD
 Allen, R.G., L.S. Pereira, D. Raes, and M. Smith. 1998. Crop
 evapotranspiration-Guidelines for Computing Crop Water requirements FAO
 Irrigation and Drainage Paper 56. FAO, Rome 300: 6541.
@@ -96,4 +175,22 @@ and evaporation using large-scale parameters. Monthly Weather Review,
 \seealso{
 \code{\link{climateData}}, \code{\link{calcWatBal}},
 \code{\link{calcSeasCal}}
+=======
+Allen, R.G., L.S. Pereira, D. Raes, and M. Smith. 1998. ‘Crop evapotranspiration-Guidelines for Computing Crop
+Water requirements FAO Irrigation and Drainage Paper 56’. FAO, Rome 300: 6541.
+
+Allen, R. G. 2005. The ASCE standardized reference evapotranspiration equation. Amer Society of Civil Engineers.
+
+Guo, Danlu & Westra, Seth & Maier, Holger. (2016). An R package for modelling actual, potential and reference
+evapotranspiration. Environmental Modelling & Software. 78. 216-224. 10.1016/j.envsoft.2015.12.019.
+
+Hargreaves, G.H.Samani, Z.A. 1985, Reference crop evapotranspiration from ambient air temperature. American Society of
+Agricultural Engineers.
+
+Priestley, C. & Taylor, R. 1972, On the assessment of surface heat flux and evaporation using large-scale parameters'. Monthly
+Weather Review, vol. 100, no. 2, pp. 81-92.
+}
+\seealso{
+\code{\link{climateData}, \link{calcWatBal}, \link{calcSeasCal}}
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 }

@@ -3,6 +3,7 @@
 \docType{data}
 \name{climateData}
 \alias{climateData}
+<<<<<<< HEAD
 \title{Daily Weather Data (1996-2020) from Angochen Weather Observing
 Station, Mozambique}
 \format{
@@ -24,11 +25,40 @@ A data frame containing daily values of weather variables:
 }
 \source{
 INAM - Instituto Nacional de Meteorologia, Mozambique
+=======
+\title{A dataframe containing raw climate data}
+\format{
+A data frame containing daily observations of climate parameters:
+
+\verb{    }\emph{\strong{\code{Station_Name:}} name of the weather station.}
+
+\verb{    }\emph{\strong{\code{Lat:}} latitude of the site in decimal degrees.}
+
+\verb{    }\emph{\strong{\code{Lon:}} longitude of the site in decimal degrees.}
+
+\verb{    }\emph{\strong{\code{Elev:}} elevation above sea level in (meters).}
+
+\verb{    }\emph{\strong{\code{Year:}} year of record "YYYY".}
+
+\verb{    }\emph{\strong{\code{Month:}} month of record "MM".}
+
+\verb{    }\emph{\strong{\code{Day:}} day of record "DD".}
+
+\verb{    }\emph{\strong{\code{Rain:}} daily rainfall in (mm).}
+
+\verb{    }\emph{\strong{\code{Tmax:}} daily maximum temperature at 2-m height in (°C).}
+
+\verb{    }\emph{\strong{\code{Tmin:}} daily minimum temperature at 2-m height in (°C).}
+}
+\source{
+INAM - Instituto Nacional de Meteorologia, Mozambique \url{https://www.inam.gov.mz/}
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 }
 \usage{
 data(climateData)
 }
 \description{
+<<<<<<< HEAD
 This R data object contains daily weather data obtained from
 Instituto Nacional de Meteorologia (INAM). The sample data includes daily raw
 weather data from January 1, 1996, to December 31, 2020, from a weather
@@ -42,10 +72,24 @@ data(climateData)
 str(climateData)
 
 ## Get the head of the data frame
+=======
+The R data object was obtained from Instituto Nacional de Meteorologia (INAM). This example data set contains the daily raw climate
+data over the period between 1/1/1996 and 12/31/2020 from a weather station located in Angochen, Nampula province of Mozambique.
+}
+\examples{
+# load example data:
+data(climateData)
+
+# Get the structure of the data frame:
+str(climateData)
+
+# Get the head of the data frame:
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 head(climateData)
 
 }
 \seealso{
+<<<<<<< HEAD
 \code{\link{AgroClimateData}}, \code{\link{calcEto}}
 }
 \keyword{Mozambique,}
@@ -53,3 +97,8 @@ head(climateData)
 \keyword{datasets,}
 \keyword{meteorology}
 \keyword{weather,}
+=======
+\code{\link{AgroClimateData}, \link{calcEto}}
+}
+\keyword{datasets}
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a

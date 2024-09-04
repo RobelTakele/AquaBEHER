@@ -7,8 +7,12 @@
 calcSeasCal(data, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC)
 }
 \arguments{
+<<<<<<< HEAD
 \item{data}{an R object of dataframe as returned by \code{\link{calcWatBal}}
 or a dataframe having similar parameters.}
+=======
+\item{data}{an R object of dataframe as returned by  \code{\link{calcWatBal}} or a dataframe having similar parameters.}
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 
 \item{onsetWind.start}{Earliest possible start date of the onset window.}
 
@@ -19,7 +23,11 @@ or a dataframe having similar parameters.}
 \item{soilWHC}{Water holding capacity of the soil at root zone depth in (mm).}
 }
 \value{
+<<<<<<< HEAD
 The function generates list of dataframes  with columns of variables:
+=======
+The function generates list of data frames  with columns of variables:
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 
 \strong{\code{Onset.dF:}} a data frame with columns of onset variables:
 
@@ -41,11 +49,17 @@ The function generates list of dataframes  with columns of variables:
 
 \verb{    } \emph{Year:} year of the season under investigation, "YYYY".
 
+<<<<<<< HEAD
 \verb{    } \emph{cessation.Year:} year of the season under investigation,
 "YYYY".
 
 \verb{    } \emph{cessation.Month:} month of the cessation of the season in
 "MM".
+=======
+\verb{    } \emph{cessation.Year:} year of the season under investigation, "YYYY".
+
+\verb{    } \emph{cessation.Month:} month of the cessation of the season in "MM".
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 
 \verb{    } \emph{cessation.Day:} day of the cessation of the season in "DD".
 
@@ -59,12 +73,17 @@ The function generates list of dataframes  with columns of variables:
 
 \verb{    } \emph{onset.YYYYDOY:} onset date of the season in "YYYY-DOY".
 
+<<<<<<< HEAD
 \verb{    } \emph{cessation.YYYYDOY:} cessation date of the season in
 "YYYY-DOY".
+=======
+\verb{    } \emph{cessation.YYYYDOY:} cessation date of the season in "YYYY-DOY".
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 
 \verb{    } \emph{Duration:} duration of the season in "days".
 }
 \description{
+<<<<<<< HEAD
 This function estimates the rainy season calendar, i.e onset
 date, cessation date and duration of the rainy season based on Agroclimatic
 approach. The agroclimatic approach defines the onset of the rainy season as
@@ -103,6 +122,35 @@ onset to cessation of the season.
 }
 \examples{
 \donttest{
+=======
+This function estimates the rainy season calendar, i.e onset date, cessation date and duration of the rainy season
+based on Agroclimatic approach. The agroclimatic approach defines the onset of the rainy season as the optimal date that
+ensures sufficient soil moisture during planting and early growing periods to avoid crop failure after sowing and requires
+information on rainfall, reference evapotranspiration and accounting of the daily soil water balance parameters.
+}
+\details{
+As per agroclimatic approach, a normal rainy season (growing season) is defined as one when there is an excess of precipitation
+over potential evapotranspiration (PET). Such a period met the evapotransiration demands of crops and recharge the moisture
+of the soil profile (FAO 1977; 1978; 1986). Thus, the rainy season calendar defined accordingly:
+
+\strong{Onset}
+
+The \emph{onset} of the rainy season will start on the first day after \emph{onsetWind.start}, when the actual-to-potential
+evapotranspiration ratio is greater than 0.5 for 7 consecutive days, followed by a 20-day period in which plant available
+water remains above wilting over the root zone of the soil layer.
+
+\strong{Cesation}
+
+The rainy season will end, \emph{cessation}, on the first day after \emph{onsetWind.end}, when the actual-to-potential
+evapotranspiration ratio is less than 0.5 for 7 consecutive days, followed by 12 consecutive non-growing days in which plant
+available water remains below wilting over the root zone of the soil layer.
+
+\strong{Duration}
+
+The \emph{duration} of the rainy season is the total number of days from onset to cessation of the season.
+}
+\examples{
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 # load example data:
 data(AgroClimateData)
 
@@ -111,6 +159,7 @@ PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
 # Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 AgroClimateData$Eto <- PET$ET.Daily
+<<<<<<< HEAD
 }
 }
 \references{
@@ -123,6 +172,31 @@ Organization of the United Nation (FAO), FAO Forestry paper, No 7, Rome.
 FAO, 1986. Early Agrometeorological crop yield forecasting. FAO Plant
 Production and Protection paper No. 73, by M. Frère and G.F. Popov. FAO,
 Rome, Italy
+=======
+
+# Estimate daily water balance for the soil having 100mm of WHC:
+watBal <- calcWatBal(AgroClimateData, soilWHC = 100)
+
+# estimate the rainy season calandar (Onset, Cessation and Duration):
+onsetWind.start = "1996-09-01"  # earliest possible start data of the onset window
+onsetWind.end = "1997-01-31"   # the late possible date for end of the onset window
+cessaWind.end = "1997-06-30"   # the late possible date for end of the cessation window
+
+seasCal.lst <- calcSeasCal(watBal, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC = 100)
+
+str(seasCal.lst)
+
+}
+\references{
+FAO, 1977. Crop water requirements. FAO Irrigation and Drainage Paper No. 24, by Doorenbos J and W.O. Pruitt. FAO,
+Rome, Italy.
+
+FAO 1978. Forestry for Local Community Development Food and Agriculture Organization of the United Nation (FAO), FAO Forestry
+paper, No 7, Rome.
+
+FAO, 1986. Early Agrometeorological crop yield forecasting. FAO Plant Production and Protection paper No. 73, by M. Frère and
+G.F. Popov. FAO, Rome, Italy
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 }
 \seealso{
 \code{\link{calcEto}, \link{calcWatBal}}

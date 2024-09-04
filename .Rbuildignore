@@ -9,8 +9,12 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+<<<<<<< HEAD
 ^Makefile$
 ^Jenkinsfile$
 ^revdep$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+=======
+
+>>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a

@@ -125,7 +125,6 @@
 #' @importFrom lubridate as_date
 #'
 #' @examples
-#'
 #' \donttest{
 #' # load example data:
 #' data(AgroClimateData)
@@ -135,8 +134,6 @@
 #'
 #' # Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 #' AgroClimateData$Eto <- PET$ET.Daily
-#'
-#'
 #' }
 #' @export
 
@@ -145,23 +142,18 @@
 
 calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
                         cessaWind.end, soilWHC) {
-
   # ***** Check of specific data requirement
 
   if ((is.null(data$Year) & is.null(data$Month) & is.null(data$Day)) |
-      ((length(which(is.na(data$Year)))>0)&
-      (length(which(is.na(data$Month)))>0)&
-      (length(which(is.na(data$Day)))>0))) {
-
+    ((length(which(is.na(data$Year))) > 0) &
+      (length(which(is.na(data$Month))) > 0) &
+      (length(which(is.na(data$Day))) > 0))) {
     stop("Required data column for [Year], [Month] and [Day] is missing!")
-
   }
 
   if (is.null(soilWHC) | is.na(soilWHC)) {
-
     stop("Required data for water holding capacity of the soil [soilWHC]
          is missing! ")
-
   }
 
   # if (is.null(data$Rain) | length(which(is.na(data$Rain)))> 0) {
@@ -170,276 +162,302 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
   #
   # }
 
-  if (is.null(data$R) | length(which(is.na(data$R)))> 0) {
-
+  if (is.null(data$R) | length(which(is.na(data$R))) > 0) {
     stop("Required data column for actual-to-potential evapotranspiration
          amount [R] is missing! ")
-
   }
 
-  if (is.null(data$AVAIL) | length(which(is.na(data$AVAIL)))> 0) {
-
+  if (is.null(data$AVAIL) | length(which(is.na(data$AVAIL))) > 0) {
     stop("Required data column for available soil water amount [AVAIL]
          is missing! ")
-
   }
 
   if (is.null(onsetWind.start) | is.na(onsetWind.start)) {
-
     stop("Required date for start of the onset window [onsetWind.start]
          is missing! ")
-
   }
 
   if (is.null(onsetWind.end) | is.na(onsetWind.end)) {
-
     stop("Required date for end of the onset window [onsetWind.end]
          is missing! ")
-
   }
 
   if (is.null(cessaWind.end) | is.na(cessaWind.end)) {
-
     stop("Required date for end of the cessation window [cessaWind.end]
          is missing! ")
-
   }
 
- # ****************************************************************************
+  # ****************************************************************************
 
-  data$date <- lubridate::as_date(paste0(data$Year, "-", data$Month, "-",
-                                         data$Day))
-  data$DOY <- strftime(as.POSIXlt(lubridate::as_date(paste0(data$Year, "-",
-                                                            data$Month, "-",
-                                                            data$Day))), "%j")
+  data$date <- lubridate::as_date(paste0(
+    data$Year, "-", data$Month, "-",
+    data$Day
+  ))
+  data$DOY <- strftime(as.POSIXlt(lubridate::as_date(paste0(
+    data$Year, "-",
+    data$Month, "-",
+    data$Day
+  ))), "%j")
   data$YYDOY <- paste0(data$Year, "-", data$DOY)
   year.vec <- as.numeric(sort(unique(data$Year)))
 
-  Rindex.thr = 0.5
-  PAW.thr = min(max((0.25 * soilWHC), 10), 30)
-#  data$Rain[data$Rain < 1] <- 0
+  Rindex.thr <- 0.5
+  PAW.thr <- min(max((0.25 * soilWHC), 10), 30)
+  #  data$Rain[data$Rain < 1] <- 0
 
- if (lubridate::as_date(onsetWind.start) < lubridate::as_date(onsetWind.end) |
-     lubridate::as_date(onsetWind.start) < lubridate::as_date(cessaWind.end)) {
+  if (lubridate::as_date(onsetWind.start) < lubridate::as_date(onsetWind.end) |
+    lubridate::as_date(onsetWind.start) < lubridate::as_date(cessaWind.end)) {
+    year.len <- length(year.vec) - 1
+  } else {
+    year.len <- length(year.vec)
+  }
 
-   year.len <- length(year.vec) -1
+  # *****************************************************************************
 
- } else {
+  Onset.dF <- data.frame(
+    Year = rep(NA, year.len),
+    onset.Year = rep(NA, year.len),
+    onset.Month = rep(NA, year.len),
+    onset.Day = rep(NA, year.len),
+    onset.JD = rep(NA, year.len),
+    onset.Value = rep(NA, year.len)
+  )
 
-   year.len <- length(year.vec)
+  Cessation.dF <- data.frame(
+    Year = rep(NA, year.len),
+    cessation.Year = rep(NA, year.len),
+    cessation.Month = rep(NA, year.len),
+    cessation.Day = rep(NA, year.len),
+    cessation.JD = rep(NA, year.len),
+    cessation.Value = rep(NA, year.len)
+  )
 
- }
+  Duration.dF <- data.frame(
+    Year = rep(NA, year.len),
+    onset.YYYYDOY = rep(NA, year.len),
+    cessation.YYYYDOY = rep(NA, year.len),
+    Duration = rep(NA, year.len)
+  )
 
-# *****************************************************************************
+  for (yr in 1:(year.len)) {
+    if (!is.null(onsetWind.start) & !is.null(cessaWind.end)) {
+      ons <- as.numeric(format(lubridate::as_date(onsetWind.start), "%j"))
+      one <- as.numeric(format(lubridate::as_date(onsetWind.end), "%j"))
+      cne <- as.numeric(format(lubridate::as_date(cessaWind.end), "%j"))
 
- Onset.dF <- data.frame(Year = rep(NA, year.len),
-                        onset.Year = rep(NA, year.len),
-                        onset.Month = rep(NA, year.len),
-                        onset.Day = rep(NA, year.len),
-                        onset.JD = rep(NA, year.len),
-                        onset.Value = rep(NA, year.len))
+      onsetWind.start.yr <- lubridate::as_date(paste0(
+        year.vec[yr],
+        substr(onsetWind.start, 5, 10)
+      ))
 
- Cessation.dF <- data.frame(Year = rep(NA, year.len),
-                            cessation.Year = rep(NA, year.len),
-                            cessation.Month = rep(NA, year.len),
-                            cessation.Day = rep(NA, year.len),
-                            cessation.JD  = rep(NA, year.len),
-                            cessation.Value = rep(NA, year.len))
-
- Duration.dF <- data.frame(Year = rep(NA, year.len),
-                           onset.YYYYDOY = rep(NA, year.len),
-                           cessation.YYYYDOY = rep(NA, year.len),
-                           Duration = rep(NA, year.len))
-
- for (yr in 1:(year.len))   {
-
-   if (!is.null(onsetWind.start) & !is.null(cessaWind.end)) {
-
-     ons = as.numeric(format(lubridate::as_date(onsetWind.start), "%j"))
-     one = as.numeric(format(lubridate::as_date(onsetWind.end), "%j"))
-     cne = as.numeric(format(lubridate::as_date(cessaWind.end), "%j"))
-
- onsetWind.start.yr <- lubridate::as_date(paste0(year.vec[yr],
-                                                 substr(onsetWind.start,5,10)))
-
-     if (ons < one) {
-
- onsetWind.end.yr <- lubridate::as_date(paste0(year.vec[yr],
-                                               substr(onsetWind.end, 5, 10)))
-
-     } else {
-
-     onsetWind.end.yr <- lubridate::as_date(paste0(year.vec[yr+1],
-                                                   substr(onsetWind.end,5,10)))
-
-     }
-
-     data.onset.yr =
-       data[which(onsetWind.start.yr ==
-                    data$date):which((onsetWind.end.yr + 20) == data$date), ]
-
-     # ***** onset date
-
-     onset <- NA
-
-  for (day in 1:(nrow(data.onset.yr)- 20)) {
-
-    if (is.na(onset) & (length(which(is.na(data.onset.yr$R))) < 1) &
-       (data.onset.yr$R[day] >= Rindex.thr) &
-       (data.onset.yr$R[day+1] >= Rindex.thr) &
-       (data.onset.yr$R[day+2] >= Rindex.thr) &
-       (data.onset.yr$R[day+3] >= Rindex.thr) &
-       (data.onset.yr$R[day+4] >= Rindex.thr) &
-       (data.onset.yr$R[day+5] >= Rindex.thr)) {
-
-         avail.vec <- data.onset.yr$AVAIL[day:(day+20)]
-         avail.grDay <- length(which(avail.vec  > PAW.thr))
-
-         if (avail.grDay > 12) {
-
-           onset <- day
-
-         }  else (next)
-       }
-     }
-
-
-     if (is.na(onset)){onset.index = NA} else
-       {onset.index = data.onset.yr$YYDOY[onset]}
-     if (is.na(onset)){onset.Year = NA} else
-       {onset.Year = as.numeric(substr(onset.index, 1, 4))}
-     if (is.na(onset)){onset.Month = NA} else
-       {onset.Month = as.numeric(data.onset.yr$Month[onset])}
-     if (is.na(onset)){onset.Day = NA} else
-       {onset.Day = as.numeric(data.onset.yr$Day[onset])}
-
-     onset.yr.dF  = data.frame(Year = as.numeric(year.vec[yr]),
-                               onset.Year = onset.Year,
-                               onset.Month = onset.Month,
-                               onset.Day = onset.Day,
-                               onset.JD = as.numeric(substr(onset.index, 6, 8)),
-                               onset.Value = onset)
-
-     Onset.dF[yr,] <- onset.yr.dF
-
-# *****************************************************************************
-
-      if (!is.na(onset)) {
-
-       cessaWind.start.yr <- lubridate::as_date(paste0(onset.Year, "-",
-                                                       onset.Month, "-",
-                                                       onset.Day)) + 35
-     }
-
-     if (!is.na(onset) & (ons < cne)) {
-
-    cessaWind.end.yr <- lubridate::as_date(paste0(year.vec[yr],
-                                                  substr(cessaWind.end,5,10)))
-
-     } else {
-
-    cessaWind.end.yr <- lubridate::as_date(paste0(year.vec[yr+1],
-                                                  substr(cessaWind.end, 5, 10)))
-
-     }
-
-     if (!is.na(onset)) {
-
-  data.cessation.yr = data[which(cessaWind.start.yr ==
-                                   data$date):which((cessaWind.end.yr + 20) ==
-                                                      data$date), ]
-
+      if (ons < one) {
+        onsetWind.end.yr <- lubridate::as_date(paste0(
+          year.vec[yr],
+          substr(onsetWind.end, 5, 10)
+        ))
+      } else {
+        onsetWind.end.yr <- lubridate::as_date(paste0(
+          year.vec[yr + 1],
+          substr(onsetWind.end, 5, 10)
+        ))
       }
 
- cessation <- NA
+      data.onset.yr <-
+        data[which(onsetWind.start.yr ==
+          data$date):which((onsetWind.end.yr + 20) == data$date), ]
 
- if (!is.na(onset)) {
+      # ***** onset date
 
-  for (day in 1:(nrow(data.cessation.yr)- 20)) {
+      onset <- NA
 
-    if (is.na(cessation) & (length(which(is.na(data.cessation.yr$R))) < 1) &
-        (data.cessation.yr$R[day] < Rindex.thr) &
-        (data.cessation.yr$R[day+1] < Rindex.thr) &
-        (data.cessation.yr$R[day+2] < Rindex.thr) &
-        (data.cessation.yr$R[day+3] < Rindex.thr) &
-        (data.cessation.yr$R[day+4] < Rindex.thr) &
-        (data.cessation.yr$R[day+5] < Rindex.thr)) {
+      for (day in 1:(nrow(data.onset.yr) - 20)) {
+        if (is.na(onset) & (length(which(is.na(data.onset.yr$R))) < 1) &
+          (data.onset.yr$R[day] >= Rindex.thr) &
+          (data.onset.yr$R[day + 1] >= Rindex.thr) &
+          (data.onset.yr$R[day + 2] >= Rindex.thr) &
+          (data.onset.yr$R[day + 3] >= Rindex.thr) &
+          (data.onset.yr$R[day + 4] >= Rindex.thr) &
+          (data.onset.yr$R[day + 5] >= Rindex.thr)) {
+          avail.vec <- data.onset.yr$AVAIL[day:(day + 20)]
+          avail.grDay <- length(which(avail.vec > PAW.thr))
 
-      avail.vec <- data.cessation.yr$AVAIL[(day):(day+20)]
-      avail.grDay <- length(which(avail.vec <= (PAW.thr+10)))
+          if (avail.grDay > 12) {
+            onset <- day
+          } else {
+            (next)
+          }
+        }
+      }
 
-      if (avail.grDay > 15) {
 
-        cessation <- day+1
+      if (is.na(onset)) {
+        onset.index <- NA
+      } else {
+        onset.index <- data.onset.yr$YYDOY[onset]
+      }
+      if (is.na(onset)) {
+        onset.Year <- NA
+      } else {
+        onset.Year <- as.numeric(substr(onset.index, 1, 4))
+      }
+      if (is.na(onset)) {
+        onset.Month <- NA
+      } else {
+        onset.Month <- as.numeric(data.onset.yr$Month[onset])
+      }
+      if (is.na(onset)) {
+        onset.Day <- NA
+      } else {
+        onset.Day <- as.numeric(data.onset.yr$Day[onset])
+      }
 
-      } else (next)
+      onset.yr.dF <- data.frame(
+        Year = as.numeric(year.vec[yr]),
+        onset.Year = onset.Year,
+        onset.Month = onset.Month,
+        onset.Day = onset.Day,
+        onset.JD = as.numeric(substr(onset.index, 6, 8)),
+        onset.Value = onset
+      )
+
+      Onset.dF[yr, ] <- onset.yr.dF
+
+      # *****************************************************************************
+
+      if (!is.na(onset)) {
+        cessaWind.start.yr <- lubridate::as_date(paste0(
+          onset.Year, "-",
+          onset.Month, "-",
+          onset.Day
+        )) + 35
+      }
+
+      if (!is.na(onset) & (ons < cne)) {
+        cessaWind.end.yr <- lubridate::as_date(paste0(
+          year.vec[yr],
+          substr(cessaWind.end, 5, 10)
+        ))
+      } else {
+        cessaWind.end.yr <- lubridate::as_date(paste0(
+          year.vec[yr + 1],
+          substr(cessaWind.end, 5, 10)
+        ))
+      }
+
+      if (!is.na(onset)) {
+        data.cessation.yr <- data[which(cessaWind.start.yr ==
+          data$date):which((cessaWind.end.yr + 20) ==
+          data$date), ]
+      }
+
+      cessation <- NA
+
+      if (!is.na(onset)) {
+        for (day in 1:(nrow(data.cessation.yr) - 20)) {
+          if (is.na(cessation) & (length(which(is.na(data.cessation.yr$R))) < 1) &
+            (data.cessation.yr$R[day] < Rindex.thr) &
+            (data.cessation.yr$R[day + 1] < Rindex.thr) &
+            (data.cessation.yr$R[day + 2] < Rindex.thr) &
+            (data.cessation.yr$R[day + 3] < Rindex.thr) &
+            (data.cessation.yr$R[day + 4] < Rindex.thr) &
+            (data.cessation.yr$R[day + 5] < Rindex.thr)) {
+            avail.vec <- data.cessation.yr$AVAIL[(day):(day + 20)]
+            avail.grDay <- length(which(avail.vec <= (PAW.thr + 10)))
+
+            if (avail.grDay > 15) {
+              cessation <- day + 1
+            } else {
+              (next)
+            }
+          }
+        }
+      }
+
+      if (is.na(onset)) {
+        cessation <- NA
+      }
+
+
+      if (is.na(cessation)) {
+        cessation.index <- NA
+      } else {
+        cessation.index <- data.cessation.yr$YYDOY[cessation]
+      }
+      if (is.na(cessation)) {
+        cessation.Year <- NA
+      } else {
+        cessation.Year <- as.numeric(substr(cessation.index, 1, 4))
+      }
+      if (is.na(cessation)) {
+        cessation.Month <- NA
+      } else {
+        cessation.Month <- as.numeric(data.cessation.yr$Month[cessation])
+      }
+      if (is.na(cessation)) {
+        cessation.Day <- NA
+      } else {
+        cessation.Day <- as.numeric(data.cessation.yr$Day[cessation])
+      }
+
+
+      cessation.yr.dF <- data.frame(
+        Year = as.numeric(year.vec[yr]),
+        cessation.Year = cessation.Year,
+        cessation.Month = cessation.Month,
+        cessation.Day = cessation.Day,
+        cessation.JD = as.numeric(substr(
+          cessation.index, 6, 8
+        )),
+        cessation.Value = (cessation +
+          (Onset.dF$onset.Value[yr]
+          + 35))
+      )
+
+      Cessation.dF[yr, ] <- cessation.yr.dF
+
+      # *****************************************************************************
+      duration <- NA
+
+      if (!is.na(onset) & !is.na(cessation)) {
+        duration <- length(seq(
+          from =
+            lubridate::as_date(paste0(
+              onset.yr.dF$onset.Year, "-",
+              onset.yr.dF$onset.Month, "-",
+              onset.yr.dF$onset.Day
+            )),
+          to = lubridate::as_date(paste0(
+            cessation.yr.dF$cessation.Year, "-",
+            cessation.yr.dF$cessation.Month, "-",
+            cessation.yr.dF$cessation.Day
+          )),
+          by = "day"
+        ))
+      }
+
+      if (is.na(onset)) {
+        duration <- NA
+      }
+
+      Duration.yr.dF <- data.frame(
+        Year = as.numeric(year.vec[yr]),
+        onset.YYYYDOY = onset.index,
+        cessation.YYYYDOY = cessation.index,
+        Duration = duration
+      )
+
+      Duration.dF[yr, ] <- Duration.yr.dF
     }
-  }
-}
 
- if (is.na(onset)) {cessation = NA}
-
-
- if (is.na(cessation)){cessation.index = NA}else
-   {cessation.index = data.cessation.yr$YYDOY[cessation]}
- if (is.na(cessation)){cessation.Year = NA} else
-   {cessation.Year = as.numeric(substr(cessation.index, 1, 4))}
- if (is.na(cessation)){cessation.Month = NA} else
-   {cessation.Month = as.numeric(data.cessation.yr$Month[cessation])}
- if (is.na(cessation)){cessation.Day = NA} else
-   {cessation.Day = as.numeric(data.cessation.yr$Day[cessation])}
-
-
- cessation.yr.dF <- data.frame(Year = as.numeric(year.vec[yr]),
-                               cessation.Year = cessation.Year,
-                               cessation.Month = cessation.Month,
-                               cessation.Day = cessation.Day,
-                               cessation.JD = as.numeric(substr(
-                                 cessation.index, 6, 8)),
-                               cessation.Value = (cessation +
-                                                    (Onset.dF$onset.Value[yr]
-                                                     + 35)))
-
-   Cessation.dF[yr,] <- cessation.yr.dF
-
-# *****************************************************************************
-  duration <- NA
-
-  if (!is.na(onset) & !is.na(cessation)) {
-
- duration <- length(seq(from =
-                        lubridate::as_date(paste0(onset.yr.dF$onset.Year, "-",
-                                                  onset.yr.dF$onset.Month, "-",
-                                                  onset.yr.dF$onset.Day)),
-                        to = lubridate::as_date(paste0(cessation.yr.dF$cessation.Year,"-",
-                                                       cessation.yr.dF$cessation.Month,"-",
-                                                       cessation.yr.dF$cessation.Day)),
-                        by = "day"))
-
-  }
-
-  if (is.na(onset)) {duration = NA}
-
-   Duration.yr.dF <- data.frame(Year = as.numeric(year.vec[yr]),
-                                onset.YYYYDOY = onset.index,
-                                cessation.YYYYDOY = cessation.index,
-                                Duration = duration)
-
-   Duration.dF[yr,] <- Duration.yr.dF
-
-
-   }
-
-# *****************************************************************************
+    # *****************************************************************************
   } # for yr
 
 
- seasCal.lst <- list(Onset.dF, Cessation.dF, Duration.dF )
+  seasCal.lst <- list(Onset.dF, Cessation.dF, Duration.dF)
 
- return(seasCal.lst)
+  return(seasCal.lst)
 
-###############################################################################
-
+  ###############################################################################
 }
 
 ###############################################################################

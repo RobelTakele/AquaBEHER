@@ -42,12 +42,9 @@ It calculates the amount of water present in the root zone of a homogeneous
 grass canopy growing on a well-drained and homogeneous soil.
 }
 \examples{
-
 \donttest{
 # load example data:
 data(AgroClimateData)
-
-
 }
 }
 \references{

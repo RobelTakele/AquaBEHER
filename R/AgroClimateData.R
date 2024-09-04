@@ -1,10 +1,12 @@
-##################################################################################################
-##################################################################################################
+###############################################################################
+###############################################################################
 #
-#     AgroClimateData.R: Daily Surface Meteorological Data (1982-2022) Extracted from AgERA5
+#   AgroClimateData.R: Daily Surface Meteorological Data (1982-2022) Extracted
+#   from AgERA5
 #
-#     Copyright (C) 2024 Institute of Plant Sciences, Sant’Anna School of Advanced Studies,
-#     Pisa, Italy (https://www.santannapisa.it/en/institute/plant-sciences).
+#     Copyright (C) 2024 Institute of Plant Sciences, Sant’Anna School of
+#     Advanced Studies, Pisa, Italy
+#     (https://www.santannapisa.it/en/institute/plant-sciences).
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -19,15 +21,16 @@
 #     You should have received a copy of the GNU General Public License
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
-##################################################################################################
-##################################################################################################
+###############################################################################
+###############################################################################
 
 #' @title Daily Surface Meteorological Data (1982-2022) Extracted from AgERA5
 #'
-#' @description The AgERA5 dataset provides daily surface meteorological data for the period from
-#' 1979 to present as input for agriculture and agro-ecological studies. This dataset is based on
-#' the hourly ECMWF ERA5 data at surface level, with data from January 1, 1982, through December
-#' 31, 2022, extracted for a grid located in Angochen, Nampula province of Mozambique.
+#' @description The AgERA5 dataset provides daily surface meteorological data
+#' for the period from 1979 to present as input for agriculture and
+#' agro-ecological studies. This dataset is based on the hourly ECMWF ERA5 data
+#' at surface level, with data from January 1, 1982, through December 31, 2022,
+#' extracted for a grid located in Angochen, Nampula province of Mozambique.
 #'
 #' @docType data
 #'
@@ -43,23 +46,28 @@
 #' - **Month**: Month of record ("MM").
 #' - **Day**: Day of record ("DD").
 #' - **Rain**: Daily precipitation in millimeters (mm/day).
-#' - **Tmax**: Daily maximum temperature at 2 meters height in degrees Celsius (°C).
-#' - **Tmin**: Daily minimum temperature at 2 meters height in degrees Celsius (°C).
-#' - **Rs**: Total amount of energy provided by solar radiation at the surface over the period
-#'   00-24h local time per unit area and time (MJ/m^2/day).
-#' - **Tdew**: Mean dewpoint temperature at a height of 2 metres above the surface over the period
-#'   00h-24h local time (°C).
-#' - **Uz**: Mean wind speed at a height of 2 metres above the surface over the period 00h-24h
-#'   local time (m/s).
+#' - **Tmax**: Daily maximum temperature at 2 meters height in degrees Celsius
+#' (°C).
+#' - **Tmin**: Daily minimum temperature at 2 meters height in degrees Celsius
+#' (°C).
+#' - **Rs**: Total amount of energy provided by solar radiation at the surface
+#' over the period 00-24h local time per unit area and time (MJ/m^2/day).
+#' - **Tdew**: Mean dewpoint temperature at a height of 2 metres above the
+#' surface over the period 00h-24h local time (°C).
+#' - **Uz**: Mean wind speed at a height of 2 metres above the surface over the
+#' period 00h-24h local time (m/s).
 #'
-#' @source \url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-agrometeorological-indicators?tab=overview}
+#' @source \url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/
+#' sis-agrometeorological-indicators?tab=overview}
 #'
-#' @keywords datasets, agriculture, climate, agro-ecology, meteorology, Mozambique
+#' @keywords datasets, agriculture, agroclimate, agro-ecology
 #'
-#' @references AgERA5, 2021, Copernicus Climate Change Service (C3S), Fifth generation of ECMWF
-#' atmospheric reanalysis of the global climate for agriculture and agro-ecological studies.
-#' Copernicus Climate Change Service Climate Data Store (CDS), July 2021.
-#' \url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-agrometeorological-indicators?tab=overview}
+#' @references AgERA5, 2021, Copernicus Climate Change Service (C3S), Fifth
+#' generation of ECMWF atmospheric reanalysis of the global climate for
+#' agriculture and agro-ecological studies. Copernicus Climate Change Service
+#' Climate Data Store (CDS), July 2021.
+#' \url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/
+#' sis-agrometeorological-indicators?tab=overview}
 #'
 #' @seealso \code{\link{climateData}}, \code{\link{calcEto}}
 #'
@@ -75,8 +83,8 @@
 #'
 "AgroClimateData"
 
-###################################################################################################
-###################################################################################################
-#                          >>>>>>>>>>   End of code   <<<<<<<<<<                                  #
-###################################################################################################
-###################################################################################################
+###############################################################################
+###############################################################################
+#                >>>>>>>>>>   End of code   <<<<<<<<<<                        #
+###############################################################################
+###############################################################################

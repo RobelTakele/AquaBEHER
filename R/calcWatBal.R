@@ -69,21 +69,17 @@
 #' @importFrom sp coordinates CRS proj4string
 #'
 #' @examples
-#'
 #' \donttest{
 #' # load example data:
 #' data(AgroClimateData)
-#'
-#'
 #' }
-#'@export
+#' @export
 
 ###############################################################################
 # ***** function to estimate Rindex: actual to potential evapotranspiration
 # ratio based on Jones (1987)
 
 calcWatBal <- function(data, soilWHC) {
-
   # ***** initialize parameters
   # CN : Runoff curve number
   # DC : Drainage coefficient (mm3.mm-3)
@@ -93,26 +89,22 @@ calcWatBal <- function(data, soilWHC) {
   # WATwp : Water content at wilting Point (mm)
   # WATwp = WP*z
 
- # data(rcn, envir = environment())
- # rcn <- terra::rast(system.file("extdata/rcn.tif", package = "AquaBEHER"))
- #
- #  pts.dF <- data.frame(Lat = as.numeric(data$Lat[1]),
- #                       Lon = as.numeric(data$Lon[1]))
- #  pts.sp <- pts.dF
- #  sp::coordinates(pts.sp) <- ~Lon+Lat
- #  sp::proj4string(pts.sp) <- sp::CRS("+proj=longlat")
- #  rcn.pts <- terra::extract(rcn, terra::vect(pts.sp))
+  # data(rcn, envir = environment())
+  # rcn <- terra::rast(system.file("extdata/rcn.tif", package = "AquaBEHER"))
+  #
+  #  pts.dF <- data.frame(Lat = as.numeric(data$Lat[1]),
+  #                       Lon = as.numeric(data$Lon[1]))
+  #  pts.sp <- pts.dF
+  #  sp::coordinates(pts.sp) <- ~Lon+Lat
+  #  sp::proj4string(pts.sp) <- sp::CRS("+proj=longlat")
+  #  rcn.pts <- terra::extract(rcn, terra::vect(pts.sp))
 
-  rcn.pts = NA ## ?????????????
+  rcn.pts <- NA ## ?????????????
 
   if (!is.null(rcn.pts) & !is.na(rcn.pts)) {
-
     CN <- rcn.pts
-
   } else {
-
-    CN <- 65  # *** well managed grass
-
+    CN <- 65 # *** well managed grass
   }
 
   DC <- 0.55 #
@@ -120,9 +112,9 @@ calcWatBal <- function(data, soilWHC) {
   MUF <- 0.1
   WATwp <- 0.15 * soilWHC
   # Maximum abstraction (for run off)
-  S <- 25400/CN-254
+  S <- 25400 / CN - 254
   # Initial Abstraction (for run off)
-  IA <- 0.2*S
+  IA <- 0.2 * S
 
   date.vec <- as.Date(paste0(data$Year, "-", data$Month, "-", data$Day))
 
@@ -131,16 +123,14 @@ calcWatBal <- function(data, soilWHC) {
   data$Rain[data$Rain < 2] <- 0
 
   for (day in seq_along(date.vec)) {
-
     if (day == 1) {
-
       WAT0 <- 0
 
       # Change in water before drainage (Precipitation - Runoff)
 
-      if (data$Rain[day] > IA){
-        data$RUNOFF[day] <- (data$Rain[day]-0.2*S)^2/(data$Rain[day]+0.8*S)
-      }else{
+      if (data$Rain[day] > IA) {
+        data$RUNOFF[day] <- (data$Rain[day] - 0.2 * S)^2 / (data$Rain[day] + 0.8 * S)
+      } else {
         data$RUNOFF[day] <- 0
       }
 
@@ -148,9 +138,9 @@ calcWatBal <- function(data, soilWHC) {
 
       # Calculating the amount of deep drainage
 
-      if ((WAT0+data$Rain[day]-data$RUNOFF[day]) > soilWHC){
-        data$DRAIN[day] <- DC*(WAT0+data$Rain[day]-data$RUNOFF[day]-soilWHC)
-      }else{
+      if ((WAT0 + data$Rain[day] - data$RUNOFF[day]) > soilWHC) {
+        data$DRAIN[day] <- DC * (WAT0 + data$Rain[day] - data$RUNOFF[day] - soilWHC)
+      } else {
         data$DRAIN[day] <- 0
       }
 
@@ -158,28 +148,26 @@ calcWatBal <- function(data, soilWHC) {
 
       # Calculating the amount of water lost by transpiration (after drainage)
 
-      data$TRAN[day] <- min(MUF*(WAT0+data$Rain[day]-data$RUNOFF[day]-
-                                   data$DRAIN[day]- WATwp), data$Eto[day])
+      data$TRAN[day] <- min(MUF * (WAT0 + data$Rain[day] - data$RUNOFF[day] -
+        data$DRAIN[day] - WATwp), data$Eto[day])
       data$TRAN[day] <- max(data$TRAN[day], 0)
       data$TRAN[day] <- min(data$TRAN[day], soilWHC)
 
       data$R[day] <- data$TRAN[day] / data$Eto[day]
       data$TRAN[day] <- max(data$TRAN[day], (data$R[day] * data$Eto[day]))
 
-      data$AVAIL[day] <- WAT0 + (data$Rain[day]-data$RUNOFF[day]-
-                                   data$DRAIN[day] - data$TRAN[day])
+      data$AVAIL[day] <- WAT0 + (data$Rain[day] - data$RUNOFF[day] -
+        data$DRAIN[day] - data$TRAN[day])
       data$AVAIL[day] <- min(data$AVAIL[day], soilWHC)
       data$AVAIL[day] <- max(data$AVAIL[day], 0)
-
     } else {
-
-      WAT0 <- data$AVAIL[day-1]
+      WAT0 <- data$AVAIL[day - 1]
 
       # Change in water before drainage (Precipitation - Runoff)
 
-      if (data$Rain[day] > IA){
-        data$RUNOFF[day] <- (data$Rain[day]-0.2*S)^2/(data$Rain[day]+0.8*S)
-      }else{
+      if (data$Rain[day] > IA) {
+        data$RUNOFF[day] <- (data$Rain[day] - 0.2 * S)^2 / (data$Rain[day] + 0.8 * S)
+      } else {
         data$RUNOFF[day] <- 0
       }
 
@@ -187,9 +175,9 @@ calcWatBal <- function(data, soilWHC) {
 
       # Calculating the amount of deep drainage
 
-      if ((WAT0+data$Rain[day]-data$RUNOFF[day]) > soilWHC){
-        data$DRAIN[day] <- DC*(WAT0+data$Rain[day]-data$RUNOFF[day]-soilWHC)
-      }else{
+      if ((WAT0 + data$Rain[day] - data$RUNOFF[day]) > soilWHC) {
+        data$DRAIN[day] <- DC * (WAT0 + data$Rain[day] - data$RUNOFF[day] - soilWHC)
+      } else {
         data$DRAIN[day] <- 0
       }
 
@@ -197,21 +185,19 @@ calcWatBal <- function(data, soilWHC) {
 
       # Calculating the amount of water lost by transpiration (after drainage)
 
-      data$TRAN[day] <- min(MUF*(WAT0+data$Rain[day]-data$RUNOFF[day]-
-                                   data$DRAIN[day]- WATwp), data$Eto[day])
+      data$TRAN[day] <- min(MUF * (WAT0 + data$Rain[day] - data$RUNOFF[day] -
+        data$DRAIN[day] - WATwp), data$Eto[day])
       data$TRAN[day] <- max(data$TRAN[day], 0)
       data$TRAN[day] <- min(data$TRAN[day], soilWHC)
 
       data$R[day] <- data$TRAN[day] / data$Eto[day]
       data$TRAN[day] <- max(data$TRAN[day], (data$R[day] * data$Eto[day]))
 
-      data$AVAIL[day] <- WAT0 + (data$Rain[day]-data$RUNOFF[day]-
-                                   data$DRAIN[day] - data$TRAN[day])
+      data$AVAIL[day] <- WAT0 + (data$Rain[day] - data$RUNOFF[day] -
+        data$DRAIN[day] - data$TRAN[day])
       data$AVAIL[day] <- min(data$AVAIL[day], soilWHC)
       data$AVAIL[day] <- max(data$AVAIL[day], 0)
-
     }
-
   }
 
   data$R <- round(data$R, 3)
@@ -221,11 +207,9 @@ calcWatBal <- function(data, soilWHC) {
   data$RUNOFF <- round(data$RUNOFF, 3)
 
   return(data)
-
 }
 
 
 ##############################################################################
 ##############################################################################
 ##############################################################################
-

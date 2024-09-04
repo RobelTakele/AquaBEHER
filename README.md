@@ -73,27 +73,32 @@ head(AgroClimateData)
 ```
 
 ``` r
-
 Eto.daily <- calcEto(AgroClimateData, method = "PM", Zh = 10)
+#> Adjusted 0 instances where Tmin was equal to or greater than Tmax.
+#> Penman-Monteith FAO56 Reference Crop ET
+#> Evaporative surface: FAO-56 hypothetical short grass, albedo = 0.23 ; surface resistance = 70 sm^-1; crop height = 0.12 m; roughness height = 0.02 m
+#> Timestep: daily
+#> Units: mm
+#> Time duration: 1982-01-01 to 2022-12-31
 AgroClimateData$Eto <- Eto.daily$ET.Daily
-soilWHC = 100
+soilWHC <- 100
 watBal <- calcWatBal(AgroClimateData, soilWHC)
 ```
 
 The output of daily soil water balance can be ploted:
 
 ``` r
-
-watBal <- watBal[watBal$Year %in% c(2010, 2020),]
+watBal <- watBal[watBal$Year %in% c(2010, 2020), ]
 date.vec <- as.Date.character(paste0(watBal$Year, "-", watBal$Month, "-", watBal$Day))
 
-plot(watBal$AVAIL, ty="l", xlab="Days since 2010", ylab="Water (mm)", col="black", lwd = 1, lty = 2)
-lines(watBal$Eto, col="red", lwd = 3)
-lines(watBal$Rain, col="blue", lwd = 1)
+plot(watBal$AVAIL, ty = "l", xlab = "Days since 2010", ylab = "Water (mm)", col = "black", lwd = 1, lty = 2)
+lines(watBal$Eto, col = "red", lwd = 3)
+lines(watBal$Rain, col = "blue", lwd = 1)
 
-   legend("bottom",c("Rain","Eto","Available Moisture"),
-         horiz=TRUE, bty='n', cex=1,lty=c(1,1,2),lwd=c(2,2,2), inset=c(1,1),
-         xpd=TRUE, col=c("blue","red","black"))
+legend("bottom", c("Rain", "Eto", "Available Moisture"),
+  horiz = TRUE, bty = "n", cex = 1, lty = c(1, 1, 2), lwd = c(2, 2, 2), inset = c(1, 1),
+  xpd = TRUE, col = c("blue", "red", "black")
+)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
@@ -112,10 +117,4 @@ class="uri">mailto:m.dellacqua@santannapisa.it</a>) or Mario Enrico Pè
 (<a href="mailto:m.pe@santannapisa.it"
 class="uri">mailto:m.pe@santannapisa.it</a>). You can find out more
 about us visiting the group web page
-(<http://www.capitalisegenetics.santannapisa.it/>) and following us on
-Twitter [@GenLab_SSA](https://twitter.com/genlab_ssa?lang=en)
-
-We are committed to the [free
-software](https://www.fsf.org/about/what-is-free-software) and
-[FAIR](https://www.go-fair.org/fair-principles/) principles. This set of
-repositories collects our latest developments and provide reusable code.
+(<http://www.capitalisegenetics.santannapisa.it/>)

@@ -3,7 +3,8 @@
 \docType{data}
 \name{climateData}
 \alias{climateData}
-\title{Daily Weather Data (1996-2020) from Angochen Weather Observing Station, Mozambique}
+\title{Daily Weather Data (1996-2020) from Angochen Weather Observing
+Station, Mozambique}
 \format{
 A data frame containing daily values of weather variables:
 \itemize{
@@ -15,8 +16,10 @@ A data frame containing daily values of weather variables:
 \item \strong{Month}: Month of the record (MM).
 \item \strong{Day}: Day of the record (DD).
 \item \strong{Rain}: Daily rainfall in millimeters (mm).
-\item \strong{Tmax}: Daily maximum temperature at 2 meters height in degrees Celsius (°C).
-\item \strong{Tmin}: Daily minimum temperature at 2 meters height in degrees Celsius (°C).
+\item \strong{Tmax}: Daily maximum temperature at 2 meters height in degrees Celsius
+(°C).
+\item \strong{Tmin}: Daily minimum temperature at 2 meters height in degrees Celsius
+(°C).
 }
 }
 \source{
@@ -26,9 +29,10 @@ INAM - Instituto Nacional de Meteorologia, Mozambique
 data(climateData)
 }
 \description{
-This R data object contains daily weather data obtained from Instituto Nacional de
-Meteorologia (INAM). The sample data includes daily raw weather data from January 1, 1996, to
-December 31, 2020, from a weather station located in Angochen, Nampula province of Mozambique.
+This R data object contains daily weather data obtained from
+Instituto Nacional de Meteorologia (INAM). The sample data includes daily raw
+weather data from January 1, 1996, to December 31, 2020, from a weather
+station located in Angochen, Nampula province of Mozambique.
 }
 \examples{
 ## Load the climate data

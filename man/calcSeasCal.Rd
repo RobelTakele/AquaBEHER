@@ -102,7 +102,6 @@ The \emph{duration} of the rainy season is the total number of days from
 onset to cessation of the season.
 }
 \examples{
-
 \donttest{
 # load example data:
 data(AgroClimateData)
@@ -112,8 +111,6 @@ PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
 # Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 AgroClimateData$Eto <- PET$ET.Daily
-
-
 }
 }
 \references{

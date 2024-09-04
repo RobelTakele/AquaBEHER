@@ -16,27 +16,31 @@ A data frame containing daily observations of weather variables:
 \item \strong{Month}: Month of record ("MM").
 \item \strong{Day}: Day of record ("DD").
 \item \strong{Rain}: Daily precipitation in millimeters (mm/day).
-\item \strong{Tmax}: Daily maximum temperature at 2 meters height in degrees Celsius (°C).
-\item \strong{Tmin}: Daily minimum temperature at 2 meters height in degrees Celsius (°C).
-\item \strong{Rs}: Total amount of energy provided by solar radiation at the surface over the period
-00-24h local time per unit area and time (MJ/m^2/day).
-\item \strong{Tdew}: Mean dewpoint temperature at a height of 2 metres above the surface over the period
-00h-24h local time (°C).
-\item \strong{Uz}: Mean wind speed at a height of 2 metres above the surface over the period 00h-24h
-local time (m/s).
+\item \strong{Tmax}: Daily maximum temperature at 2 meters height in degrees Celsius
+(°C).
+\item \strong{Tmin}: Daily minimum temperature at 2 meters height in degrees Celsius
+(°C).
+\item \strong{Rs}: Total amount of energy provided by solar radiation at the surface
+over the period 00-24h local time per unit area and time (MJ/m^2/day).
+\item \strong{Tdew}: Mean dewpoint temperature at a height of 2 metres above the
+surface over the period 00h-24h local time (°C).
+\item \strong{Uz}: Mean wind speed at a height of 2 metres above the surface over the
+period 00h-24h local time (m/s).
 }
 }
 \source{
-\url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-agrometeorological-indicators?tab=overview}
+\url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/
+sis-agrometeorological-indicators?tab=overview}
 }
 \usage{
 data(AgroClimateData)
 }
 \description{
-The AgERA5 dataset provides daily surface meteorological data for the period from
-1979 to present as input for agriculture and agro-ecological studies. This dataset is based on
-the hourly ECMWF ERA5 data at surface level, with data from January 1, 1982, through December
-31, 2022, extracted for a grid located in Angochen, Nampula province of Mozambique.
+The AgERA5 dataset provides daily surface meteorological data
+for the period from 1979 to present as input for agriculture and
+agro-ecological studies. This dataset is based on the hourly ECMWF ERA5 data
+at surface level, with data from January 1, 1982, through December 31, 2022,
+extracted for a grid located in Angochen, Nampula province of Mozambique.
 }
 \examples{
 ## Load the agroclimate data
@@ -50,17 +54,17 @@ head(AgroClimateData)
 
 }
 \references{
-AgERA5, 2021, Copernicus Climate Change Service (C3S), Fifth generation of ECMWF
-atmospheric reanalysis of the global climate for agriculture and agro-ecological studies.
-Copernicus Climate Change Service Climate Data Store (CDS), July 2021.
-\url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-agrometeorological-indicators?tab=overview}
+AgERA5, 2021, Copernicus Climate Change Service (C3S), Fifth
+generation of ECMWF atmospheric reanalysis of the global climate for
+agriculture and agro-ecological studies. Copernicus Climate Change Service
+Climate Data Store (CDS), July 2021.
+\url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/
+sis-agrometeorological-indicators?tab=overview}
 }
 \seealso{
 \code{\link{climateData}}, \code{\link{calcEto}}
 }
-\keyword{Mozambique}
 \keyword{agriculture,}
-\keyword{agro-ecology,}
-\keyword{climate,}
+\keyword{agro-ecology}
+\keyword{agroclimate,}
 \keyword{datasets,}
-\keyword{meteorology,}

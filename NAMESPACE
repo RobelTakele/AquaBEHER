@@ -3,11 +3,8 @@
 export(calcEto)
 export(calcSeasCal)
 export(calcWatBal)
-<<<<<<< HEAD
 export(fcstWSC)
-=======
 export(rcn)
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 importFrom(dplyr,group_by)
 importFrom(dplyr,summarize)
 importFrom(ggplot2,geom_area)
@@ -27,7 +24,4 @@ importFrom(raster,raster)
 importFrom(sp,CRS)
 importFrom(sp,coordinates)
 importFrom(sp,proj4string)
-<<<<<<< HEAD
 importFrom(stats,quantile)
-=======
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a

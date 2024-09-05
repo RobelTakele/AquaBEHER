@@ -64,7 +64,4 @@ sis-agrometeorological-indicators?tab=overview}
 \seealso{
 \code{\link{climateData}}, \code{\link{calcEto}}
 }
-\keyword{agriculture,}
-\keyword{agro-ecology}
-\keyword{agroclimate,}
-\keyword{datasets,}
+\keyword{datasets}

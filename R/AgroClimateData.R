@@ -60,8 +60,6 @@
 #' @source \url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/
 #' sis-agrometeorological-indicators?tab=overview}
 #'
-#' @keywords datasets, agriculture, agroclimate, agro-ecology
-#'
 #' @references AgERA5, 2021, Copernicus Climate Change Service (C3S), Fifth
 #' generation of ECMWF atmospheric reanalysis of the global climate for
 #' agriculture and agro-ecological studies. Copernicus Climate Change Service

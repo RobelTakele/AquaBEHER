@@ -102,13 +102,13 @@
 #' \code{\link{calcSeasCal}}
 #'
 #' @examples
-#' # Load example data:
+#' ## Load sample data:
 #' data(climateData)
-#' calcEto(climateData, method = "HS")
+#' PET.HS <- calcEto(climateData, method = "HS")
 #'
-#' # Load example data:
+#' ## Load sample data:
 #' data(AgroClimateData)
-#' calcEto(AgroClimateData, method = "PM", crop = "short")
+#' PET.PM <- calcEto(AgroClimateData, method = "PM", crop = "short")
 #'
 #' @export
 ###############################################################################

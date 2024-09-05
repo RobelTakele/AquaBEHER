@@ -1,7 +1,11 @@
-#     calcWatBal.R Soil Water Balance
+###############################################################################
+###############################################################################
 #
-#     Copyright (C) 2022 Center of Plant Sciences, Scuola Superiore Sant’Anna
-#     (http://www.capitalisegenetics.santannapisa.it)
+#      calcWatBal.R Soil Water Balance
+#
+#     Copyright (C) 2024 Institute of Plant Sciences, Sant’Anna School of
+#     Advanced Studies, Pisa, Italy
+#     (https://www.santannapisa.it/en/institute/plant-sciences).
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -17,64 +21,71 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
+###############################################################################
 
-#' @title Soil Water Balance
+#' @title Daily Soil Water Balance Estimation
 #'
-#' @description Function to estimate a budget-based daily soil water balance.
-#' It calculates the amount of water present in the root zone of a homogeneous
-#' grass canopy growing on a well-drained and homogeneous soil.
+#' @description This function estimates the daily soil water balance based on a
+#' simple mass balance budget approach. It calculates the amount of water
+#' available in the root zone  of a homogeneous grass canopy growing on a
+#' well-drained, homogeneous soil.
 #'
-#' @param data a dataframe containing the required variables: Columns must
-#' contain the following parameters:
+#' @param data A data frame containing the required input variables. The data
+#' frame must include the following columns:
+#' \itemize{
+#'   \item \strong{Lat}: Latitude of the site (decimal degrees).
+#'   \item \strong{Lon}: Longitude of the site (decimal degrees).
+#'   \item \strong{Elev}: Elevation above sea level (meters).
+#'   \item \strong{Year}: Year of the record ("YYYY").
+#'   \item \strong{Month}: Month of the record ("MM").
+#'   \item \strong{Day}: Day of the record ("DD").
+#'   \item \strong{Rain}: Daily rainfall (mm).
+#'   \item \strong{Eto}: Daily potential evapotranspiration (mm).
+#' }
 #'
-#'        Lat: latitude of the site in decimal degrees.
-#'        Lon: longitude of the site in decimal degrees.
-#'        Elev: elevation above sea level in (meters).
-#'        Year: year of record "YYYY".
-#'        Month: month of record "MM".
-#'        Day: day of record "DD".
-#'        Rain: daily rainfall in (mm).
-#'        Eto: daily potential evapotranspiration in (mm).
+#' @param soilWHC Numeric. Water holding capacity of the soil (mm).
 #'
-#' @param soilWHC \verb{  }Water holding capacity of the soil in (mm).
+#' @return A data frame with the following components:
+#' \itemize{
+#'   \item \strong{DRAIN}: Deep drainage (mm).
+#'   \item \strong{TRAN}: Water lost by transpiration (mm).
+#'   \item \strong{RUNOFF}: Surface runoff (mm).
+#'   \item \strong{AVAIL}: Available soil moisture storage (mm).
+#'   \item \strong{R}: Ratio of actual-to-potential evapotranspiration.
+#' }
 #'
-#' @return The function generates a data frame containing the following
-#' components:
+#' @references
+#' Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. (1998). \emph{Crop
+#' Evapotranspiration: Guidelines for Computing Crop Water Requirements.} FAO
+#' Irrigation and Drainage Paper no. 56, FAO: Rome, Italy. ISBN 92-5-104219-5.
 #'
-#' \emph{\code{DRAIN: amount of deep drainage in (mm).}}
-#'
-#' \emph{\code{TRAN: amount of water lost by transpiration in (mm).}}
-#'
-#' \emph{\code{RUNOFF: surface runoff in (mm).}}
-#'
-#' \emph{\code{AVAIL: available soil moisture storage in (mm).}}
-#'
-#' \emph{\code{R: actual-to-potential evapotranspiration ratio.}}
-#'
-#'
-#' @references Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop
-#' Evapotranspiration: Guidelines for Computing Crop Water Requirements; FAO
-#' Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998;
-#' ISBN 92-5-104219-5.
-#'
-#' Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water
-#' requirements, Irrigation and Drainage Paper 24, Food and Agriculture
+#' Doorenbos, J., & Pruitt, W.O. (1975). \emph{Guidelines for Predicting Crop
+#' Water Requirements.} Irrigation and Drainage Paper 24, Food and Agriculture
 #' Organization of the United Nations, Rome, 179 p.
 #'
-#' @seealso \code{\link{calcEto}, \link{calcSeasCal}}
+#' @seealso \code{\link{calcEto}}, \code{\link{calcSeasCal}}
 #'
-#' @importFrom graphics legend par
-#' @importFrom graphics lines
-#' @importFrom raster raster extract
+#' @importFrom graphics legend par lines
+#' @importFrom terra rast extract
 #' @importFrom sp coordinates CRS proj4string
 #'
 #' @examples
 #' \donttest{
-#' # load example data:
+#' ## Load sample data
 #' data(AgroClimateData)
+#'
+#' # Estimate daily PET using the Penman-Monteith method
+#' PET.PM <- calcEto(AgroClimateData, method = "PM", Zh = 10)
+#'
+#' # Add the estimated PET to the AgroClimateData frame
+#' AgroClimateData$Eto <- PET.PM$ET.Daily
+#'
+#' # Estimate daily soil water balance for a soil with 100 mm WHC
+#' watBal <- calcWatBal(data = AgroClimateData, soilWHC = 100)
+#'
 #' }
+#'
 #' @export
-
 ###############################################################################
 # ***** function to estimate Rindex: actual to potential evapotranspiration
 # ratio based on Jones (1987)
@@ -89,17 +100,17 @@ calcWatBal <- function(data, soilWHC) {
   # WATwp : Water content at wilting Point (mm)
   # WATwp = WP*z
 
-  # data(rcn, envir = environment())
-  # rcn <- terra::rast(system.file("extdata/rcn.tif", package = "AquaBEHER"))
-  #
-  #  pts.dF <- data.frame(Lat = as.numeric(data$Lat[1]),
-  #                       Lon = as.numeric(data$Lon[1]))
-  #  pts.sp <- pts.dF
-  #  sp::coordinates(pts.sp) <- ~Lon+Lat
-  #  sp::proj4string(pts.sp) <- sp::CRS("+proj=longlat")
-  #  rcn.pts <- terra::extract(rcn, terra::vect(pts.sp))
-
   rcn.pts <- NA ## ?????????????
+
+  # data(rcn, envir = environment())
+  rcn <- terra::rast(system.file("extdata/rcn.tif", package = "AquaBEHER"))
+
+   pts.dF <- data.frame(Lat = as.numeric(data$Lat[1]),
+                        Lon = as.numeric(data$Lon[1]))
+   pts.sp <- pts.dF
+   sp::coordinates(pts.sp) <- ~Lon+Lat
+   sp::proj4string(pts.sp) <- sp::CRS("+proj=longlat")
+   rcn.pts <- as.double(terra::extract(rcn, terra::vect(pts.sp))[2])
 
   if (!is.null(rcn.pts) & !is.na(rcn.pts)) {
     CN <- rcn.pts
@@ -123,13 +134,15 @@ calcWatBal <- function(data, soilWHC) {
   data$Rain[data$Rain < 2] <- 0
 
   for (day in seq_along(date.vec)) {
+
     if (day == 1) {
       WAT0 <- 0
 
       # Change in water before drainage (Precipitation - Runoff)
 
       if (data$Rain[day] > IA) {
-        data$RUNOFF[day] <- (data$Rain[day] - 0.2 * S)^2 / (data$Rain[day] + 0.8 * S)
+        data$RUNOFF[day] <- (data$Rain[day] - 0.2 * S)^2 /
+          (data$Rain[day] + 0.8 * S)
       } else {
         data$RUNOFF[day] <- 0
       }
@@ -139,7 +152,8 @@ calcWatBal <- function(data, soilWHC) {
       # Calculating the amount of deep drainage
 
       if ((WAT0 + data$Rain[day] - data$RUNOFF[day]) > soilWHC) {
-        data$DRAIN[day] <- DC * (WAT0 + data$Rain[day] - data$RUNOFF[day] - soilWHC)
+        data$DRAIN[day] <- DC * (WAT0 + data$Rain[day] - data$RUNOFF[day] -
+                                   soilWHC)
       } else {
         data$DRAIN[day] <- 0
       }
@@ -160,23 +174,27 @@ calcWatBal <- function(data, soilWHC) {
         data$DRAIN[day] - data$TRAN[day])
       data$AVAIL[day] <- min(data$AVAIL[day], soilWHC)
       data$AVAIL[day] <- max(data$AVAIL[day], 0)
+
     } else {
-      WAT0 <- data$AVAIL[day - 1]
+
+       WAT0 <- data$AVAIL[day - 1]
 
       # Change in water before drainage (Precipitation - Runoff)
 
       if (data$Rain[day] > IA) {
-        data$RUNOFF[day] <- (data$Rain[day] - 0.2 * S)^2 / (data$Rain[day] + 0.8 * S)
+        data$RUNOFF[day] <- (data$Rain[day] - 0.2 * S)^2 /
+          (data$Rain[day] + 0.8 * S)
       } else {
         data$RUNOFF[day] <- 0
       }
 
-      data$RUNOFF[day] <- max(data$RUNOFF[day], 0)
+      data$RUNOFF[day] <- max((data$RUNOFF[day]), 0)
 
       # Calculating the amount of deep drainage
 
       if ((WAT0 + data$Rain[day] - data$RUNOFF[day]) > soilWHC) {
-        data$DRAIN[day] <- DC * (WAT0 + data$Rain[day] - data$RUNOFF[day] - soilWHC)
+        data$DRAIN[day] <- DC * (WAT0 + data$Rain[day] -
+                                   data$RUNOFF[day] - soilWHC)
       } else {
         data$DRAIN[day] <- 0
       }

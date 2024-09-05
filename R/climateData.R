@@ -52,8 +52,6 @@
 #'
 #' @source INAM - Instituto Nacional de Meteorologia, Mozambique
 #'
-#' @keywords datasets, weather, climate, Mozambique, meteorology
-#'
 #' @seealso \code{\link{AgroClimateData}}, \code{\link{calcEto}}
 #'
 #' @examples

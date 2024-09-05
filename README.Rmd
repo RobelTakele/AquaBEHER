@@ -18,11 +18,9 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml)
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-<<<<<<< HEAD
 [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-=======
-[![Gitter chat](https://badges.gitter.im/gitterHQ/gitter.png)](https://gitter.im/r-hub/community)
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
+[![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![metacran downloads](https://cranlogs.r-pkg.org/badges/AquaBEHER)](https://cran.r-project.org/package=AquaBEHER)
 <!-- badges: end -->
 
  The goal of AquaBEHER is to computes and integrates daily reference evapotranspiration (Eto) into FAO56 water balance model. 
@@ -63,7 +61,6 @@ What is special about using `README.Rmd` instead of just `README.md`? You can in
 data(AgroClimateData)
 
 head(AgroClimateData)
-<<<<<<< HEAD
 ```
 
 ```{r watBal.daily}
@@ -71,24 +68,11 @@ Eto.daily <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 AgroClimateData$Eto <- Eto.daily$ET.Daily
 soilWHC <- 100
 watBal <- calcWatBal(AgroClimateData, soilWHC)
-=======
- 
-```
-
-```{r watBal.daily}
-
-Eto.daily <- calcEto(AgroClimateData, method = "PM", Zh = 10)
-AgroClimateData$Eto <- Eto.daily$ET.Daily
-soilWHC = 100
-watBal <- calcWatBal(AgroClimateData, soilWHC)
-
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 ```
 
 The output of daily soil water balance can be ploted:
 
 ```{r }
-<<<<<<< HEAD
 watBal <- watBal[watBal$Year %in% c(2010, 2020), ]
 date.vec <- as.Date.character(paste0(watBal$Year, "-", watBal$Month, "-", watBal$Day))
 
@@ -100,41 +84,14 @@ legend("bottom", c("Rain", "Eto", "Available Moisture"),
   horiz = TRUE, bty = "n", cex = 1, lty = c(1, 1, 2), lwd = c(2, 2, 2), inset = c(1, 1),
   xpd = TRUE, col = c("blue", "red", "black")
 )
-=======
-
-watBal <- watBal[watBal$Year %in% c(2010, 2020),]
-date.vec <- as.Date.character(paste0(watBal$Year, "-", watBal$Month, "-", watBal$Day))
-
-plot(watBal$AVAIL, ty="l", xlab="Days since 2010", ylab="Water (mm)", col="black", lwd = 1, lty = 2)
-lines(watBal$Eto, col="red", lwd = 3)
-lines(watBal$Rain, col="blue", lwd = 1)
-
-   legend("bottom",c("Rain","Eto","Available Moisture"),
-         horiz=TRUE, bty='n', cex=1,lty=c(1,1,2),lwd=c(2,2,2), inset=c(1,1),
-         xpd=TRUE, col=c("blue","red","black"))
-
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 ```
 
 
 <img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
 
 
-<<<<<<< HEAD
 The Genetics Group at the **Center of Plant Sciences** is a geographically and culturally diverse research team working on data-drivem agicultural innovation combining crop genetics, climate, and participatory approaches. We are based at **Scuola Superiore Sant’Anna**, Pisa, Italy. 
 
 You can contact us sending an email to Matteo Dell'Acqua (mailto:m.dellacqua@santannapisa.it) or Mario Enrico Pè (mailto:m.pe@santannapisa.it).
 You can find out more about us visiting the group web page (http://www.capitalisegenetics.santannapisa.it/) 
-=======
-The **Center of Plant Sciences Group** is a geographically and culturally diverse research team working on climate and crop genetics 
-at **Scuola Superiore Sant’Anna**, Pisa, Italy. 
-
-You can contact us sending an email to Matteo Dell'Acqua (mailto:m.dellacqua@santannapisa.it) or Mario Enrico Pè (mailto:m.pe@santannapisa.it).
-You can also visit the crop genetics (http://www.capitalisegenetics.santannapisa.it/) web page.
-
-We are committed to the 
-[free software](https://www.fsf.org/about/what-is-free-software) and 
-[FAIR](https://www.go-fair.org/fair-principles/) principles.
-This set of repositories collects our latest developments and provide reusable code.
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 

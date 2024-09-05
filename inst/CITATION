@@ -1,0 +1,16 @@
+citHeader("To cite AquaBEHER in publications, please use:")
+
+bibentry(
+  bibtype  = "Manual",
+  title    = "AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture",
+  author   = c(as.person("Robel Takele"), as.person("Matteo Dell'Acqua")),
+  year     = 2023,
+  note     = "R package version 1.0.0",
+  url      = "https://robeltakele.github.io/AquaBEHER/",
+
+  textVersion =
+    paste("Robel Takele, Matteo Dell'Acqua (2023).",
+          "AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture.",
+          "R package version 1.0.0. Available at https://cran.r-project.org/web/packages/AquaBEHER")
+)
+

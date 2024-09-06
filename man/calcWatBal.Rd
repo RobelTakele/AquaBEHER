@@ -23,13 +23,21 @@ frame must include the following columns:
 \item{soilWHC}{Numeric. Water holding capacity of the soil (mm).}
 }
 \value{
-A data frame with the following components:
+A list with the following components:
+\describe{
+\item{\strong{data}}{A data frame containing the results of the water
+balance calculations, with the following columns:
 \itemize{
 \item \strong{DRAIN}: Deep drainage (mm).
 \item \strong{TRAN}: Water lost by transpiration (mm).
 \item \strong{RUNOFF}: Surface runoff (mm).
 \item \strong{AVAIL}: Available soil moisture storage (mm).
-\item \strong{R}: Ratio of actual-to-potential evapotranspiration.
+\item \strong{R}: Ratio of actual to potential evapotranspiration.
+}
+}
+\item{\strong{warnings}}{A list of warnings related to any unrealistic
+or adjusted values in the input data or parameters used during the water
+balance calculations.}
 }
 }
 \description{

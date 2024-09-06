@@ -45,14 +45,22 @@
 #'
 #' @param soilWHC Numeric. Water holding capacity of the soil (mm).
 #'
-#' @return A data frame with the following components:
-#' \itemize{
-#'   \item \strong{DRAIN}: Deep drainage (mm).
-#'   \item \strong{TRAN}: Water lost by transpiration (mm).
-#'   \item \strong{RUNOFF}: Surface runoff (mm).
-#'   \item \strong{AVAIL}: Available soil moisture storage (mm).
-#'   \item \strong{R}: Ratio of actual-to-potential evapotranspiration.
-#' }
+#' @return A list with the following components:
+#'   \describe{
+#'     \item{\strong{data}}{A data frame containing the results of the water
+#'     balance calculations, with the following columns:
+#'       \itemize{
+#'         \item \strong{DRAIN}: Deep drainage (mm).
+#'         \item \strong{TRAN}: Water lost by transpiration (mm).
+#'         \item \strong{RUNOFF}: Surface runoff (mm).
+#'         \item \strong{AVAIL}: Available soil moisture storage (mm).
+#'         \item \strong{R}: Ratio of actual to potential evapotranspiration.
+#'       }
+#'     }
+#'     \item{\strong{warnings}}{A list of warnings related to any unrealistic
+#'     or adjusted values in the input data or parameters used during the water
+#'     balance calculations.}
+#'   }
 #'
 #' @references
 #' Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. (1998). \emph{Crop
@@ -87,135 +95,170 @@
 #'
 #' @export
 ###############################################################################
-# ***** function to estimate Rindex: actual to potential evapotranspiration
-# ratio based on Jones (1987)
+###############################################################################
 
 calcWatBal <- function(data, soilWHC) {
-  # ***** initialize parameters
-  # CN : Runoff curve number
-  # DC : Drainage coefficient (mm3.mm-3)
-  # MUF : Water Uptake coefficient (mm^3 mm^-3)
-  # WATfc : Maximum Water content at field capacity (mm) >>>>> WHC
-  # WATfc = FC*z
-  # WATwp : Water content at wilting Point (mm)
-  # WATwp = WP*z
 
-  rcn.pts <- NA ## ?????????????
+  warnings.list <- list()
 
-  # data(rcn, envir = environment())
-  rcn <- terra::rast(system.file("extdata/rcn.tif", package = "AquaBEHER"))
+  ## ***** Validate parameters:
 
-   pts.dF <- data.frame(Lat = as.numeric(data$Lat[1]),
-                        Lon = as.numeric(data$Lon[1]))
-   pts.sp <- pts.dF
-   sp::coordinates(pts.sp) <- ~Lon+Lat
-   sp::proj4string(pts.sp) <- sp::CRS("+proj=longlat")
-   rcn.pts <- as.double(terra::extract(rcn, terra::vect(pts.sp))[2])
-
-  if (!is.null(rcn.pts) & !is.na(rcn.pts)) {
-    CN <- rcn.pts
-  } else {
-    CN <- 65 # *** well managed grass
+  if (is.null(data$Rain) || is.null(data$Eto) || is.null(soilWHC)) {
+    stop("Required data missing for 'Rain', 'Eto', or 'soilWHC'")
   }
 
-  DC <- 0.55 #
+  ## ***** Check for missing data:
 
-  MUF <- 0.1
+  if (any(is.na(data$Rain)) || any(is.na(data$Eto)) || is.na(soilWHC)) {
+    stop("Missing values detected in 'Rain', 'Eto', or 'soilWHC'")
+  }
+
+  ## ***** Check for realistic values:
+
+  # Check soil water holding capacity (soilWHC) limits
+  if (soilWHC < 15) {
+    stop("The soil has very low water holding capacity (< 15 mm)")
+  }
+
+  if (soilWHC > 300) {
+
+    soilWHC <- 300
+    warnings.list[["soilWHC"]] <- "The soil water holding capacity exceeded
+    realistic limits and has been set to the upper limit (300 mm)."
+    warning(warnings.list[["soilWHC"]])
+
+  }
+
+  ## Define upper thresholds for Rain and Eto:
+
+  rainU.tr <- 2000
+  petU.tr <- 20
+
+  ## Check for excessive Rain values:
+
+  if (any(data$Rain > rainU.tr)) {
+
+    data$Rain[data$Rain > rainU.tr] <- rainU.tr
+    warnings.list[["Rain"]] <- paste("Some 'Rain' values exceeded", rainU.tr,
+                                     "mm and were set to this limit.")
+    warning(warnings.list[["Rain"]])
+
+  }
+
+  ## Check for excessive Eto values:
+
+  if (any(data$Eto > petU.tr)) {
+
+    data$Eto[data$Eto > petU.tr] <- petU.tr
+    warnings.list[["Eto"]] <- paste("Some 'Eto' values exceeded", petU.tr,
+                                    "mm/day and were set to this limit.")
+    warning(warnings.list[["Eto"]])
+
+  }
+
+###############################################################################
+###############################################################################
+  ## ***** Initialize parameters
+
+  rcn.pts <- NA
+
+  ## ***** Load curve number raster
+
+  rcn <- terra::rast(system.file("extdata/rcn.tif", package = "AquaBEHER"))
+
+  ## ***** Extract curve number
+
+  pts.dF <- data.frame(Lat = as.numeric(data$Lat[1]),
+                       Lon = as.numeric(data$Lon[1]))
+  coords <- cbind(Lon = pts.dF$Lon, Lat = pts.dF$Lat)
+  sp::coordinates(pts.dF) <- coords
+  sp::proj4string(pts.dF) <- sp::CRS("+proj=longlat")
+  vect_points <- terra::vect(pts.dF)
+  rcn.pts <- terra::extract(rcn, vect_points)[, 2]
+
+  CN <- if (!is.null(rcn.pts) && !is.na(rcn.pts)) rcn.pts else 65
+
+  ## ***** Check curve number limits:
+
+  if (CN < 0 || CN > 100) {
+
+    warnings.list[["CN"]] <- "Curve Number (CN) must be between 0 and 100.
+    Set to default value: 65."
+    warning(warnings.list[["CN"]])
+    CN <- 65
+
+  }
+
+  ## ***** ???????
+
+  DC <- 0.55
+  MUF <- 0.096
   WATwp <- 0.15 * soilWHC
-  # Maximum abstraction (for run off)
+
+  ## ***** Maximum abstraction:
+
   S <- 25400 / CN - 254
-  # Initial Abstraction (for run off)
+
+  ## ***** Initial Abstraction as 20% of maximum abstraction (S):
+
   IA <- 0.2 * S
 
   date.vec <- as.Date(paste0(data$Year, "-", data$Month, "-", data$Day))
-
   data$RUNOFF <- data$DRAIN <- data$TRAN <- data$AVAIL <- data$R <- NA
-
   data$Rain[data$Rain < 2] <- 0
+
+###############################################################################
+###############################################################################
+  ## ***** loop over each day:
 
   for (day in seq_along(date.vec)) {
 
     if (day == 1) {
-      WAT0 <- 0
+      WAT0 <- 0  # Initial soil water content (mm)
+    } else {
+      WAT0 <- data$AVAIL[day - 1]
+    }
 
-      # Change in water before drainage (Precipitation - Runoff)
+    ## ***** Calculate runoff:
 
-      if (data$Rain[day] > IA) {
-        data$RUNOFF[day] <- (data$Rain[day] - 0.2 * S)^2 /
-          (data$Rain[day] + 0.8 * S)
-      } else {
-        data$RUNOFF[day] <- 0
-      }
+    if (data$Rain[day] > IA) {
 
-      data$RUNOFF[day] <- max(data$RUNOFF[day], 0)
-
-      # Calculating the amount of deep drainage
-
-      if ((WAT0 + data$Rain[day] - data$RUNOFF[day]) > soilWHC) {
-        data$DRAIN[day] <- DC * (WAT0 + data$Rain[day] - data$RUNOFF[day] -
-                                   soilWHC)
-      } else {
-        data$DRAIN[day] <- 0
-      }
-
-      data$DRAIN[day] <- max(data$DRAIN[day], 0)
-
-      # Calculating the amount of water lost by transpiration (after drainage)
-
-      data$TRAN[day] <- min(MUF * (WAT0 + data$Rain[day] - data$RUNOFF[day] -
-        data$DRAIN[day] - WATwp), data$Eto[day])
-      data$TRAN[day] <- max(data$TRAN[day], 0)
-      data$TRAN[day] <- min(data$TRAN[day], soilWHC)
-
-      data$R[day] <- data$TRAN[day] / data$Eto[day]
-      data$TRAN[day] <- max(data$TRAN[day], (data$R[day] * data$Eto[day]))
-
-      data$AVAIL[day] <- WAT0 + (data$Rain[day] - data$RUNOFF[day] -
-        data$DRAIN[day] - data$TRAN[day])
-      data$AVAIL[day] <- min(data$AVAIL[day], soilWHC)
-      data$AVAIL[day] <- max(data$AVAIL[day], 0)
+      data$RUNOFF[day] <- ((data$Rain[day] - IA)^2 /
+                             (data$Rain[day] + 0.8 * S))
 
     } else {
 
-       WAT0 <- data$AVAIL[day - 1]
+      data$RUNOFF[day] <- 0
 
-      # Change in water before drainage (Precipitation - Runoff)
-
-      if (data$Rain[day] > IA) {
-        data$RUNOFF[day] <- (data$Rain[day] - 0.2 * S)^2 /
-          (data$Rain[day] + 0.8 * S)
-      } else {
-        data$RUNOFF[day] <- 0
-      }
-
-      data$RUNOFF[day] <- max((data$RUNOFF[day]), 0)
-
-      # Calculating the amount of deep drainage
-
-      if ((WAT0 + data$Rain[day] - data$RUNOFF[day]) > soilWHC) {
-        data$DRAIN[day] <- DC * (WAT0 + data$Rain[day] -
-                                   data$RUNOFF[day] - soilWHC)
-      } else {
-        data$DRAIN[day] <- 0
-      }
-
-      data$DRAIN[day] <- max(data$DRAIN[day], 0)
-
-      # Calculating the amount of water lost by transpiration (after drainage)
-
-      data$TRAN[day] <- min(MUF * (WAT0 + data$Rain[day] - data$RUNOFF[day] -
-        data$DRAIN[day] - WATwp), data$Eto[day])
-      data$TRAN[day] <- max(data$TRAN[day], 0)
-      data$TRAN[day] <- min(data$TRAN[day], soilWHC)
-
-      data$R[day] <- data$TRAN[day] / data$Eto[day]
-      data$TRAN[day] <- max(data$TRAN[day], (data$R[day] * data$Eto[day]))
-
-      data$AVAIL[day] <- WAT0 + (data$Rain[day] - data$RUNOFF[day] -
-        data$DRAIN[day] - data$TRAN[day])
-      data$AVAIL[day] <- min(data$AVAIL[day], soilWHC)
-      data$AVAIL[day] <- max(data$AVAIL[day], 0)
     }
+
+    data$RUNOFF[day] <- max(data$RUNOFF[day], 0)
+
+    ## ***** Calculate deep drainage:
+
+    excessWater <- WAT0 + data$Rain[day] - data$RUNOFF[day]
+    data$DRAIN[day] <- if (excessWater > soilWHC) DC * (excessWater - soilWHC)
+    else 0
+    data$DRAIN[day] <- max(data$DRAIN[day], 0)
+
+    ## ***** Calculate water lost by transpiration:
+
+    TRANavail <- (WAT0 + data$Rain[day] - data$RUNOFF[day] -
+                    data$DRAIN[day] - WATwp)
+    data$TRAN[day] <- min(MUF * TRANavail, data$Eto[day])
+    data$TRAN[day] <- max(data$TRAN[day], 0)
+    data$TRAN[day] <- min(data$TRAN[day], soilWHC)
+
+    ##  Calculate ratio of actual to potential evapotranspiration (R-index)
+
+    data$R[day] <- ifelse(data$Eto[day] > 0, data$TRAN[day] / data$Eto[day], 0)
+    data$TRAN[day] <- min(data$TRAN[day], data$R[day] * data$Eto[day])
+
+    ## ***** Calculate available soil moisture:
+
+    data$AVAIL[day] <- (WAT0 + data$Rain[day] - data$RUNOFF[day] -
+                          data$DRAIN[day] - data$TRAN[day])
+    data$AVAIL[day] <- min(max(data$AVAIL[day], 0), soilWHC)
   }
 
   data$R <- round(data$R, 3)
@@ -224,10 +267,14 @@ calcWatBal <- function(data, soilWHC) {
   data$DRAIN <- round(data$DRAIN, 3)
   data$RUNOFF <- round(data$RUNOFF, 3)
 
-  return(data)
+  data <- as.data.frame(data)
+
+  return(list(data = data, warnings = warnings.list))
+
 }
 
-
-##############################################################################
-##############################################################################
-##############################################################################
+###############################################################################
+###############################################################################
+#                >>>>>>>>>>   End of code   <<<<<<<<<<                        #
+###############################################################################
+###############################################################################

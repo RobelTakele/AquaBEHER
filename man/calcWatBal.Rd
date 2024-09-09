@@ -2,114 +2,76 @@
 % Please edit documentation in R/calcWatBal.R
 \name{calcWatBal}
 \alias{calcWatBal}
-\title{Soil Water Balance}
+\title{Daily Soil Water Balance Estimation}
 \usage{
 calcWatBal(data, soilWHC)
 }
 \arguments{
-<<<<<<< HEAD
-\item{data}{a dataframe containing the required variables: Columns must
-contain the following parameters:
-=======
-\item{data}{a dataframe containing the required variables: Columns must contain the following parameters:
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
+\item{data}{A data frame containing the required input variables. The data
+frame must include the following columns:
+\itemize{
+\item \strong{Lat}: Latitude of the site (decimal degrees).
+\item \strong{Lon}: Longitude of the site (decimal degrees).
+\item \strong{Elev}: Elevation above sea level (meters).
+\item \strong{Year}: Year of the record ("YYYY").
+\item \strong{Month}: Month of the record ("MM").
+\item \strong{Day}: Day of the record ("DD").
+\item \strong{Rain}: Daily rainfall (mm).
+\item \strong{Eto}: Daily potential evapotranspiration (mm).
+}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{   Lat: latitude of the site in decimal degrees.
-   Lon: longitude of the site in decimal degrees.
-   Elev: elevation above sea level in (meters).
-   Year: year of record "YYYY".
-   Month: month of record "MM".
-   Day: day of record "DD".
-   Rain: daily rainfall in (mm).
-   Eto: daily potential evapotranspiration in (mm).
-}\if{html}{\out{</div>}}}
-
-\item{soilWHC}{\verb{  }Water holding capacity of the soil in (mm).}
+\item{soilWHC}{Numeric. Water holding capacity of the soil (mm).}
 }
 \value{
-<<<<<<< HEAD
-The function generates a data frame containing the following
-components:
-
-\emph{\code{DRAIN: amount of deep drainage in (mm).}}
-
-\emph{\code{TRAN: amount of water lost by transpiration in (mm).}}
-=======
-The function generates a data frame containing the following components:
-
-\emph{\code{DRAIN: amount of deep drainage in (mm).}}
-
-\emph{\code{TRAN: amount of water lost by transpiration (after drainage) in (mm).}}
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
-
-\emph{\code{RUNOFF: surface runoff in (mm).}}
-
-\emph{\code{AVAIL: available soil moisture storage in (mm).}}
-
-\emph{\code{R: actual-to-potential evapotranspiration ratio.}}
+A list with the following components:
+\describe{
+\item{\strong{data}}{A data frame containing the results of the water
+balance calculations, with the following columns:
+\itemize{
+\item \strong{DRAIN}: Deep drainage (mm).
+\item \strong{TRAN}: Water lost by transpiration (mm).
+\item \strong{RUNOFF}: Surface runoff (mm).
+\item \strong{AVAIL}: Available soil moisture storage (mm).
+\item \strong{R}: Ratio of actual to potential evapotranspiration.
+}
+}
+\item{\strong{warnings}}{A list of warnings related to any unrealistic
+or adjusted values in the input data or parameters used during the water
+balance calculations.}
+}
 }
 \description{
-<<<<<<< HEAD
-Function to estimate a budget-based daily soil water balance.
-It calculates the amount of water present in the root zone of a homogeneous
-grass canopy growing on a well-drained and homogeneous soil.
+This function estimates the daily soil water balance based on a
+simple mass balance budget approach. It calculates the amount of water
+available in the root zone  of a homogeneous grass canopy growing on a
+well-drained, homogeneous soil.
 }
 \examples{
 \donttest{
-# load example data:
+## Load sample data
 data(AgroClimateData)
+
+# Estimate daily PET using the Penman-Monteith method
+PET.PM <- calcEto(AgroClimateData, method = "PM", Zh = 10)
+
+# Add the estimated PET to the AgroClimateData frame
+AgroClimateData$Eto <- PET.PM$ET.Daily
+
+# Estimate daily soil water balance for a soil with 100 mm WHC
+watBal <- calcWatBal(data = AgroClimateData, soilWHC = 100)
+
 }
+
 }
 \references{
-Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop
-Evapotranspiration: Guidelines for Computing Crop Water Requirements; FAO
-Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998;
-ISBN 92-5-104219-5.
+Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. (1998). \emph{Crop
+Evapotranspiration: Guidelines for Computing Crop Water Requirements.} FAO
+Irrigation and Drainage Paper no. 56, FAO: Rome, Italy. ISBN 92-5-104219-5.
 
-Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water
-requirements, Irrigation and Drainage Paper 24, Food and Agriculture
+Doorenbos, J., & Pruitt, W.O. (1975). \emph{Guidelines for Predicting Crop
+Water Requirements.} Irrigation and Drainage Paper 24, Food and Agriculture
 Organization of the United Nations, Rome, 179 p.
-=======
-Function to estimate a budget-based daily soil water balance. It calculates the amount of water present in the
-root zone of a homogeneous grass canopy growing on a well-drained and homogeneous soil.
-}
-\examples{
-# load example data:
-data(AgroClimateData)
-
-# Estimate daily PET:
-PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
-
-# Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
-AgroClimateData$Eto <- PET$ET.Daily
-
-# Estimate daily water balance for the soil having 100mm of WHC:
-watBal<- calcWatBal(AgroClimateData, soilWHC = 100)
-
-# Visualizing water balance parameters for 2019/20 season
-watBal.19T20 <- watBal[watBal$Year \%in\% c(2019, 2020),]
-date.vec <- as.Date.character(paste0(watBal.19T20$Year, "-",
-                                     watBal.19T20$Month, "-", watBal.19T20$Day))
-
-plot(y = watBal.19T20$AVAIL, x = date.vec, ty="l", col="black", xlab="", ylab=" Water (mm)",
-       main="Daily Water Balance Parameters", lwd = 1, lty = 2)
- lines(y = watBal.19T20$Eto, x = date.vec, col="red", lwd = 3, lty = 1)
- lines(y = watBal.19T20$Rain, x = date.vec, col="blue", lwd = 1, lty = 1)
-
-  legend("bottomright",c("Rain","Eto","Available Moisture"),
-        horiz=FALSE, bty='n', cex=1.2,lty=c(1,1,2),lwd=c(1,3,1), inset=c(0,0.7),
-        xpd=TRUE, col=c("blue","red","black"))
-
-}
-\references{
-Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop Evapotranspiration: Guidelines for Computing Crop Water
-Requirements; FAO
-Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998; ISBN 92-5-104219-5.
-
-Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water requirements, Irrigation and Drainage Paper 24, Food
-and Agriculture Organization of the United Nations, Rome, 179 p.
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 }
 \seealso{
-\code{\link{calcEto}, \link{calcSeasCal}}
+\code{\link{calcEto}}, \code{\link{calcSeasCal}}
 }

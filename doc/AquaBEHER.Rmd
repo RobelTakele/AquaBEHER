@@ -1,12 +1,8 @@
 ---
-<<<<<<< HEAD
-title: Estimation and prediction of wet season calandar and soil water balance for agricultural
-=======
-title: Estimation of rainy season calandar and soil water balance for agricultural
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
-  crops using AquaBEHER
+title: "Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using AquaBEHER"
 author: "Robel Takele and Matteo Dell'Acqua"
 date: "`r Sys.Date()`"
+
 output:
   prettydoc::html_pretty:
     theme: architect
@@ -14,25 +10,20 @@ output:
     math: mathjax
     fig_caption: yes
     toc: yes
-    toc_depth: 1
+    toc_depth: 2
     anchor_sections: yes
     number_sections: no
 #    css: tools/vignette.css
     df_print: default
     keep_tex: yes
-<<<<<<< HEAD
     
-=======
-
-  pdf_document:
-    toc: yes
-    toc_depth: 1
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 vignette: >
   %\VignetteIndexEntry{AquaBEHER} 
   %\VignetteEngine{knitr::rmarkdown} 
   %\VignetteDepends{prettydoc}
   %\VignetteDepends{ggplot2}
+    %\VignetteDepends{ggrepel} 
+  %\VignetteDepends{scales} 
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -41,329 +32,366 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+
 ```
 
-# 1. Introduction 
 
-<<<<<<< HEAD
-This vignette is a short tutorial to the usage and functionalists of AquaBEHER R package. It is directed to first-time package users who are familiar with the basic concepts of R. The vignette presents the use of several key functions of the package, some useful hints and guidelines. AquaBEHER computes and integrates daily reference evapotranspiration (Eto) and a soil water balance model to estimate parameters of crop and soil water balances for agricultural crops. Using the computed daily soil water balance parameters, the package can estimates and predicts the rainy season calendar (Onset, Cessation and Duration) based on agroclimatic approach for a predefined window. 
-=======
-This vignette is a short tutorial to the usage and functionalists of AquaBEHER R package. It is directed to first-time package users who are familiar with the basic concepts of R. The vignette presents the use of several key functions of the package, some useful hints and guidelines. AquaBEHER computes and integrates daily reference evapotranspiration (Eto) and a soil water balance model to estimate parameters of crop and soil water balances for agricultural crops. Using the computed daily soil water balance parameters, the package can estimates the rainy season calendar (Onset, Cessation and Duration) based on agroclimatic approach for a predefined window. 
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
+```{r, echo=FALSE, results='asis'}
+cat('
+<style>
+.infobox {
+    border: 2px solid #007BFF; /* Blue border */
+    background-color: #E9ECEF; /* Light gray background */
+    border-radius: 3px; /* Rounded corners */
+    padding: 15px; /* Space inside the box */
+    margin: 20px 0; /* Space outside the box */
+    font-size: 20px; /* Text size */
+}
+</style>
+')
+```
 
+
+# 1. Introduction
+
+Welcome to the tutorial for **AquaBEHER**, an R package designed to estimate 
+and predict the wet season calendar and soil water balance for agricultural 
+applications. This vignette provides a practical guide to using AquaBEHER. The 
+package integrates daily potential evapotranspiration (PET) and soil water 
+balance parameters to compute the wet season calendar (WSC) for crop and soil 
+water management. Using these parameters, AquaBEHER can estimate and predict 
+the onset, cessation, and duration of the wet season based on an 
+agroclimatic approach.
+
+In this tutorial, you will learn how to:
+
+ * Install and set up AquaBEHER.
+ * Estimate potential evapotranspiration (PET) using different methods.
+ * Calculate daily soil water balance.
+ * Estimate the wet season calendar using an agroclimatic approach.
 
 # 2. Installation and Loading
 
- Installing the latest development version from the online repository using the devtools package. Note that to utilize the full functionality of devtools on Windows, [Rtools](https://cran.r-project.org/bin/windows/Rtools/) must be installed.
+To install the latest development version of AquaBEHER, use devtools. Ensure 
+that Rtools is installed on Windows for full functionality.
 
 ```{r AquaBEHER setup}
-<<<<<<< HEAD
-# Install packages if not already installed
+
+## Install required packages:
 # if (!require("pacman")) install.packages("pacman")
-# pacman::p_load(knitr, rmarkdown, prettydoc, dplyr, ggplot2, lubridate, raster, sp, devtools)
+# pacman::p_load(knitr, rmarkdown, prettydoc, dplyr, ggplot2, lubridate, 
+# terra, devtools, ggrepel, zoo)
 
-# devtools::install_local("/path/to/AquaBEHER_0.1.0.tar.gz")
+## Install AquaBEHER from CRAN:
+   # install.packages("AquaBEHER")
 
-library(AquaBEHER)
-library(ggplot2)
-=======
+## Install AquaBEHER from GitHub:
+ # devtools::install_github("RobelTakele/AquaBEHER")
 
-# install.packages("devtools")
-# devtools::install_github("RobelTakele/AquaBEHER", dependencies = TRUE, type = "source",
-#                           build_manual = TRUE, build_vignettes = TRUE)
-
-library(AquaBEHER)
-library(ggplot2)
-
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
+   library(AquaBEHER)  
+   library(ggplot2)
+   library(ggrepel)
+   
 ```
 
 # 3. Required Climate Data
 
-The methods for calculating evapotranspiration from meteorological data require various physical parameters. Some of the data are measured directly in weather stations. Other parameters are related to commonly measured data and can be derived with the help of a direct or empirical relationship.
+For evapotranspiration calculations, various meteorological and geographical 
+parameters are needed, as shown below:
 
-The meteorological factors determining evapotranspiration are weather parameters which provide energy for vaporization and remove water vapor from the evaporating surface. The principal weather parameters to consider are presented below.
+Meteorological Data:
 
- * Maximum temperature
- * Minimum temperature
+ * Maximum and minimum temperature
  * Solar radiation
- * Dew point temperature or relative humidity
+ * Dew point temperature 
  * Wind speed
+ * Rainfall 
  
-In addition, georeferenced information on the location of the climate record is required:
+Geographical Data:
 
- * Latitude 
+ * Latitude
  * Longitude
  * Elevation
 
 ```{r climateData}
-<<<<<<< HEAD
+
 data(AgroClimateData)
 str(AgroClimateData)
 head(AgroClimateData)
-=======
 
- data(AgroClimateData)
- str(AgroClimateData)
- head(AgroClimateData)
- 
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 ```
 
 # 4. Potential Evapotranspiration
 
-For many agricultural applications, it is relevant to get an estimate of the potential evapotranspiration (PET). Different methods are developed for estimating Eto. Most of them use empirical equations to determine the value of PET from weather variables. The AquaBEHER package provides options for estimating reference evapotranspiration (Eto) using the FAO Penman-Monteith, Priestley Taylor and Hargreaves-Samani formulations.
+Potential evapotranspiration (PET) is vital for agricultural water management. 
+AquaBEHER offers multiple methods to estimate PET, including the 
+FAO Penman-Monteith, Priestley-Taylor, and Hargreaves-Samani formulations.
 
-<img align="right" width="300" src=tools/Evapotranspiration.gif>
+<img align="right" width="300" src="tools/Evapotranspiration.gif" alt="Evapotranspiration cycle">
 
-### Usage
-calcEto(AgroClimateData, method = "PM", crop = "short")
+### Usage:
 
- * The function give a list of 
-    + daily estimations of Eto in (mm/day)
+ PET <- calcEto(AgroClimateData, method = "PM", crop = "short")  
+ str(PET)  
+
+ * The function returnes a list of
+    + daily estimations of PET in (mm/day)
     + daily estimations of extraterrestrial radiation (MJ/m2/day)
     + daily estimations of slope of vapor pressure curve (kPa/°C)
 
-### Example
-The calcEto compute with inputs of data frame containing daily values of meteorological parameters:
+### Example:
+
+The calcEto function computes PET with inputs of a data frame containing daily 
+values of meteorological parameters:
 
 ```{r}
-<<<<<<< HEAD
-PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
-
-str(PET)
-=======
 
 PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
 
 str(PET)
 
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 ```
 
-Graphical comparison of the evapotranspiration (mm/day) calculated using the FAO Penman–Monteith formulation and the Hargreaves-Samani formulation:
+Graphical comparison of the evapotranspiration (mm/day) calculated using 
+the FAO Penman–Monteith formulation and the Hargreaves-Samani formulation:
 
 ```{r}
-# Compute Eto using hargreves-samani formulation using the example data from 'AgroClimateData':
 
-data(AgroClimateData)
-
+## Compute PET using Hargreaves-Samani formulation using the sample data f
+## rom 'AgroClimateData':
 Eto.HS <- calcEto(AgroClimateData, method = "HS")
 
-# Now compute Eto using Penman-Monteith formulation for hypothetical grass (short crop):
-
+## Now compute PET using Penman-Monteith formulation:
 Eto.PM <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
-<<<<<<< HEAD
-plot(Eto.PM$ET.Daily[1:1000], ty = "l", xlab = "Days since 1996", ylab = "Eto (mm/day)", col = "black", lwd = 1, lty = 2)
+plot(Eto.PM$ET.Daily[1:1000], type = "l", xlab = "Days since 1996", 
+     ylab = "Eto (mm/day)", col = "black", lwd = 1, lty = 2)
 lines(Eto.HS$ET.Daily[1:1000], col = "blue", lwd = 2, lty = 1)
 
-legend("bottom", c("Eto: Penman–Monteith ", "Eto: Hargreaves-Samani"),
-  horiz = TRUE, bty = "n", cex = 1, lty = c(2, 1), lwd = c(2, 2), inset = c(1, 1),
+legend("bottom", c("Eto: Penman–Monteith", "Eto: Hargreaves-Samani"),
+  horiz = TRUE, bty = "n", cex = 1, lty = c(2, 1), 
+  lwd = c(2, 2), inset = c(1, 1),
   xpd = TRUE, col = c("black", "blue")
 )
-```
-
-**Notice:** It appears that the FAO Penman–Monteith formulation presents enhanced day-to-day variations of evapotranspiration than the the Hargreaves-Samani formulation.
-
-# 5. Soil Water Balance
-
-This function perform daily computations of soil water balance parameters for the root zone. Soil water changes daily in response to rainfall, evapotranspiration, runoff and deep drainage.
-=======
-plot(Eto.PM$ET.Daily[1:1000], ty="l", xlab="Days since 1996", ylab="Eto (mm/day)", col="black", lwd = 1, lty = 2)
-lines(Eto.HS$ET.Daily[1:1000], col="blue", lwd = 2, lty = 1)
-
-   legend("bottom",c("Eto: Penman–Monteith ","Eto: Hargreaves-Samani"),
-         horiz=TRUE, bty='n', cex=1,lty=c(2,1),lwd=c(2,2), inset=c(1,1),
-         xpd=TRUE, col=c("black","blue"))
 
 ```
 
-
-**Notice:** It appears that the FAO Penman–Monteith formulation presents enhanced day-to-day variations of evapotranspiration than the the Hargreaves-Samani formulation.
-
-
+**Key Insight:** The FAO Penman–Monteith formulation presents enhanced 
+day-to-day variations of evapotranspiration compared to the Hargreaves-Samani 
+formulation.
 
 # 5. Soil Water Balance
 
-This function perform daily computations of soil water balance parameters for the root zone. Soil water changes daily in response to rainfall, evapotranspiration, runoff and deep drainage. 
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
+This function performs daily computations of soil water balance parameters for 
+the root zone. Soil water changes daily in response to rainfall, 
+evapotranspiration, runoff and deep drainage.
 
 **Assumptions**
 
  * Atmospheric conditions affect the rate at which crops use water.
- * The soil has uniform cross-section of homogeneous volume with a measured depth and a unit area.
- * A well-established, dense grass crop is growing, which completely covers the soil surface.
+ * The soil has uniform cross-section of homogeneous volume with a measured 
+ depth and a unit area.
+ * A well-established, dense grass crop is growing, which completely covers 
+ the soil surface.
 
-### Usage
+### Usage:
 calcWatBal(data, soilWHC)
 
-### Example
-The calcWatBal compute with inputs of data frame containing daily values of Rain, Eto and soil water holding capacity.
+### Example:
+The calcWatBal compute with inputs of data frame containing daily values of 
+Rain, Eto and soil water holding capacity.
 
 ```{r}
-<<<<<<< HEAD
+
+data(AgroClimateData)
+
 PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
-# Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
+## Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 AgroClimateData$Eto <- PET$ET.Daily
 
-# Estimate daily water balance for the soil having 100mm of WHC:
-soilWHC <- 100
+## Estimate daily water balance for the soil having 100mm of soilWHC:
+soilWHC = 100
 
-watBal <- calcWatBal(data = AgroClimateData, soilWHC)
+watBal.list <- calcWatBal(data = AgroClimateData, soilWHC)
+watBal <- watBal.list$data
 
 str(watBal)
 
-# Plotting the water balance output for the climatological year from 2019 to 2020 using ggplot2:
-
+## Filter the data for the years 2019 and 2020:
 watBal.19T20 <- watBal[watBal$Year %in% c(2019, 2020), ]
-date.vec <- as.Date.character(paste0(watBal.19T20$Year, "-", watBal.19T20$Month, "-", watBal.19T20$Day))
 
-ggplot(data = watBal.19T20) +
-  geom_line(aes(y = AVAIL, x = date.vec, fill = "AVAIL"), size = 0.8, color = "red") +
-  geom_col(aes(y = Rain, x = date.vec, fill = "Rain"), size = 1) +
-  scale_x_date(date_breaks = "1 month", date_labels = "%b-%Y") +
-  scale_fill_manual(name = " ", values = c("AVAIL" = "red", "Rain" = "blue")) +
-  scale_y_continuous(expand = c(0, 2)) +
-  labs(y = "Moisture (mm)", x = NULL) +
-  theme_linedraw() +
-  theme(
-    axis.title = element_text(size = 14, colour = "black", family = "Times New Roman"),
-    axis.text = element_text(size = 10, colour = "black", family = "Times New Roman"),
-    axis.text.x = element_text(size = 10, colour = "black", family = "Times New Roman", angle = 45, vjust = 0.5)
-  )
-```
+## Create a date vector:
+date.vec <- as.Date(paste0(watBal.19T20$Year, "-", 
+                           watBal.19T20$Month, "-", 
+                           watBal.19T20$Day), format = "%Y-%m-%d")
 
-=======
+## Add the date vector to the data frame:
+watBal.19T20$date <- date.vec
 
-PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
+## Plotting the water balance output for the climatological year 
+## from 2019 to 2020 using ggplot2:
 
-# Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
- AgroClimateData$Eto <- PET$ET.Daily
+library(ggplot2)
+library(scales)
 
-# Estimate daily water balance for the soil having 100mm of WHC:
-soilWHC = 100
- 
-watBal<- calcWatBal(AgroClimateData, soilWHC)
+ggplot(data = watBal.19T20, aes(x = date)) +
+  geom_bar(aes(y = Rain), stat = "identity", fill = "#1f78b4", 
+           alpha = 0.6, width = 0.8) +
+  geom_line(aes(y = AVAIL), color = "#33a02c", size = 1.5) +
+  geom_line(aes(y = Eto), color = "#ff7f00", size = 1.2, 
+            linetype = "dashed") +
+  
+  scale_x_date(date_labels = "%b %Y", date_breaks = "1 month", 
+               expand = c(0.01, 0)) +
+  scale_y_continuous(
+    name = "Available Soil Water (mm)", 
+    sec.axis = sec_axis(~., name = "Rainfall (mm)") ) +
 
-str(watBal )
-
-# Plotting the water balance output for the climatological year from 2019 to 2020 using ggplot2:
-
- watBal.19T20 <- watBal[watBal$Year %in% c(2019, 2020),]
- date.vec <- as.Date.character(paste0(watBal.19T20$Year, "-", watBal.19T20$Month, "-", watBal.19T20$Day))
-
- ggplot(data = watBal.19T20) +
-         geom_line(aes(y = AVAIL, x = date.vec, fill = "AVAIL"), size = 0.8, color = "red") +
-         geom_col(aes(y = Rain, x = date.vec, fill = "Rain"), size = 1) +
-        
-         
-
-         scale_x_date(date_breaks = "1 month", date_labels =  "%b-%Y") +
-   
-         scale_fill_manual(name = " ", values = c('AVAIL' = "red", 'Rain' = "blue")) +
-   
-         scale_y_continuous(expand = c(0, 2))  +
-         labs(y="Moisture (mm)", x=NULL) +
-   
-         theme_linedraw()  +
-   
-   theme(axis.title = element_text(size = 14, colour = "black", family = "Times New Roman"),
-         axis.text = element_text(size = 10, colour = "black", family = "Times New Roman"),
-         axis.text.x = element_text(size = 10, colour = "black", family = "Times New Roman", angle = 45, vjust = 0.5))
+  labs(title = "Rainfall, Available Soil Water and 
+       Potential Evapotranspiration",
+       subtitle = "Data from 2019 to 2020",
+       x = " ",
+       y = " ") +
+  theme_minimal(base_size = 15) +
+  
+    theme(
+    plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
+    plot.subtitle = element_text(size = 14, hjust = 0.5, color = "grey40"),
+    axis.title.y = element_text(color = "#33a02c"),
+    axis.title.y.right = element_text(color = "#1f78b4"),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(linetype = "dotted", color = "grey80"))
 
 ```
 
 
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 # 6. Rainy Season Calandar
 
-The onset and cessation dates of the rainy season were determined for each climatological year `Figure 1`. The term climatological year represents the period between two driest periods, which is traditionally defined based on a calender year starting from the driest month and has a fixed length of 12 months.
+The onset and cessation dates of the wet season were determined for each 
+climatological year `Figure 1`. The term climatological year represents the 
+period between two driest periods, which is traditionally defined based on a 
+calender year starting from the driest month and has a fixed length of 12 months.
 
 
 ![Figure 1. Example of a climatological yea, the onset and cessation windows](tools/climatologicalYear.png)
 
-Various methods have been developed to estimate the rainy season calendar, i.e. the onset, cessation and duration of the rainy season. Common method used for crop production applications is the agroclimatic approach. As per agroclimatic approach, a normal rainy season (growing season) is defined as one when there is an excess of precipitation over potential evapotranspiration (PET). Such a period meets the evapotransiration demands of crops and recharge the moisture of the soil profile FAO 1977; 1978; 1986). Thus, the rainy season calendar defined accordingly:
+Various methods have been developed to estimate the wet season calendar, 
+i.e. the onset, cessation and duration of the wet season. Common method used 
+for crop production applications is the agroclimatic approach. As per 
+agroclimatic approach, a normal wet season (growing season) is defined as one 
+when there is an excess of precipitation over potential evapotranspiration (PET). 
+Such a period meets the evapotransiration demands of crops and recharge the 
+moisture of the soil profile (FAO 1977; 1978; 1986). Thus, the wet season 
+calendar defined accordingly:
 
- **Onset**
+  **Onset**
 
-The onset of the rainy season will start on the first day after `onsetWind.start`, when the actual-to-potential evapotranspiration ratio is greater than 0.5 for 7 consecutive days, followed by a 20-day period in which plant available water remains above wilting over the root zone of the soil layer.
+  The onset of the wet season will start on the first day after 
+  `onsetWind.start`, when the actual-to-potential evapotranspiration ratio is 
+  greater than 0.5 for 7 consecutive days, followed by a 20-day period in which 
+  plant available water remains above wilting over the root zone of the soil layer.
 
 **Cesation**
 
-The rainy season will end, cessation, on the first day after `onsetWind.end`, when the actual-to-potential evapotranspiration ratio is less than 0.5 for 7 consecutive days, followed by 12 consecutive non-growing days in which plant available water remains below wilting over the root zone of the soil layer.
+  The wet season will end, cessation, on the first day after `onsetWind.end`, 
+  when the actual-to-potential evapotranspiration ratio is less than 0.5 for 7 
+  consecutive days, followed by 12 consecutive non-growing days in which plant 
+  available water remains below wilting over the root zone of the soil layer.
 
 **Duration**
 
-The duration of the rainy season is the total number of days from onset to cessation of the season.
+  The duration of the wet season is the total number of days from onset to 
+  cessation of the season.
 
 ![Figure 2. Hypotetical example of onset and cessation date determination](tools/hypExample_SeasCal.png)
 
 
-### Example
+### Example:
 
-Using the example climate data provided by the AquaBEHER package, compute the rainy season calandar:
+Using the sample climate data provided by the AquaBEHER package, 
+compute the wet season calendar:
 
-```{r}
-# seasonal calndar is estimated for the onset window ranges from 01-September to 31-January having a soil with 100mm of WHC
-<<<<<<< HEAD
-soilWHC <- 100
-onsetWind.start <- "1996-09-01" # earliest possible start date of the onset window
-onsetWind.end <- "1997-01-31" # the latest possible date for end of the onset window
-cessaWind.end <- "1997-06-30" # the latest possible date for end of the cessation window
-=======
-soilWHC = 100
-onsetWind.start = "1996-09-01"  # earliest possible start date of the onset window
-onsetWind.end = "1997-01-31"    # the latest possible date for end of the onset window
-cessaWind.end = "1997-06-30"    # the latest possible date for end of the cessation window
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
+```{r WSC}
 
-seasCal.lst <- calcSeasCal(watBal, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC = 100)
+## The wet season calendar is estimated for the onset window ranges from 
+## 01-September to 31-January having a soil with 80mm of soilWHC:
 
-str(seasCal.lst)
+ data(AgroClimateData)
 
-# plotting year to year variation of onset cessation and seasonal duration
+ PET <- calcEto(AgroClimateData, method = "HS")
+ AgroClimateData$Eto <- PET$ET.Daily
 
-<<<<<<< HEAD
-seasCal.dF <- data.frame(
-  Year = seasCal.lst[[1]][, c("Year")],
-  Onset = seasCal.lst[[1]][, c("onset.JD")],
-  Cessation = seasCal.lst[[2]][, c("cessation.JD")],
-  Duration = seasCal.lst[[3]][, c("Duration")]
-)
+ soilWHC = 80
 
-ggplot(data = seasCal.dF) +
-  geom_line(aes(y = Onset, x = Year, color = "Onset"), size = 1) +
-  geom_line(aes(y = Cessation, x = Year, color = "Cessation"), size = 1) +
-  geom_area(aes(y = Duration, x = Year, color = "Duration⁠"), size = 0.8, alpha = 0.4) +
-  scale_color_manual(name = "Calendar", values = c("Onset" = "blue", "Cessation" = "red", "Duration" = "grey")) +
-  labs(y = "Day of a year (DOY)", x = NULL) +
-  theme_bw()
+ watBal.list <- calcWatBal(data = AgroClimateData, soilWHC)
+ watBal <- watBal.list$data
+
+ onsetWind.start <- "10-01" ## earliest possible start date of the onset window
+ onsetWind.end <- "01-31" ## the latest possible date for end of the onset window
+ cessaWind.end <- "06-30" ## the latest possible date for end of the cessation window
+
+  seasCal.dF <- calcSeasCal(data = watBal, onsetWind.start,
+                            onsetWind.end, cessaWind.end, soilWHC)
+
+ str(seasCal.dF)
+
+ seasCal.dF$OnsetDate <- as.Date(seasCal.dF$OnsetDate)
+ seasCal.dF$CessationDate <- as.Date(seasCal.dF$CessationDate)
+
+max_onset <- max(seasCal.dF$OnsetValue, na.rm = TRUE)
+max_cessation <- max(seasCal.dF$CessationValue, na.rm = TRUE)
+max_value <- max(max_onset, max_cessation)
+
+
+
+ggplot(seasCal.dF, aes(x = Year)) +
+  geom_line(aes(y = OnsetValue, color = "Onset"),
+            size = 1.5, linetype = "solid") +
+  geom_line(aes(y = CessationValue, color = "Cessation"),
+            size = 1.5, linetype = "dashed") +
+  geom_point(aes(y = OnsetValue, color = "Onset"), size = 3,
+             shape = 21, fill = "white") +
+  geom_point(aes(y = CessationValue, color = "Cessation"),
+             size = 3, shape = 21, fill = "white") +
+  geom_text_repel(aes(y = OnsetValue,
+                      label = ifelse(!is.na(OnsetDate),
+                                     format(OnsetDate, "%Y-%m-%d"), ""),
+                      color = "Onset"), size = 3,
+                  box.padding = 0.5, point.padding = 0.5) +
+  geom_text_repel(aes(y = CessationValue,
+                      label = ifelse(!is.na(CessationDate),
+                                     format(CessationDate, "%Y-%m-%d"), ""),
+                      color = "Cessation"), size = 3,
+                  box.padding = 0.5, point.padding = 0.5) +
+  scale_y_continuous(name = paste0("Days Since: ",
+                                   format(as.Date(paste0("2023-",
+                                                         onsetWind.start)),
+                                          "%d %b")),
+                     breaks = seq(0, max_value, by = 10)) +
+  labs(title = "Onset and Cessation Dates of the Wet Season",
+       x = " ", color = "Legend") +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 16),
+    legend.position = "top",
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold"),
+    legend.title = element_text(face = "bold"),
+    legend.text = element_text(size = 12),
+    panel.grid.major = element_line(color = "#e0e0e0"),
+    panel.grid.minor = element_line(color = "#f0f0f0"),
+    panel.background = element_rect(fill = "#f7f7f7"),
+    plot.background = element_rect(fill = "#f7f7f7")
+  ) +
+  scale_color_manual(name = "Legend",
+                     values = c("Onset" = "#1f77b4",
+                                "Cessation" = "red"))
+
 ```
 
-=======
-seasCal.dF <- data.frame(Year = seasCal.lst[[1]][,c("Year")],
-                         Onset = seasCal.lst[[1]][,c("onset.JD")],
-                         Cessation = seasCal.lst[[2]][,c("cessation.JD")],
-                         Duration = seasCal.lst[[3]][,c("Duration")])
 
- ggplot(data = seasCal.dF) +
-   geom_line(aes(y = Onset, x = Year, color = "Onset"), size = 1) +
-   geom_line(aes(y = Cessation, x = Year, color = "Cessation"), size = 1) +
-   geom_area(aes(y = Duration, x = Year, color = "Duration⁠"), size = 0.8, alpha = 0.4)+
- 
-   scale_color_manual(name = "Calendar", values = c('Onset' = "blue", 'Cessation' = "red", 'Duration' = "grey"))  +
-
- labs(y="Day of a year (DOY)", x=NULL) +
-
-   theme_bw()
-
-
-```
-
-
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 # 7. References
 
 Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop Evapotranspiration: Guidelines for Computing Crop Water Requirements; FAO Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998; ISBN 92-5-104219-5.
@@ -371,37 +399,16 @@ Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop Evapotranspiration: Guideli
 Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water requirements, Irrigation and Drainage Paper 24, Food and Agriculture Organization of the United Nations, Rome, 179 p.
 
 Hargreaves, G.H. and Samani, Z.A. (1985) Reference Crop Evapotranspiration from Temperature. Applied Engineering in Agriculture, 1, 96-99.
-<<<<<<< HEAD
-=======
-http://dx.doi.org/10.13031/2013.26773 
-
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 
 $$\\[0.2in]$$
-
-
-<img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
-
-
-<<<<<<< HEAD
-The Genetics Group at the **Center of Plant Sciences** is a geographically and culturally diverse research team working on data-drivem agicultural innovation combining crop genetics, climate, and participatory approaches. We are based at **Scuola Superiore Sant’Anna**, Pisa, Italy.
+  
+  
+  <img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
+  
+  
+  The Genetics Group at the **Institute of Plant Sciences** is a geographically and culturally diverse research team working on data-driven agicultural innovation combining crop genetics, climate, and participatory approaches. We are based at **Scuola Superiore Sant’Anna**, Pisa, Italy.
 
 You can contact us sending an email to Matteo Dell'Acqua (mailto:m.dellacqua@santannapisa.it) or Mario Enrico Pè (mailto:m.pe@santannapisa.it).
 You can find out more about us visiting the group web page (http://www.capitalisegenetics.santannapisa.it/) 
 
 
-=======
-
-[![projects](https://img.shields.io/badge/projects-eu-003399)](profile/projects.md#International) 
-
-The **Center of Plant Sciences Group** is a geographically and culturally diverse research team working on climate and crop genetics 
-at **Scuola Superiore Sant’Anna**, Pisa, Italy. 
-
-You can contact us sending an email to Matteo Dell'Acqua (mailto:m.dellacqua@santannapisa.it) or Mario Enrico Pè (mailto:m.pe@santannapisa.it).
-You can also visit the crop genetics (http://www.capitalisegenetics.santannapisa.it/) web page.
-
-We are committed to the 
-[free software](https://www.fsf.org/about/what-is-free-software) and 
-[FAIR](https://www.go-fair.org/fair-principles/) principles.
-This set of repositories collects our latest developments and provide reusable code.
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a

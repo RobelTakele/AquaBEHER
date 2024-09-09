@@ -3,31 +3,20 @@
 export(calcEto)
 export(calcSeasCal)
 export(calcWatBal)
-<<<<<<< HEAD
 export(fcstWSC)
-=======
-export(rcn)
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
+importFrom(dplyr,"%>%")
 importFrom(dplyr,group_by)
+importFrom(dplyr,mutate)
 importFrom(dplyr,summarize)
-importFrom(ggplot2,geom_area)
-importFrom(ggplot2,geom_line)
-importFrom(ggplot2,ggplot)
-importFrom(ggplot2,labs)
-importFrom(ggplot2,scale_x_date)
-importFrom(ggplot2,scale_y_continuous)
-importFrom(ggplot2,theme)
-importFrom(ggplot2,theme_linedraw)
 importFrom(graphics,legend)
 importFrom(graphics,lines)
 importFrom(graphics,par)
 importFrom(lubridate,as_date)
-importFrom(raster,extract)
-importFrom(raster,raster)
+importFrom(rlang,.data)
 importFrom(sp,CRS)
 importFrom(sp,coordinates)
 importFrom(sp,proj4string)
-<<<<<<< HEAD
 importFrom(stats,quantile)
-=======
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
+importFrom(terra,extract)
+importFrom(terra,rast)
+importFrom(zoo,rollapply)

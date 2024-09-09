@@ -1,209 +1,214 @@
-<<<<<<< HEAD
 ## ----include = FALSE----------------------------------------------------------
-=======
-## ---- include = FALSE---------------------------------------------------------
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 
+
+## ----echo=FALSE, results='asis'-----------------------------------------------
+cat('
+<style>
+.infobox {
+    border: 2px solid #007BFF; /* Blue border */
+    background-color: #E9ECEF; /* Light gray background */
+    border-radius: 3px; /* Rounded corners */
+    padding: 15px; /* Space inside the box */
+    margin: 20px 0; /* Space outside the box */
+    font-size: 20px; /* Text size */
+}
+</style>
+')
+
 ## ----AquaBEHER setup----------------------------------------------------------
-<<<<<<< HEAD
-# Install packages if not already installed
+
+## Install required packages:
 # if (!require("pacman")) install.packages("pacman")
-# pacman::p_load(knitr, rmarkdown, prettydoc, dplyr, ggplot2, lubridate, raster, sp, devtools)
+# pacman::p_load(knitr, rmarkdown, prettydoc, dplyr, ggplot2, lubridate, 
+# terra, devtools, ggrepel, zoo)
 
-# devtools::install_local("/path/to/AquaBEHER_0.1.0.tar.gz")
-=======
+## Install AquaBEHER from CRAN:
+   # install.packages("AquaBEHER")
 
-# install.packages("devtools")
-# devtools::install_github("RobelTakele/AquaBEHER", dependencies = TRUE, type = "source",
-#                           build_manual = TRUE, build_vignettes = TRUE)
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
+## Install AquaBEHER from GitHub:
+ # devtools::install_github("RobelTakele/AquaBEHER")
 
-library(AquaBEHER)
-library(ggplot2)
+   library(AquaBEHER)  
+   library(ggplot2)
+   library(ggrepel)
+   
 
-<<<<<<< HEAD
 ## ----climateData--------------------------------------------------------------
+
 data(AgroClimateData)
 str(AgroClimateData)
 head(AgroClimateData)
 
-## -----------------------------------------------------------------------------
-=======
-
-## ----climateData--------------------------------------------------------------
-
- data(AgroClimateData)
- str(AgroClimateData)
- head(AgroClimateData)
- 
 
 ## -----------------------------------------------------------------------------
 
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
 
 str(PET)
 
-<<<<<<< HEAD
-=======
 
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 ## -----------------------------------------------------------------------------
-# Compute Eto using hargreves-samani formulation using the example data from 'AgroClimateData':
 
-data(AgroClimateData)
-
+## Compute PET using Hargreaves-Samani formulation using the sample data f
+## rom 'AgroClimateData':
 Eto.HS <- calcEto(AgroClimateData, method = "HS")
 
-# Now compute Eto using Penman-Monteith formulation for hypothetical grass (short crop):
-
+## Now compute PET using Penman-Monteith formulation:
 Eto.PM <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
-<<<<<<< HEAD
-plot(Eto.PM$ET.Daily[1:1000], ty = "l", xlab = "Days since 1996", ylab = "Eto (mm/day)", col = "black", lwd = 1, lty = 2)
+plot(Eto.PM$ET.Daily[1:1000], type = "l", xlab = "Days since 1996", 
+     ylab = "Eto (mm/day)", col = "black", lwd = 1, lty = 2)
 lines(Eto.HS$ET.Daily[1:1000], col = "blue", lwd = 2, lty = 1)
 
-legend("bottom", c("Eto: Penman–Monteith ", "Eto: Hargreaves-Samani"),
-  horiz = TRUE, bty = "n", cex = 1, lty = c(2, 1), lwd = c(2, 2), inset = c(1, 1),
+legend("bottom", c("Eto: Penman–Monteith", "Eto: Hargreaves-Samani"),
+  horiz = TRUE, bty = "n", cex = 1, lty = c(2, 1), 
+  lwd = c(2, 2), inset = c(1, 1),
   xpd = TRUE, col = c("black", "blue")
 )
 
+
 ## -----------------------------------------------------------------------------
+
+data(AgroClimateData)
+
 PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
-# Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
+## Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 AgroClimateData$Eto <- PET$ET.Daily
 
-# Estimate daily water balance for the soil having 100mm of WHC:
-soilWHC <- 100
+## Estimate daily water balance for the soil having 100mm of soilWHC:
+soilWHC = 100
 
-watBal <- calcWatBal(data = AgroClimateData, soilWHC)
+watBal.list <- calcWatBal(data = AgroClimateData, soilWHC)
+watBal <- watBal.list$data
 
 str(watBal)
 
-# Plotting the water balance output for the climatological year from 2019 to 2020 using ggplot2:
-
+## Filter the data for the years 2019 and 2020:
 watBal.19T20 <- watBal[watBal$Year %in% c(2019, 2020), ]
-date.vec <- as.Date.character(paste0(watBal.19T20$Year, "-", watBal.19T20$Month, "-", watBal.19T20$Day))
 
-ggplot(data = watBal.19T20) +
-  geom_line(aes(y = AVAIL, x = date.vec, fill = "AVAIL"), size = 0.8, color = "red") +
-  geom_col(aes(y = Rain, x = date.vec, fill = "Rain"), size = 1) +
-  scale_x_date(date_breaks = "1 month", date_labels = "%b-%Y") +
-  scale_fill_manual(name = " ", values = c("AVAIL" = "red", "Rain" = "blue")) +
-  scale_y_continuous(expand = c(0, 2)) +
-  labs(y = "Moisture (mm)", x = NULL) +
-  theme_linedraw() +
-  theme(
-    axis.title = element_text(size = 14, colour = "black", family = "Times New Roman"),
-    axis.text = element_text(size = 10, colour = "black", family = "Times New Roman"),
-    axis.text.x = element_text(size = 10, colour = "black", family = "Times New Roman", angle = 45, vjust = 0.5)
-  )
+## Create a date vector:
+date.vec <- as.Date(paste0(watBal.19T20$Year, "-", 
+                           watBal.19T20$Month, "-", 
+                           watBal.19T20$Day), format = "%Y-%m-%d")
 
-## -----------------------------------------------------------------------------
-# seasonal calndar is estimated for the onset window ranges from 01-September to 31-January having a soil with 100mm of WHC
-soilWHC <- 100
-onsetWind.start <- "1996-09-01" # earliest possible start date of the onset window
-onsetWind.end <- "1997-01-31" # the latest possible date for end of the onset window
-cessaWind.end <- "1997-06-30" # the latest possible date for end of the cessation window
-=======
-plot(Eto.PM$ET.Daily[1:1000], ty="l", xlab="Days since 1996", ylab="Eto (mm/day)", col="black", lwd = 1, lty = 2)
-lines(Eto.HS$ET.Daily[1:1000], col="blue", lwd = 2, lty = 1)
+## Add the date vector to the data frame:
+watBal.19T20$date <- date.vec
 
-   legend("bottom",c("Eto: Penman–Monteith ","Eto: Hargreaves-Samani"),
-         horiz=TRUE, bty='n', cex=1,lty=c(2,1),lwd=c(2,2), inset=c(1,1),
-         xpd=TRUE, col=c("black","blue"))
+## Plotting the water balance output for the climatological year 
+## from 2019 to 2020 using ggplot2:
+
+library(ggplot2)
+library(scales)
+
+ggplot(data = watBal.19T20, aes(x = date)) +
+  geom_bar(aes(y = Rain), stat = "identity", fill = "#1f78b4", 
+           alpha = 0.6, width = 0.8) +
+  geom_line(aes(y = AVAIL), color = "#33a02c", size = 1.5) +
+  geom_line(aes(y = Eto), color = "#ff7f00", size = 1.2, 
+            linetype = "dashed") +
+  
+  scale_x_date(date_labels = "%b %Y", date_breaks = "1 month", 
+               expand = c(0.01, 0)) +
+  scale_y_continuous(
+    name = "Available Soil Water (mm)", 
+    sec.axis = sec_axis(~., name = "Rainfall (mm)") ) +
+
+  labs(title = "Rainfall, Available Soil Water and 
+       Potential Evapotranspiration",
+       subtitle = "Data from 2019 to 2020",
+       x = " ",
+       y = " ") +
+  theme_minimal(base_size = 15) +
+  
+    theme(
+    plot.title = element_text(face = "bold", size = 18, hjust = 0.5),
+    plot.subtitle = element_text(size = 14, hjust = 0.5, color = "grey40"),
+    axis.title.y = element_text(color = "#33a02c"),
+    axis.title.y.right = element_text(color = "#1f78b4"),
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    panel.grid.minor = element_blank(),
+    panel.grid.major = element_line(linetype = "dotted", color = "grey80"))
 
 
-## -----------------------------------------------------------------------------
+## ----WSC----------------------------------------------------------------------
 
-PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
+## The wet season calendar is estimated for the onset window ranges from 
+## 01-September to 31-January having a soil with 80mm of soilWHC:
 
-# Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
+ data(AgroClimateData)
+
+ PET <- calcEto(AgroClimateData, method = "HS")
  AgroClimateData$Eto <- PET$ET.Daily
 
-# Estimate daily water balance for the soil having 100mm of WHC:
-soilWHC = 100
- 
-watBal<- calcWatBal(AgroClimateData, soilWHC)
+ soilWHC = 80
 
-str(watBal )
+ watBal.list <- calcWatBal(data = AgroClimateData, soilWHC)
+ watBal <- watBal.list$data
 
-# Plotting the water balance output for the climatological year from 2019 to 2020 using ggplot2:
+ onsetWind.start <- "10-01" ## earliest possible start date of the onset window
+ onsetWind.end <- "01-31" ## the latest possible date for end of the onset window
+ cessaWind.end <- "06-30" ## the latest possible date for end of the cessation window
 
- watBal.19T20 <- watBal[watBal$Year %in% c(2019, 2020),]
- date.vec <- as.Date.character(paste0(watBal.19T20$Year, "-", watBal.19T20$Month, "-", watBal.19T20$Day))
+  seasCal.dF <- calcSeasCal(data = watBal, onsetWind.start,
+                            onsetWind.end, cessaWind.end, soilWHC)
 
- ggplot(data = watBal.19T20) +
-         geom_line(aes(y = AVAIL, x = date.vec, fill = "AVAIL"), size = 0.8, color = "red") +
-         geom_col(aes(y = Rain, x = date.vec, fill = "Rain"), size = 1) +
-        
-         
+ str(seasCal.dF)
 
-         scale_x_date(date_breaks = "1 month", date_labels =  "%b-%Y") +
-   
-         scale_fill_manual(name = " ", values = c('AVAIL' = "red", 'Rain' = "blue")) +
-   
-         scale_y_continuous(expand = c(0, 2))  +
-         labs(y="Moisture (mm)", x=NULL) +
-   
-         theme_linedraw()  +
-   
-   theme(axis.title = element_text(size = 14, colour = "black", family = "Times New Roman"),
-         axis.text = element_text(size = 10, colour = "black", family = "Times New Roman"),
-         axis.text.x = element_text(size = 10, colour = "black", family = "Times New Roman", angle = 45, vjust = 0.5))
+ seasCal.dF$OnsetDate <- as.Date(seasCal.dF$OnsetDate)
+ seasCal.dF$CessationDate <- as.Date(seasCal.dF$CessationDate)
+
+max_onset <- max(seasCal.dF$OnsetValue, na.rm = TRUE)
+max_cessation <- max(seasCal.dF$CessationValue, na.rm = TRUE)
+max_value <- max(max_onset, max_cessation)
 
 
-## -----------------------------------------------------------------------------
-# seasonal calndar is estimated for the onset window ranges from 01-September to 31-January having a soil with 100mm of WHC
-soilWHC = 100
-onsetWind.start = "1996-09-01"  # earliest possible start date of the onset window
-onsetWind.end = "1997-01-31"    # the latest possible date for end of the onset window
-cessaWind.end = "1997-06-30"    # the latest possible date for end of the cessation window
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 
-seasCal.lst <- calcSeasCal(watBal, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC = 100)
+ggplot(seasCal.dF, aes(x = Year)) +
+  geom_line(aes(y = OnsetValue, color = "Onset"),
+            size = 1.5, linetype = "solid") +
+  geom_line(aes(y = CessationValue, color = "Cessation"),
+            size = 1.5, linetype = "dashed") +
+  geom_point(aes(y = OnsetValue, color = "Onset"), size = 3,
+             shape = 21, fill = "white") +
+  geom_point(aes(y = CessationValue, color = "Cessation"),
+             size = 3, shape = 21, fill = "white") +
+  geom_text_repel(aes(y = OnsetValue,
+                      label = ifelse(!is.na(OnsetDate),
+                                     format(OnsetDate, "%Y-%m-%d"), ""),
+                      color = "Onset"), size = 3,
+                  box.padding = 0.5, point.padding = 0.5) +
+  geom_text_repel(aes(y = CessationValue,
+                      label = ifelse(!is.na(CessationDate),
+                                     format(CessationDate, "%Y-%m-%d"), ""),
+                      color = "Cessation"), size = 3,
+                  box.padding = 0.5, point.padding = 0.5) +
+  scale_y_continuous(name = paste0("Days Since: ",
+                                   format(as.Date(paste0("2023-",
+                                                         onsetWind.start)),
+                                          "%d %b")),
+                     breaks = seq(0, max_value, by = 10)) +
+  labs(title = "Onset and Cessation Dates of the Wet Season",
+       x = " ", color = "Legend") +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 16),
+    legend.position = "top",
+    axis.title.x = element_text(face = "bold"),
+    axis.title.y = element_text(face = "bold"),
+    legend.title = element_text(face = "bold"),
+    legend.text = element_text(size = 12),
+    panel.grid.major = element_line(color = "#e0e0e0"),
+    panel.grid.minor = element_line(color = "#f0f0f0"),
+    panel.background = element_rect(fill = "#f7f7f7"),
+    plot.background = element_rect(fill = "#f7f7f7")
+  ) +
+  scale_color_manual(name = "Legend",
+                     values = c("Onset" = "#1f77b4",
+                                "Cessation" = "red"))
 
-str(seasCal.lst)
-
-# plotting year to year variation of onset cessation and seasonal duration
-
-<<<<<<< HEAD
-seasCal.dF <- data.frame(
-  Year = seasCal.lst[[1]][, c("Year")],
-  Onset = seasCal.lst[[1]][, c("onset.JD")],
-  Cessation = seasCal.lst[[2]][, c("cessation.JD")],
-  Duration = seasCal.lst[[3]][, c("Duration")]
-)
-
-ggplot(data = seasCal.dF) +
-  geom_line(aes(y = Onset, x = Year, color = "Onset"), size = 1) +
-  geom_line(aes(y = Cessation, x = Year, color = "Cessation"), size = 1) +
-  geom_area(aes(y = Duration, x = Year, color = "Duration⁠"), size = 0.8, alpha = 0.4) +
-  scale_color_manual(name = "Calendar", values = c("Onset" = "blue", "Cessation" = "red", "Duration" = "grey")) +
-  labs(y = "Day of a year (DOY)", x = NULL) +
-  theme_bw()
-=======
-seasCal.dF <- data.frame(Year = seasCal.lst[[1]][,c("Year")],
-                         Onset = seasCal.lst[[1]][,c("onset.JD")],
-                         Cessation = seasCal.lst[[2]][,c("cessation.JD")],
-                         Duration = seasCal.lst[[3]][,c("Duration")])
-
- ggplot(data = seasCal.dF) +
-   geom_line(aes(y = Onset, x = Year, color = "Onset"), size = 1) +
-   geom_line(aes(y = Cessation, x = Year, color = "Cessation"), size = 1) +
-   geom_area(aes(y = Duration, x = Year, color = "Duration⁠"), size = 0.8, alpha = 0.4)+
- 
-   scale_color_manual(name = "Calendar", values = c('Onset' = "blue", 'Cessation' = "red", 'Duration' = "grey"))  +
-
- labs(y="Day of a year (DOY)", x=NULL) +
-
-   theme_bw()
-
-
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a
 

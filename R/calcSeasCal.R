@@ -1,7 +1,11 @@
-#     calcSeasCal.R Rainy season calandar
+###############################################################################
+###############################################################################
 #
-#     Copyright (C) 2022 Center of Plant Sciences, Scuola Superiore Sant’Anna
-#     (http://www.capitalisegenetics.santannapisa.it)
+#      calcSeasCal.R Wet season calendar
+#
+#     Copyright (C) 2024 Institute of Plant Sciences, Sant’Anna School of
+#     Advanced Studies, Pisa, Italy
+#     (https://www.santannapisa.it/en/institute/plant-sciences).
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU General Public License as published by
@@ -17,449 +21,348 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ###############################################################################
-#' @title Rainy Season Calendar
+###############################################################################
+
+#' @title Wet Season Calendar
 #'
-#' @description This function estimates the rainy season calendar, i.e onset
-#' date, cessation date and duration of the rainy season based on Agroclimatic
-#' approach. The agroclimatic approach defines the onset of the rainy season as
-#' the optimal date that ensures sufficient soil moisture during planting and
-#' early growing periods to avoid crop failure after sowing and requires
-#' information on rainfall, reference evapotranspiration and accounting of the
-#' daily soil water balance parameters.
+#' @description Estimates the wet season calendar, including the onset date,
+#' cessation date, and duration, based on an agroclimatic approach. The
+#' function relies on daily soil water balance parameters.
 #'
-#' @param data  an R object of dataframe as returned by \code{\link{calcWatBal}}
-#' or a dataframe having similar parameters.
-#' @param onsetWind.start Earliest possible start date of the onset window.
-#' @param onsetWind.end The latest possible date for end of the onset window.
-#' @param cessaWind.end The latest possible date for end of the cessation window.
-#' @param soilWHC Water holding capacity of the soil at root zone depth in (mm).
+#' @param data  An R dataframe returned by \code{\link{calcWatBal}} or
+#' a dataframe with similar parameters.
+#' @param onsetWind.start The earliest possible start date for the onset window
+#' in "MM-DD" format.
+#' @param onsetWind.end The latest possible end date for the onset window
+#' in "MM-DD" format.
+#' @param cessaWind.end The latest possible end date for the cessation window
+#' in "MM-DD" format.
+#' @param soilWHC The available soil water holding capacity at
+#' root zone depth (in mm).
 #'
-#' @return The function generates list of dataframes  with columns of variables:
-#'
-#' \strong{\code{Onset.dF:}} a data frame with columns of onset variables:
-#'
-#' \verb{    } \emph{Year:} year of the season under investigation, "YYYY".
-#'
-#' \verb{    } \emph{onset.Year:} year of the season under investigation, "YYYY".
-#'
-#' \verb{    } \emph{onset.Month:} month of the onset of the season in "MM".
-#'
-#' \verb{    } \emph{onset.Day:} day of the onset of the season in "DD".
-#'
-#' \verb{    } \emph{JD:} onset date of the season in Julian day, "DOY".
-#'
-#' \verb{    } \emph{YYYYDOY:} onset date of the season in "YYYY-DOY".
-#'
-#' \verb{    } \emph{Year:} year of the season under investigation, "YYYY".
-#'
-#' \strong{\code{Cessation.dF:}} a data frame with columns of onset variables:
-#'
-#' \verb{    } \emph{Year:} year of the season under investigation, "YYYY".
-#'
-#' \verb{    } \emph{cessation.Year:} year of the season under investigation,
-#' "YYYY".
-#'
-#' \verb{    } \emph{cessation.Month:} month of the cessation of the season in
-#' "MM".
-#'
-#' \verb{    } \emph{cessation.Day:} day of the cessation of the season in "DD".
-#'
-#' \verb{    } \emph{JD:} cessation date of the season in Julian day, "DOY".
-#'
-#' \verb{    } \emph{YYYYDOY:} cessation date of the season in "YYYY-DOY".
-#'
-#' \strong{\code{Duration.dF:}} a data frame with columns of onset variables:
-#'
-#' \verb{    } \emph{Year:} year of the season under investigation, "YYYY".
-#'
-#' \verb{    } \emph{onset.YYYYDOY:} onset date of the season in "YYYY-DOY".
-#'
-#' \verb{    } \emph{cessation.YYYYDOY:} cessation date of the season in
-#' "YYYY-DOY".
-#'
-#' \verb{    } \emph{Duration:} duration of the season in "days".
+#' @return A dataframe containing the following columns:
+#' \describe{
+#'   \item{Year}{The year of the season (YYYY).}
+#'   \item{OnsetDate}{The onset date, formatted as "YYYY-MM-DD".}
+#'   \item{OnsetDOY}{The Julian day (DOY) of the onset.}
+#'   \item{OnsetValue}{The number of days since \code{onsetWind.start}.}
+#'   \item{CessationDate}{The cessation date, formatted as "YYYY-MM-DD".}
+#'   \item{CessationDOY}{The Julian day (DOY) of the cessation.}
+#'   \item{CessationValue}{The number of days since \code{onsetWind.start}.}
+#'   \item{Duration}{The duration of the wet season (in days).}
+#' }
 #'
 #' @details
+#' The agroclimatic approach defines the wet season based on the balance
+#' between precipitation and potential evapotranspiration (PET). The wet season
+#' begins when the moisture available to crops exceeds their
+#' evapotranspiration demands, ensuring optimal growth conditions.
 #'
-#' As per agroclimatic approach, a normal rainy season (growing season) is
-#' defined as one when there is an excess of precipitation over potential
-#' evapotranspiration (PET). Such a period met the evapotransiration demands of
-#' crops and recharge the moisture of the soil profile (FAO 1977; 1978; 1986).
-#' Thus, the rainy season calendar defined accordingly:
+#' \strong{Onset:}
+#' The wet season onset is defined as the first day after \code{onsetWind.start}
+#' when the ratio of actual evapotranspiration (AET) to potential
+#' evapotranspiration (PET) exceeds 0.5 for at least 5 consecutive days, and the
+#' soil moisture remains above 25% of the available soil water holding capacity
+#' (\code{soilWHC}) for a minimum of 20 consecutive days, ensuring sufficient
+#' moisture availability for plant growth.
 #'
-#' \strong{Onset}
+#' \strong{Cessation:}
+#' The wet season ends on the first day after \code{onsetWind.end} when the
+#' AET/PET ratio falls below 0.5 for at least 5 consecutive days, and the
+#' soil moisture remains below 25% of the available soil water holding capacity
+#' (\code{soilWHC}) for a minimum of 12 consecutive days.
 #'
-#' The \emph{onset} of the rainy season will start on the first day after
-#' \emph{onsetWind.start}, when the actual-to-potential evapotranspiration ratio
-#' is greater than 0.5 for 7 consecutive days, followed by a 20-day period in
-#' which plant available water remains above wilting over the root zone of the
-#' soil layer.
+#' \strong{Duration:}
+#' The total duration of the wet season is the number of days between
+#' onset and cessation.
 #'
-#' \strong{Cesation}
+#' @references
+#' FAO, 1977. Crop water requirements. FAO Irrigation and Drainage Paper No. 24,
+#' by Doorenbos J. and W.O. Pruitt. FAO, Rome, Italy.
 #'
-#' The rainy season will end, \emph{cessation}, on the first day after
-#' \emph{onsetWind.end}, when the actual-to-potential evapotranspiration ratio
-#' is less than 0.5 for 7 consecutive days, followed by 12 consecutive
-#' non-growing days in which plant available water remains below wilting over
-#' the root zone of the soil layer.
+#' FAO, 1978. Forestry for Local Community Development. FAO Forestry Paper
+#' No. 7, FAO, Rome.
 #'
-#'  \strong{Duration}
-#'
-#' The \emph{duration} of the rainy season is the total number of days from
-#' onset to cessation of the season.
-#'
-#' @references FAO, 1977. Crop water requirements. FAO Irrigation and Drainage
-#' Paper No. 24, by Doorenbos J and W.O. Pruitt. FAO, Rome, Italy.
-#'
-#' FAO 1978. Forestry for Local Community Development Food and Agriculture
-#' Organization of the United Nation (FAO), FAO Forestry paper, No 7, Rome.
-#'
-#' FAO, 1986. Early Agrometeorological crop yield forecasting. FAO Plant
-#' Production and Protection paper No. 73, by M. Frère and G.F. Popov. FAO,
-#' Rome, Italy
+#' FAO, 1986. Early Agrometeorological Crop Yield Forecasting. FAO Plant
+#' Production and Protection Paper No. 73, by M. Frère and G.F.
+#' Popov. FAO, Rome.
 #'
 #' @seealso \code{\link{calcEto}, \link{calcWatBal}}
 #'
-#' @importFrom ggplot2 ggplot geom_line geom_area scale_x_date scale_y_continuous labs theme_linedraw theme
-#' @importFrom dplyr group_by summarize
+#' @importFrom dplyr group_by summarize mutate %>%
 #' @importFrom lubridate as_date
+#' @importFrom zoo rollapply
+#' @importFrom rlang .data
 #'
 #' @examples
 #' \donttest{
-#' # load example data:
+#' ## Load example data:
 #' data(AgroClimateData)
 #'
-#' # Estimate daily PET:
+#' ## Estimate daily PET:
 #' PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 #'
-#' # Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
+#' ## Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 #' AgroClimateData$Eto <- PET$ET.Daily
+#'
+#' ## Estimate daily water balance for the soil having 100mm of WHC:
+#' watBal.list <- calcWatBal(data = AgroClimateData, soilWHC = 100)
+#' watBal <- watBal.list$data
+#'
+#' ## seasonal calendar is estimated for the onset window ranges from
+#' ## 01 September to 31 January having a soil with 100mm of WHC:
+#'
+#' soilWHC <- 100
+#' onsetWind.start <- "09-01"
+#' onsetWind.end <- "01-31"
+#' cessaWind.end <- "06-30"
+#'
+#' seasCal.dF <- calcSeasCal(data = watBal, onsetWind.start, onsetWind.end,
+#' cessaWind.end, soilWHC)
+#'
+#'  str(seasCal.dF)
+#'
 #' }
 #' @export
-
 ###############################################################################
-# ***** function to estimate
+###############################################################################
+# ***** function to estimate WSC
 
 calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
                         cessaWind.end, soilWHC) {
-  # ***** Check of specific data requirement
 
-  if ((is.null(data$Year) & is.null(data$Month) & is.null(data$Day)) |
-    ((length(which(is.na(data$Year))) > 0) &
-      (length(which(is.na(data$Month))) > 0) &
-      (length(which(is.na(data$Day))) > 0))) {
-    stop("Required data column for [Year], [Month] and [Day] is missing!")
+         ## ***** Validate parameters ***** ##
+
+  requiredColumns <- c("Year", "Month", "Day", "R", "AVAIL")
+  missingCols <- setdiff(requiredColumns, colnames(data))
+
+  if (length(missingCols) > 0) {
+    stop(paste("The required data columns",
+               paste(missingCols, collapse = ", "), "are missing!"))
   }
 
-  if (is.null(soilWHC) | is.na(soilWHC)) {
-    stop("Required data for water holding capacity of the soil [soilWHC]
-         is missing! ")
+  ## ***** Validate onset window start ("MM-DD"):
+
+  if (is.null(onsetWind.start) || is.na(onsetWind.start) ||
+      !grepl("^\\d{2}-\\d{2}$", onsetWind.start)) {
+    stop("The start date for the onset window 'onsetWind.start' is
+         missing or not in 'MM-DD' format!")
   }
 
-  # if (is.null(data$Rain) | length(which(is.na(data$Rain)))> 0) {
-  #
-  # stop("Required data column for daily rainfall amount [Rain] is missing! ")
-  #
-  # }
+  ## ***** Validate onset window end ("MM-DD"):
 
-  if (is.null(data$R) | length(which(is.na(data$R))) > 0) {
-    stop("Required data column for actual-to-potential evapotranspiration
-         amount [R] is missing! ")
+  if (is.null(onsetWind.end) || is.na(onsetWind.end) ||
+      !grepl("^\\d{2}-\\d{2}$", onsetWind.end)) {
+    stop("The end date for the onset window 'onsetWind.end' is
+         missing or not in 'MM-DD' format!")
   }
 
-  if (is.null(data$AVAIL) | length(which(is.na(data$AVAIL))) > 0) {
-    stop("Required data column for available soil water amount [AVAIL]
-         is missing! ")
+  ## ***** Validate cessation window end ("MM-DD"):
+
+  if (is.null(cessaWind.end) || is.na(cessaWind.end) ||
+      !grepl("^\\d{2}-\\d{2}$", cessaWind.end)) {
+    stop("The end date for the cessation window [cessaWind.end] is missing
+         or not in 'MM-DD' format!")
   }
 
-  if (is.null(onsetWind.start) | is.na(onsetWind.start)) {
-    stop("Required date for start of the onset window [onsetWind.start]
-         is missing! ")
+  ## ***** Validate R-index:
+
+  if (any(is.na(data$R)) || any(data$R < 0 | data$R > 1)) {
+    stop("The actual-to-potential evapotranspiration ratio 'R'
+         must be between 0 and 1!")
   }
 
-  if (is.null(onsetWind.end) | is.na(onsetWind.end)) {
-    stop("Required date for end of the onset window [onsetWind.end]
-         is missing! ")
+  ## ***** Validate AVAIL (available soil water):
+
+  if (any(is.na(data$AVAIL)) || any(data$AVAIL < 0)) {
+    stop("The available soil water 'AVAIL' column contains invalid or
+         negative values!")
   }
 
-  if (is.null(cessaWind.end) | is.na(cessaWind.end)) {
-    stop("Required date for end of the cessation window [cessaWind.end]
-         is missing! ")
+  ## ***** Validate soilWHC:
+
+  if (is.null(soilWHC) || !is.numeric(soilWHC) || soilWHC <= 0) {
+    stop("The soil water holding capacity 'soilWHC' must be a
+         positive number!")
   }
 
-  # ****************************************************************************
-
-  data$date <- lubridate::as_date(paste0(
-    data$Year, "-", data$Month, "-",
-    data$Day
-  ))
-  data$DOY <- strftime(as.POSIXlt(lubridate::as_date(paste0(
-    data$Year, "-",
-    data$Month, "-",
-    data$Day
-  ))), "%j")
-  data$YYDOY <- paste0(data$Year, "-", data$DOY)
-  year.vec <- as.numeric(sort(unique(data$Year)))
+##############################################################################
+##############################################################################
 
   Rindex.thr <- 0.5
-  PAW.thr <- min(max((0.25 * soilWHC), 10), 30)
-  #  data$Rain[data$Rain < 1] <- 0
+  RAW.thr <- max((0.25 * soilWHC), 5)
 
-  if (lubridate::as_date(onsetWind.start) < lubridate::as_date(onsetWind.end) |
-    lubridate::as_date(onsetWind.start) < lubridate::as_date(cessaWind.end)) {
-    year.len <- length(year.vec) - 1
-  } else {
-    year.len <- length(year.vec)
-  }
+## ****************************************************************************
 
-  # *****************************************************************************
+  data$date <- lubridate::as_date(paste0(data$Year, "-",
+                                         data$Month, "-", data$Day))
 
-  Onset.dF <- data.frame(
-    Year = rep(NA, year.len),
-    onset.Year = rep(NA, year.len),
-    onset.Month = rep(NA, year.len),
-    onset.Day = rep(NA, year.len),
-    onset.JD = rep(NA, year.len),
-    onset.Value = rep(NA, year.len)
+  dates <- as.Date(data$date)
+  years <- unique(data$Year)
+
+  # WSC.dF <- data.frame(Year =   years, # integer(),
+  #                      OnsetDate = as.Date(character()),
+  #                      OnsetDOY = integer(),
+  #                      OnsetValue = integer(),
+  #                      CessationDate = as.Date(character()),
+  #                      CessationDOY = integer(),
+  #                      CessationValue = integer(),
+  #                      Duration = integer())
+
+  WSC.dF <- data.frame(
+    Year = years,
+    OnsetDate = as.Date(rep(NA, length(years))),
+    OnsetDOY = integer(length(years)),
+    OnsetValue = integer(length(years)),
+    CessationDate = as.Date(rep(NA, length(years))),
+    CessationDOY = integer(length(years)),
+    CessationValue = integer(length(years)),
+    Duration = integer(length(years))
   )
 
-  Cessation.dF <- data.frame(
-    Year = rep(NA, year.len),
-    cessation.Year = rep(NA, year.len),
-    cessation.Month = rep(NA, year.len),
-    cessation.Day = rep(NA, year.len),
-    cessation.JD = rep(NA, year.len),
-    cessation.Value = rep(NA, year.len)
-  )
+## ****************************************************************************
 
-  Duration.dF <- data.frame(
-    Year = rep(NA, year.len),
-    onset.YYYYDOY = rep(NA, year.len),
-    cessation.YYYYDOY = rep(NA, year.len),
-    Duration = rep(NA, year.len)
-  )
+  for (yearS in seq_along(years)) {
 
-  for (yr in 1:(year.len)) {
-    if (!is.null(onsetWind.start) & !is.null(cessaWind.end)) {
-      ons <- as.numeric(format(lubridate::as_date(onsetWind.start), "%j"))
-      one <- as.numeric(format(lubridate::as_date(onsetWind.end), "%j"))
-      cne <- as.numeric(format(lubridate::as_date(cessaWind.end), "%j"))
+    yearStart <- years[yearS]
 
-      onsetWind.start.yr <- lubridate::as_date(paste0(
-        year.vec[yr],
-        substr(onsetWind.start, 5, 10)
-      ))
+     onsetWind.start.date <- as.Date(paste0(yearStart, "-",
+                                           onsetWind.start), format="%Y-%m-%d")
 
-      if (ons < one) {
-        onsetWind.end.yr <- lubridate::as_date(paste0(
-          year.vec[yr],
-          substr(onsetWind.end, 5, 10)
-        ))
-      } else {
-        onsetWind.end.yr <- lubridate::as_date(paste0(
-          year.vec[yr + 1],
-          substr(onsetWind.end, 5, 10)
-        ))
-      }
-
-      data.onset.yr <-
-        data[which(onsetWind.start.yr ==
-          data$date):which((onsetWind.end.yr + 20) == data$date), ]
-
-      # ***** onset date
-
-      onset <- NA
-
-      for (day in 1:(nrow(data.onset.yr) - 20)) {
-        if (is.na(onset) & (length(which(is.na(data.onset.yr$R))) < 1) &
-          (data.onset.yr$R[day] >= Rindex.thr) &
-          (data.onset.yr$R[day + 1] >= Rindex.thr) &
-          (data.onset.yr$R[day + 2] >= Rindex.thr) &
-          (data.onset.yr$R[day + 3] >= Rindex.thr) &
-          (data.onset.yr$R[day + 4] >= Rindex.thr) &
-          (data.onset.yr$R[day + 5] >= Rindex.thr)) {
-          avail.vec <- data.onset.yr$AVAIL[day:(day + 20)]
-          avail.grDay <- length(which(avail.vec > PAW.thr))
-
-          if (avail.grDay > 12) {
-            onset <- day
-          } else {
-            (next)
-          }
-        }
-      }
-
-
-      if (is.na(onset)) {
-        onset.index <- NA
-      } else {
-        onset.index <- data.onset.yr$YYDOY[onset]
-      }
-      if (is.na(onset)) {
-        onset.Year <- NA
-      } else {
-        onset.Year <- as.numeric(substr(onset.index, 1, 4))
-      }
-      if (is.na(onset)) {
-        onset.Month <- NA
-      } else {
-        onset.Month <- as.numeric(data.onset.yr$Month[onset])
-      }
-      if (is.na(onset)) {
-        onset.Day <- NA
-      } else {
-        onset.Day <- as.numeric(data.onset.yr$Day[onset])
-      }
-
-      onset.yr.dF <- data.frame(
-        Year = as.numeric(year.vec[yr]),
-        onset.Year = onset.Year,
-        onset.Month = onset.Month,
-        onset.Day = onset.Day,
-        onset.JD = as.numeric(substr(onset.index, 6, 8)),
-        onset.Value = onset
-      )
-
-      Onset.dF[yr, ] <- onset.yr.dF
-
-      # *****************************************************************************
-
-      if (!is.na(onset)) {
-        cessaWind.start.yr <- lubridate::as_date(paste0(
-          onset.Year, "-",
-          onset.Month, "-",
-          onset.Day
-        )) + 35
-      }
-
-      if (!is.na(onset) & (ons < cne)) {
-        cessaWind.end.yr <- lubridate::as_date(paste0(
-          year.vec[yr],
-          substr(cessaWind.end, 5, 10)
-        ))
-      } else {
-        cessaWind.end.yr <- lubridate::as_date(paste0(
-          year.vec[yr + 1],
-          substr(cessaWind.end, 5, 10)
-        ))
-      }
-
-      if (!is.na(onset)) {
-        data.cessation.yr <- data[which(cessaWind.start.yr ==
-          data$date):which((cessaWind.end.yr + 20) ==
-          data$date), ]
-      }
-
-      cessation <- NA
-
-      if (!is.na(onset)) {
-        for (day in 1:(nrow(data.cessation.yr) - 20)) {
-          if (is.na(cessation) & (length(which(is.na(data.cessation.yr$R))) < 1) &
-            (data.cessation.yr$R[day] < Rindex.thr) &
-            (data.cessation.yr$R[day + 1] < Rindex.thr) &
-            (data.cessation.yr$R[day + 2] < Rindex.thr) &
-            (data.cessation.yr$R[day + 3] < Rindex.thr) &
-            (data.cessation.yr$R[day + 4] < Rindex.thr) &
-            (data.cessation.yr$R[day + 5] < Rindex.thr)) {
-            avail.vec <- data.cessation.yr$AVAIL[(day):(day + 20)]
-            avail.grDay <- length(which(avail.vec <= (PAW.thr + 10)))
-
-            if (avail.grDay > 15) {
-              cessation <- day + 1
-            } else {
-              (next)
-            }
-          }
-        }
-      }
-
-      if (is.na(onset)) {
-        cessation <- NA
-      }
-
-
-      if (is.na(cessation)) {
-        cessation.index <- NA
-      } else {
-        cessation.index <- data.cessation.yr$YYDOY[cessation]
-      }
-      if (is.na(cessation)) {
-        cessation.Year <- NA
-      } else {
-        cessation.Year <- as.numeric(substr(cessation.index, 1, 4))
-      }
-      if (is.na(cessation)) {
-        cessation.Month <- NA
-      } else {
-        cessation.Month <- as.numeric(data.cessation.yr$Month[cessation])
-      }
-      if (is.na(cessation)) {
-        cessation.Day <- NA
-      } else {
-        cessation.Day <- as.numeric(data.cessation.yr$Day[cessation])
-      }
-
-
-      cessation.yr.dF <- data.frame(
-        Year = as.numeric(year.vec[yr]),
-        cessation.Year = cessation.Year,
-        cessation.Month = cessation.Month,
-        cessation.Day = cessation.Day,
-        cessation.JD = as.numeric(substr(
-          cessation.index, 6, 8
-        )),
-        cessation.Value = (cessation +
-          (Onset.dF$onset.Value[yr]
-          + 35))
-      )
-
-      Cessation.dF[yr, ] <- cessation.yr.dF
-
-      # *****************************************************************************
-      duration <- NA
-
-      if (!is.na(onset) & !is.na(cessation)) {
-        duration <- length(seq(
-          from =
-            lubridate::as_date(paste0(
-              onset.yr.dF$onset.Year, "-",
-              onset.yr.dF$onset.Month, "-",
-              onset.yr.dF$onset.Day
-            )),
-          to = lubridate::as_date(paste0(
-            cessation.yr.dF$cessation.Year, "-",
-            cessation.yr.dF$cessation.Month, "-",
-            cessation.yr.dF$cessation.Day
-          )),
-          by = "day"
-        ))
-      }
-
-      if (is.na(onset)) {
-        duration <- NA
-      }
-
-      Duration.yr.dF <- data.frame(
-        Year = as.numeric(year.vec[yr]),
-        onset.YYYYDOY = onset.index,
-        cessation.YYYYDOY = cessation.index,
-        Duration = duration
-      )
-
-      Duration.dF[yr, ] <- Duration.yr.dF
+    if (as.numeric(substring(onsetWind.end, 1, 2)) <
+        as.numeric(substring(onsetWind.start, 1, 2))) {
+      onsetWind.end.date <- as.Date(paste0(yearStart + 1, "-",
+                                           onsetWind.end), format="%Y-%m-%d")
+    } else {
+      onsetWind.end.date <- as.Date(paste0(yearStart, "-",
+                                           onsetWind.end), format="%Y-%m-%d")
     }
 
-    # *****************************************************************************
-  } # for yr
+    onset.window <- data.frame(dates, data$R, data$AVAIL) %>%
+      dplyr::filter(dates >= onsetWind.start.date & dates <= onsetWind.end.date)
 
+    colnames(onset.window) <- c("dates", "R", "AVAIL")
 
-  seasCal.lst <- list(Onset.dF, Cessation.dF, Duration.dF)
+    onset.window <- onset.window %>%
+      dplyr::mutate(R.aboveThreshold = .data$R > Rindex.thr,
+                    AVAIL.aboveThreshold = .data$AVAIL > RAW.thr)
 
-  return(seasCal.lst)
+    onset.window <- onset.window %>%
+      dplyr::mutate(Rstreak = zoo::rollapply(.data$R.aboveThreshold,
+                                             width = 7,
+                                             FUN = all, fill = NA,
+                                             align = "left"))
 
-  ###############################################################################
+    onset.date <- NA
+
+    for (i in which(onset.window$Rstreak == TRUE)) {
+
+      if ((i + 15) <= nrow(onset.window)) {
+
+        if (all(onset.window$AVAIL.aboveThreshold[i:(i + 15)],
+                na.rm = TRUE)) {
+          onset.date <- onset.window$dates[i]
+          break
+        }
+      }
+    }
+
+   # if (is.na(onset.date)) next
+
+    cessation.start.date <- onset.date + 25
+
+    if (as.numeric(substring(cessaWind.end, 1, 2)) <
+        as.numeric(substring(onsetWind.start, 1, 2))) {
+      cessation.end.date <- as.Date(paste0(yearStart + 1, "-",
+                                           cessaWind.end), format="%Y-%m-%d")
+    } else {
+      cessation.end.date <- as.Date(paste0(yearStart, "-",
+                                           cessaWind.end), format="%Y-%m-%d")
+    }
+
+    cessation.window <- data.frame(dates, data$R, data$AVAIL) %>%
+      dplyr::filter(dates >= cessation.start.date & dates <= cessation.end.date)
+
+    colnames(cessation.window) <- c("dates", "R", "AVAIL")
+
+    cessation.window <- cessation.window %>%
+      dplyr::mutate(R.belowThreshold = .data$R < Rindex.thr,
+                    AVAIL.belowThreshold = .data$AVAIL < (RAW.thr +
+                                                            0.1 * soilWHC))
+
+    cessation.window <- cessation.window %>%
+      dplyr::mutate(Rstreak = zoo::rollapply(.data$R.belowThreshold,
+                                             width = 7,
+                                             FUN = all, fill = NA,
+                                             align = "left"))
+
+    cessation.date <- NA
+
+    for (i in which(cessation.window$Rstreak == TRUE)) {
+
+      if ((i + 14) <= nrow(cessation.window)) {
+
+        if (all(cessation.window$AVAIL.belowThreshold[i :(i + 14)],
+                na.rm = TRUE)) {
+          cessation.date <- cessation.window$dates[i]
+          break
+        }
+      }
+    }
+
+    if (!is.na(cessation.date) && !is.na(onset.date)) {
+      duration <- as.numeric(difftime(cessation.date,
+                                      onset.date, units = "days"))
+    } else {
+      cessation.date <- NA
+      duration <- NA
+    }
+
+      data.out.yr <- data.frame(Year = yearStart,
+                                OnsetDate = onset.date,
+                                OnsetDOY = if (!is.na(onset.date))
+                                {format(onset.date, "%j")} else {NA},
+                                OnsetValue = if (!is.na(onset.date))
+                                {length(seq.Date(onsetWind.start.date,
+                                                 onset.date,
+                                                 by = "day"))} else {NA},
+                                CessationDate = cessation.date,
+                                CessationDOY = if (!is.na(cessation.date))
+                                {format(cessation.date, "%j")} else {NA},
+                                CessationValue = if (!is.na(cessation.date))
+                                {length(seq.Date(onsetWind.start.date,
+                                                 cessation.date,
+                                                 by = "day"))} else {NA},
+                                Duration = duration)
+
+    WSC.dF[yearS, ] <- data.out.yr
+
+    # WSC.dF <- rbind(WSC.dF,
+    #                 data.frame(Year = yearStart,
+    #                            OnsetDate = onset.date,
+    #                            OnsetDOY = if (!is.na(onset.date))
+    #                            {format(onset.date, "%j")} else {NA},
+    #                            OnsetValue = if (!is.na(onset.date))
+    #                            {length(seq.Date(onsetWind.start.date,
+    #                                             onset.date,
+    #                                             by = "day"))} else {NA},
+    #                            CessationDate = cessation.date,
+    #                            CessationDOY = if (!is.na(cessation.date))
+    #                              {format(cessation.date, "%j")} else {NA},
+    #                            CessationValue = if (!is.na(cessation.date))
+    #                              {length(seq.Date(onsetWind.start.date,
+    #                                               cessation.date,
+    #                                               by = "day"))} else {NA},
+    #                             Duration = duration))
+
+    }
+
+  return(WSC.dF)
+
 }
 
 ###############################################################################
+###############################################################################
+#                >>>>>>>>>>   End of code   <<<<<<<<<<                        #
 ###############################################################################
 ###############################################################################

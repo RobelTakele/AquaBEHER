@@ -1,7 +1,7 @@
 Package: AquaBEHER
 Title: Estimation and Prediction of Wet Season Calendar and Soil Water
     Balance for Agriculture
-Version: 1.0.0
+Version: 1.2.0
 Authors@R: c(
     person("Robel", "Takele", , "takelerobel@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0003-0151-2537")),
@@ -31,12 +31,16 @@ Depends:
     R (>= 3.5.0)
 Imports:
     dplyr,
-    ggplot2,
     lubridate,
+    zoo,
+    rlang,
     sp,
     terra
 Suggests:
     knitr,
+    ggplot2,
+    ggrepel,
+    scales,
     prettydoc,
     rmarkdown,
     stringr,

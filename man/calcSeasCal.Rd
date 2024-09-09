@@ -2,127 +2,108 @@
 % Please edit documentation in R/calcSeasCal.R
 \name{calcSeasCal}
 \alias{calcSeasCal}
-\title{Rainy Season Calendar}
+\title{Wet Season Calendar}
 \usage{
 calcSeasCal(data, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC)
 }
 \arguments{
-\item{data}{an R object of dataframe as returned by \code{\link{calcWatBal}}
-or a dataframe having similar parameters.}
+\item{data}{An R dataframe returned by \code{\link{calcWatBal}} or
+a dataframe with similar parameters.}
 
-\item{onsetWind.start}{Earliest possible start date of the onset window.}
+\item{onsetWind.start}{The earliest possible start date for the onset window
+in "MM-DD" format.}
 
-\item{onsetWind.end}{The latest possible date for end of the onset window.}
+\item{onsetWind.end}{The latest possible end date for the onset window
+in "MM-DD" format.}
 
-\item{cessaWind.end}{The latest possible date for end of the cessation window.}
+\item{cessaWind.end}{The latest possible end date for the cessation window
+in "MM-DD" format.}
 
-\item{soilWHC}{Water holding capacity of the soil at root zone depth in (mm).}
+\item{soilWHC}{The available soil water holding capacity at
+root zone depth (in mm).}
 }
 \value{
-The function generates list of dataframes  with columns of variables:
-
-\strong{\code{Onset.dF:}} a data frame with columns of onset variables:
-
-\verb{    } \emph{Year:} year of the season under investigation, "YYYY".
-
-\verb{    } \emph{onset.Year:} year of the season under investigation, "YYYY".
-
-\verb{    } \emph{onset.Month:} month of the onset of the season in "MM".
-
-\verb{    } \emph{onset.Day:} day of the onset of the season in "DD".
-
-\verb{    } \emph{JD:} onset date of the season in Julian day, "DOY".
-
-\verb{    } \emph{YYYYDOY:} onset date of the season in "YYYY-DOY".
-
-\verb{    } \emph{Year:} year of the season under investigation, "YYYY".
-
-\strong{\code{Cessation.dF:}} a data frame with columns of onset variables:
-
-\verb{    } \emph{Year:} year of the season under investigation, "YYYY".
-
-\verb{    } \emph{cessation.Year:} year of the season under investigation,
-"YYYY".
-
-\verb{    } \emph{cessation.Month:} month of the cessation of the season in
-"MM".
-
-\verb{    } \emph{cessation.Day:} day of the cessation of the season in "DD".
-
-\verb{    } \emph{JD:} cessation date of the season in Julian day, "DOY".
-
-\verb{    } \emph{YYYYDOY:} cessation date of the season in "YYYY-DOY".
-
-\strong{\code{Duration.dF:}} a data frame with columns of onset variables:
-
-\verb{    } \emph{Year:} year of the season under investigation, "YYYY".
-
-\verb{    } \emph{onset.YYYYDOY:} onset date of the season in "YYYY-DOY".
-
-\verb{    } \emph{cessation.YYYYDOY:} cessation date of the season in
-"YYYY-DOY".
-
-\verb{    } \emph{Duration:} duration of the season in "days".
+A dataframe containing the following columns:
+\describe{
+\item{Year}{The year of the season (YYYY).}
+\item{OnsetDate}{The onset date, formatted as "YYYY-MM-DD".}
+\item{OnsetDOY}{The Julian day (DOY) of the onset.}
+\item{OnsetValue}{The number of days since \code{onsetWind.start}.}
+\item{CessationDate}{The cessation date, formatted as "YYYY-MM-DD".}
+\item{CessationDOY}{The Julian day (DOY) of the cessation.}
+\item{CessationValue}{The number of days since \code{onsetWind.start}.}
+\item{Duration}{The duration of the wet season (in days).}
+}
 }
 \description{
-This function estimates the rainy season calendar, i.e onset
-date, cessation date and duration of the rainy season based on Agroclimatic
-approach. The agroclimatic approach defines the onset of the rainy season as
-the optimal date that ensures sufficient soil moisture during planting and
-early growing periods to avoid crop failure after sowing and requires
-information on rainfall, reference evapotranspiration and accounting of the
-daily soil water balance parameters.
+Estimates the wet season calendar, including the onset date,
+cessation date, and duration, based on an agroclimatic approach. The
+function relies on daily soil water balance parameters.
 }
 \details{
-As per agroclimatic approach, a normal rainy season (growing season) is
-defined as one when there is an excess of precipitation over potential
-evapotranspiration (PET). Such a period met the evapotransiration demands of
-crops and recharge the moisture of the soil profile (FAO 1977; 1978; 1986).
-Thus, the rainy season calendar defined accordingly:
+The agroclimatic approach defines the wet season based on the balance
+between precipitation and potential evapotranspiration (PET). The wet season
+begins when the moisture available to crops exceeds their
+evapotranspiration demands, ensuring optimal growth conditions.
 
-\strong{Onset}
+\strong{Onset:}
+The wet season onset is defined as the first day after \code{onsetWind.start}
+when the ratio of actual evapotranspiration (AET) to potential
+evapotranspiration (PET) exceeds 0.5 for at least 5 consecutive days, and the
+soil moisture remains above 25\% of the available soil water holding capacity
+(\code{soilWHC}) for a minimum of 20 consecutive days, ensuring sufficient
+moisture availability for plant growth.
 
-The \emph{onset} of the rainy season will start on the first day after
-\emph{onsetWind.start}, when the actual-to-potential evapotranspiration ratio
-is greater than 0.5 for 7 consecutive days, followed by a 20-day period in
-which plant available water remains above wilting over the root zone of the
-soil layer.
+\strong{Cessation:}
+The wet season ends on the first day after \code{onsetWind.end} when the
+AET/PET ratio falls below 0.5 for at least 5 consecutive days, and the
+soil moisture remains below 25\% of the available soil water holding capacity
+(\code{soilWHC}) for a minimum of 12 consecutive days.
 
-\strong{Cesation}
-
-The rainy season will end, \emph{cessation}, on the first day after
-\emph{onsetWind.end}, when the actual-to-potential evapotranspiration ratio
-is less than 0.5 for 7 consecutive days, followed by 12 consecutive
-non-growing days in which plant available water remains below wilting over
-the root zone of the soil layer.
-
-\strong{Duration}
-
-The \emph{duration} of the rainy season is the total number of days from
-onset to cessation of the season.
+\strong{Duration:}
+The total duration of the wet season is the number of days between
+onset and cessation.
 }
 \examples{
 \donttest{
-# load example data:
+## Load example data:
 data(AgroClimateData)
 
-# Estimate daily PET:
+## Estimate daily PET:
 PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
-# Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
+## Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
 AgroClimateData$Eto <- PET$ET.Daily
+
+## Estimate daily water balance for the soil having 100mm of WHC:
+watBal.list <- calcWatBal(data = AgroClimateData, soilWHC = 100)
+watBal <- watBal.list$data
+
+## seasonal calendar is estimated for the onset window ranges from
+## 01 September to 31 January having a soil with 100mm of WHC:
+
+soilWHC <- 100
+onsetWind.start <- "09-01"
+onsetWind.end <- "01-31"
+cessaWind.end <- "06-30"
+
+seasCal.dF <- calcSeasCal(data = watBal, onsetWind.start, onsetWind.end,
+cessaWind.end, soilWHC)
+
+ str(seasCal.dF)
+
 }
 }
 \references{
-FAO, 1977. Crop water requirements. FAO Irrigation and Drainage
-Paper No. 24, by Doorenbos J and W.O. Pruitt. FAO, Rome, Italy.
+FAO, 1977. Crop water requirements. FAO Irrigation and Drainage Paper No. 24,
+by Doorenbos J. and W.O. Pruitt. FAO, Rome, Italy.
 
-FAO 1978. Forestry for Local Community Development Food and Agriculture
-Organization of the United Nation (FAO), FAO Forestry paper, No 7, Rome.
+FAO, 1978. Forestry for Local Community Development. FAO Forestry Paper
+No. 7, FAO, Rome.
 
-FAO, 1986. Early Agrometeorological crop yield forecasting. FAO Plant
-Production and Protection paper No. 73, by M. Frère and G.F. Popov. FAO,
-Rome, Italy
+FAO, 1986. Early Agrometeorological Crop Yield Forecasting. FAO Plant
+Production and Protection Paper No. 73, by M. Frère and G.F.
+Popov. FAO, Rome.
 }
 \seealso{
 \code{\link{calcEto}, \link{calcWatBal}}

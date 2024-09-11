@@ -89,7 +89,8 @@
 #'
 #' @seealso \code{\link{calcEto}, \link{calcWatBal}}
 #'
-#' @importFrom dplyr group_by summarize mutate %>%
+#' @importFrom dplyr group_by summarize mutate
+#' @importFrom magrittr %>%
 #' @importFrom lubridate as_date
 #' @importFrom zoo rollapply
 #' @importFrom rlang .data
@@ -117,11 +118,12 @@
 #' onsetWind.end <- "01-31"
 #' cessaWind.end <- "06-30"
 #'
-#' seasCal.dF <- calcSeasCal(data = watBal, onsetWind.start, onsetWind.end,
-#' cessaWind.end, soilWHC)
+#' seasCal.dF <- calcSeasCal(
+#'   data = watBal, onsetWind.start, onsetWind.end,
+#'   cessaWind.end, soilWHC
+#' )
 #'
-#'  str(seasCal.dF)
-#'
+#' str(seasCal.dF)
 #' }
 #' @export
 ###############################################################################
@@ -130,21 +132,22 @@
 
 calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
                         cessaWind.end, soilWHC) {
-
-         ## ***** Validate parameters ***** ##
+  ## ***** Validate parameters ***** ##
 
   requiredColumns <- c("Year", "Month", "Day", "R", "AVAIL")
   missingCols <- setdiff(requiredColumns, colnames(data))
 
   if (length(missingCols) > 0) {
-    stop(paste("The required data columns",
-               paste(missingCols, collapse = ", "), "are missing!"))
+    stop(paste(
+      "The required data columns",
+      paste(missingCols, collapse = ", "), "are missing!"
+    ))
   }
 
   ## ***** Validate onset window start ("MM-DD"):
 
   if (is.null(onsetWind.start) || is.na(onsetWind.start) ||
-      !grepl("^\\d{2}-\\d{2}$", onsetWind.start)) {
+    !grepl("^\\d{2}-\\d{2}$", onsetWind.start)) {
     stop("The start date for the onset window 'onsetWind.start' is
          missing or not in 'MM-DD' format!")
   }
@@ -152,7 +155,7 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
   ## ***** Validate onset window end ("MM-DD"):
 
   if (is.null(onsetWind.end) || is.na(onsetWind.end) ||
-      !grepl("^\\d{2}-\\d{2}$", onsetWind.end)) {
+    !grepl("^\\d{2}-\\d{2}$", onsetWind.end)) {
     stop("The end date for the onset window 'onsetWind.end' is
          missing or not in 'MM-DD' format!")
   }
@@ -160,7 +163,7 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
   ## ***** Validate cessation window end ("MM-DD"):
 
   if (is.null(cessaWind.end) || is.na(cessaWind.end) ||
-      !grepl("^\\d{2}-\\d{2}$", cessaWind.end)) {
+    !grepl("^\\d{2}-\\d{2}$", cessaWind.end)) {
     stop("The end date for the cessation window [cessaWind.end] is missing
          or not in 'MM-DD' format!")
   }
@@ -186,16 +189,18 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
          positive number!")
   }
 
-##############################################################################
-##############################################################################
+  ##############################################################################
+  ##############################################################################
 
   Rindex.thr <- 0.5
   RAW.thr <- max((0.25 * soilWHC), 5)
 
-## ****************************************************************************
+  ## ****************************************************************************
 
-  data$date <- lubridate::as_date(paste0(data$Year, "-",
-                                         data$Month, "-", data$Day))
+  data$date <- lubridate::as_date(paste0(
+    data$Year, "-",
+    data$Month, "-", data$Day
+  ))
 
   dates <- as.Date(data$date)
   years <- unique(data$Year)
@@ -220,22 +225,27 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
     Duration = integer(length(years))
   )
 
-## ****************************************************************************
+  ## ****************************************************************************
 
   for (yearS in seq_along(years)) {
-
     yearStart <- years[yearS]
 
-     onsetWind.start.date <- as.Date(paste0(yearStart, "-",
-                                           onsetWind.start), format="%Y-%m-%d")
+    onsetWind.start.date <- as.Date(paste0(
+      yearStart, "-",
+      onsetWind.start
+    ), format = "%Y-%m-%d")
 
     if (as.numeric(substring(onsetWind.end, 1, 2)) <
-        as.numeric(substring(onsetWind.start, 1, 2))) {
-      onsetWind.end.date <- as.Date(paste0(yearStart + 1, "-",
-                                           onsetWind.end), format="%Y-%m-%d")
+      as.numeric(substring(onsetWind.start, 1, 2))) {
+      onsetWind.end.date <- as.Date(paste0(
+        yearStart + 1, "-",
+        onsetWind.end
+      ), format = "%Y-%m-%d")
     } else {
-      onsetWind.end.date <- as.Date(paste0(yearStart, "-",
-                                           onsetWind.end), format="%Y-%m-%d")
+      onsetWind.end.date <- as.Date(paste0(
+        yearStart, "-",
+        onsetWind.end
+      ), format = "%Y-%m-%d")
     }
 
     onset.window <- data.frame(dates, data$R, data$AVAIL) %>%
@@ -244,40 +254,46 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
     colnames(onset.window) <- c("dates", "R", "AVAIL")
 
     onset.window <- onset.window %>%
-      dplyr::mutate(R.aboveThreshold = .data$R > Rindex.thr,
-                    AVAIL.aboveThreshold = .data$AVAIL > RAW.thr)
+      dplyr::mutate(
+        R.aboveThreshold = .data$R > Rindex.thr,
+        AVAIL.aboveThreshold = .data$AVAIL > RAW.thr
+      )
 
     onset.window <- onset.window %>%
       dplyr::mutate(Rstreak = zoo::rollapply(.data$R.aboveThreshold,
-                                             width = 7,
-                                             FUN = all, fill = NA,
-                                             align = "left"))
+        width = 7,
+        FUN = all, fill = NA,
+        align = "left"
+      ))
 
     onset.date <- NA
 
     for (i in which(onset.window$Rstreak == TRUE)) {
-
       if ((i + 15) <= nrow(onset.window)) {
-
         if (all(onset.window$AVAIL.aboveThreshold[i:(i + 15)],
-                na.rm = TRUE)) {
+          na.rm = TRUE
+        )) {
           onset.date <- onset.window$dates[i]
           break
         }
       }
     }
 
-   # if (is.na(onset.date)) next
+    # if (is.na(onset.date)) next
 
     cessation.start.date <- onset.date + 25
 
     if (as.numeric(substring(cessaWind.end, 1, 2)) <
-        as.numeric(substring(onsetWind.start, 1, 2))) {
-      cessation.end.date <- as.Date(paste0(yearStart + 1, "-",
-                                           cessaWind.end), format="%Y-%m-%d")
+      as.numeric(substring(onsetWind.start, 1, 2))) {
+      cessation.end.date <- as.Date(paste0(
+        yearStart + 1, "-",
+        cessaWind.end
+      ), format = "%Y-%m-%d")
     } else {
-      cessation.end.date <- as.Date(paste0(yearStart, "-",
-                                           cessaWind.end), format="%Y-%m-%d")
+      cessation.end.date <- as.Date(paste0(
+        yearStart, "-",
+        cessaWind.end
+      ), format = "%Y-%m-%d")
     }
 
     cessation.window <- data.frame(dates, data$R, data$AVAIL) %>%
@@ -286,24 +302,26 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
     colnames(cessation.window) <- c("dates", "R", "AVAIL")
 
     cessation.window <- cessation.window %>%
-      dplyr::mutate(R.belowThreshold = .data$R < Rindex.thr,
-                    AVAIL.belowThreshold = .data$AVAIL < (RAW.thr +
-                                                            0.1 * soilWHC))
+      dplyr::mutate(
+        R.belowThreshold = .data$R < Rindex.thr,
+        AVAIL.belowThreshold = .data$AVAIL < (RAW.thr +
+          0.1 * soilWHC)
+      )
 
     cessation.window <- cessation.window %>%
       dplyr::mutate(Rstreak = zoo::rollapply(.data$R.belowThreshold,
-                                             width = 7,
-                                             FUN = all, fill = NA,
-                                             align = "left"))
+        width = 7,
+        FUN = all, fill = NA,
+        align = "left"
+      ))
 
     cessation.date <- NA
 
     for (i in which(cessation.window$Rstreak == TRUE)) {
-
       if ((i + 14) <= nrow(cessation.window)) {
-
-        if (all(cessation.window$AVAIL.belowThreshold[i :(i + 14)],
-                na.rm = TRUE)) {
+        if (all(cessation.window$AVAIL.belowThreshold[i:(i + 14)],
+          na.rm = TRUE
+        )) {
           cessation.date <- cessation.window$dates[i]
           break
         }
@@ -312,28 +330,46 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
 
     if (!is.na(cessation.date) && !is.na(onset.date)) {
       duration <- as.numeric(difftime(cessation.date,
-                                      onset.date, units = "days"))
+        onset.date,
+        units = "days"
+      ))
     } else {
       cessation.date <- NA
       duration <- NA
     }
 
-      data.out.yr <- data.frame(Year = yearStart,
-                                OnsetDate = onset.date,
-                                OnsetDOY = if (!is.na(onset.date))
-                                {format(onset.date, "%j")} else {NA},
-                                OnsetValue = if (!is.na(onset.date))
-                                {length(seq.Date(onsetWind.start.date,
-                                                 onset.date,
-                                                 by = "day"))} else {NA},
-                                CessationDate = cessation.date,
-                                CessationDOY = if (!is.na(cessation.date))
-                                {format(cessation.date, "%j")} else {NA},
-                                CessationValue = if (!is.na(cessation.date))
-                                {length(seq.Date(onsetWind.start.date,
-                                                 cessation.date,
-                                                 by = "day"))} else {NA},
-                                Duration = duration)
+    data.out.yr <- data.frame(
+      Year = yearStart,
+      OnsetDate = onset.date,
+      OnsetDOY = if (!is.na(onset.date)) {
+        format(onset.date, "%j")
+      } else {
+        NA
+      },
+      OnsetValue = if (!is.na(onset.date)) {
+        length(seq.Date(onsetWind.start.date,
+          onset.date,
+          by = "day"
+        ))
+      } else {
+        NA
+      },
+      CessationDate = cessation.date,
+      CessationDOY = if (!is.na(cessation.date)) {
+        format(cessation.date, "%j")
+      } else {
+        NA
+      },
+      CessationValue = if (!is.na(cessation.date)) {
+        length(seq.Date(onsetWind.start.date,
+          cessation.date,
+          by = "day"
+        ))
+      } else {
+        NA
+      },
+      Duration = duration
+    )
 
     WSC.dF[yearS, ] <- data.out.yr
 
@@ -354,11 +390,9 @@ calcSeasCal <- function(data, onsetWind.start, onsetWind.end,
     #                                               cessation.date,
     #                                               by = "day"))} else {NA},
     #                             Duration = duration))
-
-    }
+  }
 
   return(WSC.dF)
-
 }
 
 ###############################################################################

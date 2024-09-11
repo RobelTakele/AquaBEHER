@@ -35,6 +35,7 @@ cat('
    library(AquaBEHER)  
    library(ggplot2)
    library(ggrepel)
+   library(dplyr)
    
 
 ## ----climateData--------------------------------------------------------------
@@ -210,5 +211,88 @@ ggplot(seasCal.dF, aes(x = Year)) +
   scale_color_manual(name = "Legend",
                      values = c("Onset" = "#1f77b4",
                                 "Cessation" = "red"))
+
+
+## ----Seasonal Forecast of WSC-------------------------------------------------
+
+  ## Load example data:
+     data(AgroClimateData)
+
+  ## Estimate daily PET:
+     PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
+
+  ## Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
+     AgroClimateData$Eto <- PET$ET.Daily
+
+  ## Estimate daily water balance for the soil having 100mm of WHC:
+     watBal.list <- calcWatBal(data = AgroClimateData, soilWHC = 100)
+     watBal <- watBal.list$data
+
+  ## seasonal calendar is estimated for the onset window ranges from
+  ## 01 September to 31 January having a soil with 100mm of WHC:
+
+   soilWHC <- 100
+   onsetWind.start <- "09-01"
+   onsetWind.end <- "01-31"
+   cessaWind.end <- "06-30"
+   
+   seasCal.dF <- calcSeasCal(data = watBal, onsetWind.start, onsetWind.end,
+                             cessaWind.end, soilWHC)
+
+  ## Tercile Rainfall Probabilities of seasonal Forecast for OND, 2023:
+    rainTerc <- data.frame(T1 = 0.15, T2 = 0.10, T3 = 0.75)
+
+  ## Summarize rainfall data for October to December:
+   seasRain <- AgroClimateData %>%
+        filter(Month %in% c(10, 11, 12)) %>%
+        group_by(Year) %>%
+        summarize(sRain = sum(Rain))
+
+   ## Start of the historical resampling year
+    hisYearStart = 1991
+
+   ## End of the historical resampling year
+    hisYearEnd = 2022
+
+   ## Historical WSC Simulations:
+    hisWSCvar <- seasCal.dF
+
+   ## WSC variable to forecast:
+   fcstVarName <- "Onset"
+   tercileMethod = "quantiles"
+
+    SeasFcst.dF <- seasFcstQBR(hisYearStart, hisYearEnd, rainTerc,
+                               seasRain, hisWSCvar, fcstVarName,
+                               tercileMethod)
+    
+    
+## Resafel the dataframe for ggplot:
+ SeasFcst.dFgg <- data.frame(Category = factor(c("BelowNormal", "Normal",
+                                                 "AboveNormal"),
+                                               levels = c("BelowNormal",
+                                                          "Normal",
+                                                          "AboveNormal")),
+                             Probability = c((SeasFcst.dF$BelowNormal*100),
+                                             (SeasFcst.dF$Normal * 100),
+                                             (SeasFcst.dF$AboveNormal * 100)))
+
+ ## Create the bar plot:
+ ggplot(SeasFcst.dFgg, aes(x = Category, y = Probability, fill = Category)) +
+   geom_bar(stat = "identity", width = 0.7) +
+   scale_fill_manual(values = c("BelowNormal" = "#1f77b4",
+                                "Normal" = "#ff7f0e",
+                                "AboveNormal" = "#2ca02c")) +
+   geom_text(aes(label = paste0(Probability, "%")), vjust = -0.5,
+             size = 5, fontface = "bold") +
+   labs(title = "Seasonal Forecast of the Onset of the Wet Season",
+        x = " ",
+        y = "Probability (%)") +
+   theme_minimal() +
+   theme(
+     plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+     axis.title.x = element_text(size = 14),
+     axis.title.y = element_text(size = 14),
+     legend.position = "none")
+
 
 

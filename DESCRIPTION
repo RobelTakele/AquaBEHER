@@ -8,7 +8,6 @@ Authors@R: c(
     person("Matteo", "Dell'Acqua", , "matteo.dellacqua@santannapisa.it", role = c("aut", "ctb"),
            comment = c(ORCID = "0000-0003-0151-2537"))
   )
-Author: Robel Takele [aut, cre], Matteo Dell'Acqua [aut, ctb]
 Maintainer: Robel Takele <takelerobel@gmail.com>
 Description: The AquaBEHER package provides tools for computing and
     integrating daily reference evapotranspiration (Eto) and a soil water
@@ -20,9 +19,9 @@ Description: The AquaBEHER package provides tools for computing and
     water resources more effectively. For detailed methodologies, users
     can refer to Allen et al. (1998, ISBN:92-5-104219-5); Allen (2005,
     ISBN:9780784408056); Doorenbos and Pruitt (1975, ISBN:9251002797); Guo
-    et al. (2016) doi:10.1016/j.envsoft.2015.12.019; Hargreaves and Samani
-    (1985) doi:10.13031/2013.26773; and Priestley and Taylor (1972)
-    https://journals.ametsoc.org/view/journals/apme/18/7/1520-0450_1979_018_0898_tptema_2_0_co_2.xml.
+    et al. (2016) <doi:10.1016/j.envsoft.2015.12.019>; Hargreaves and Samani
+    (1985) <doi:10.13031/2013.26773>; and Priestley and Taylor (1972)
+    <https://journals.ametsoc.org/view/journals/apme/18/7/1520-0450_1979_018_0898_tptema_2_0_co_2.xml>.
 License: GPL (>= 3)
 URL: https://github.com/RobelTakele/AquaBEHER,
     https://robeltakele.github.io/AquaBEHER/
@@ -31,6 +30,7 @@ Depends:
     R (>= 3.5.0)
 Imports:
     dplyr,
+    magrittr,
     lubridate,
     zoo,
     rlang,

@@ -59,7 +59,6 @@ AgroClimateData$Eto <- PET.PM$ET.Daily
 
 # Estimate daily soil water balance for a soil with 100 mm WHC
 watBal <- calcWatBal(data = AgroClimateData, soilWHC = 100)
-
 }
 
 }

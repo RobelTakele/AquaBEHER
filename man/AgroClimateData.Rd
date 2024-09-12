@@ -29,8 +29,7 @@ period 00h-24h local time (m/s).
 }
 }
 \source{
-\url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/
-sis-agrometeorological-indicators?tab=overview}
+\url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-agrometeorological-indicators?tab=overview}
 }
 \usage{
 data(AgroClimateData)
@@ -58,8 +57,6 @@ AgERA5, 2021, Copernicus Climate Change Service (C3S), Fifth
 generation of ECMWF atmospheric reanalysis of the global climate for
 agriculture and agro-ecological studies. Copernicus Climate Change Service
 Climate Data Store (CDS), July 2021.
-\url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/
-sis-agrometeorological-indicators?tab=overview}
 }
 \seealso{
 \code{\link{climateData}}, \code{\link{calcEto}}

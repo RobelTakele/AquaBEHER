@@ -1,0 +1,83 @@
+/* Custom CSS to style the navigation bar blue */
+.navbar {
+  background-color: #2780e3; /* Cosmo blue color */
+  border-color: #2780e3;
+}
+
+.navbar-brand, .navbar-nav .nav-link {
+  color: #fff !important; /* Ensure text is white */
+}
+
+.navbar-nav .nav-link:hover {
+  background-color: #1c69bf; /* Darker blue on hover */
+  color: #fff !important;
+}
+
+.navbar-nav .active > .nav-link {
+  background-color: #1c69bf; /* Active link */
+  color: #fff !important;
+}
+
+/* Styling for the search form in the navbar */
+.navbar .form-inline {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .form-inline .form-control {
+  width: 200px;
+  margin-right: 10px;
+}
+
+.navbar .form-inline .btn {
+  background-color: #2780e3;
+  color: white;
+}
+
+.navbar .form-inline .btn:hover {
+  background-color: #1c69bf;
+}
+
+.navbar-nav .nav-link {
+    font-size: 5rem;  /* Increase font size */
+    font-weight: bold;  /* Make the text bold */
+    color: #0056b3;     /* Change the color to match Cosmo theme's blue */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #003580;     /* Darker shade on hover */
+}
+
+/* Styling for the footer */
+.footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+    background-color: #f8f9fa;
+    font-size: 0.9rem;
+}
+
+.footer a {
+    color: #0056b3;  /* Matching the theme color */
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #003580;  /* Darker hover color */
+}
+
+.footer .left, .footer .right {
+    display: flex;
+    gap: 15px;
+}
+
+.footer .left {
+    margin-left: 20px;
+}
+
+.footer .right {
+    margin-right: 20px;
+}
+
+
+

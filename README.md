@@ -111,15 +111,16 @@ ggplot(watBal.19T20, aes(x = date)) +
   geom_bar(aes(y = Rain), stat = "identity", fill = "#1f78b4", alpha = 0.6, width = 0.8) +
   geom_line(aes(y = AVAIL), color = "#33a02c", size = 1.5) +
   geom_line(aes(y = Eto), color = "#ff7f00", size = 1.2, linetype = "dashed") +
-  
   scale_x_date(date_labels = "%b %Y", date_breaks = "1 month", expand = c(0.01, 0)) +
   scale_y_continuous(
-    name = "Available Soil Water (mm)", 
+    name = "Available Soil Water (mm)",
     sec.axis = sec_axis(~., name = "Rainfall (mm)")
   ) +
-  labs(title = "Rainfall, Available Soil Water, and Potential Evapotranspiration",
-       subtitle = "2019-2020 Data",
-       x = NULL, y = NULL) +
+  labs(
+    title = "Rainfall, Available Soil Water, and Potential Evapotranspiration",
+    subtitle = "2019-2020 Data",
+    x = NULL, y = NULL
+  ) +
   theme_minimal(base_size = 15) +
   theme(
     plot.title = element_text(face = "bold", size = 18, hjust = 0.5),

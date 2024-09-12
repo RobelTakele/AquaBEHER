@@ -2,35 +2,75 @@ url: https://robeltakele.github.io/AquaBEHER/
 template:
   bootstrap: 5
   bootswatch: cosmo
+  assets:
+    css:
+      - Assets/custom.css
+    js:
+      - Assets/custom.js
+
+# Website Title
+title: AquaBEHER
+
+# Author information
+author:
+  name: Robel Takele
+  email: takelerobel@gmail.com
+  url: https://github.com/RobelTakele
+
+# Copyright information
+copyright: © 2024 Institute of Plant Sciences, Sant’Anna School of Advanced Studies, Pisa, Italy
+
+# Navbar customization
 navbar:
-  structure:
-    left:
-    - intro
-    - reference
-    - articles
-    - tutorials
-    - news
-    right: github
-  components:
-    reference:
-      text: Function Reference
-      href: reference/index.html
-    github:
-      icon: fab fa-github fa-lg
-      href: https://github.com/RobelTakele/AquaBEHER/
-      aria-label: github
-    intro:
-      text: User Guide
+  left:
+    - text: Home
+      href: index.html
+    - text: Tutorial
       href: articles/AquaBEHER.html
-reference:
-- title: All functions
-  contents:
-  - '`AgroClimateData`'
-  - '`calcEto`'
-  - '`calcSeasCal`'
-  - '`calcWatBal`'
-  - '`climateData`'
-  - '`rcn`'
+    - text: User Guide
+      href: reference/index.html
 
+    - text: News
+      href: news/index.html
+  right:
+    - text: GitHub
+      icon: fab fa-github fa-lg
+      href: https://github.com/RobelTakele/AquaBEHER
+      aria-label: GitHub Repo
+    - text: Issues
+      icon: fas fa-exclamation-circle fa-lg
+      href: https://github.com/RobelTakele/AquaBEHER/issues
+      aria-label: Report Issues
+  logo: logo.png
 
+# Sidebar customization
+sidebar:
+  search: true
+  toc: true
+
+# Footer customization
+footer:
+  left:
+    - text: © 2024 Sant'Anna School of Advanced Studies
+      href: https://www.santannapisa.it/en
+    - text: License (GPL-3)
+      href: LICENSE
+    - text: Source Code
+      href: https://github.com/RobelTakele/AquaBEHER
+  right:
+    - text: Contact
+      href: mailto:takelerobel@gmail.com
+    - text: Twitter
+      icon: fab fa-twitter
+      href: https://twitter.com/RobelTakele
+    - text: LinkedIn
+      icon: fab fa-linkedin
+      href: https://www.linkedin.com/in/robel-takele
+
+# Additional metadata (SEO friendly)
+meta:
+  description: "AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture."
+  social:
+    twitter: "@RobelTakele"
+    linkedin: "robel-takele"
 

@@ -1,6 +1,7 @@
 # Changelog
 
-## [1.2.0] - 2024-09-09
+# AquaBEHER 1.2.0 
+## 2024-09-09
 
 ### Added
 - **Citation Information**: Included citation details in `inst/CITATION`.
@@ -19,7 +20,8 @@
 - **calcWatBal Function**: Returns a list containing a dataframe and a list of warnings related to any unrealistic or adjusted values in the input data or parameters.
 - **Wet Season Calendar (WSC) Parameters**: Improved criteria for characterizing WSC parameters.
 
-## [1.0.0] - 2024-09-04
+# AquaBEHER 1.0.0 
+## 2024-09-04
 
 ### Added
 - **Error Handling**: Enhanced error handling and warnings for missing and unrealistic data.
@@ -27,5 +29,6 @@
 - **Documentation**: Improved documentation for better clarity and completeness.
 - **Testing**: Established a testing structure for the `calcEto` function using `testthat`.
 
-### Initial Release
+# AquaBEHER 0.1.0 
+## Initial Release:
 - **AquaBEHER 0.1.0**: First submission to CRAN.

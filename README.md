@@ -1,36 +1,54 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+<p id="start" align="center">
+<a href="#start"><img height="300rem" src="inst/www/AquaBEHER.png"></a>
+</p>
 
-# AquaBEHER
+<div align="center">
+
+<a href="https://github.com/RobelTakele/AquaBEHER/issues/new?labels=bug&projects=&template=01_BUG-REPORT.yml&title=%5BBUG%5D+%3Ctitle%3E" style="font-size: 20px;">Report
+a Bug</a>    \|   
+<a href="https://github.com/RobelTakele/AquaBEHER/discussions/new?category=ideas" style="font-size: 20px;">Request
+a Feature</a>    \|   
+<a href="https://github.com/RobelTakele/AquaBEHER/discussions/new/choose" style="font-size: 20px;">Ask
+a Question</a>
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml)
-[![Project Status: Active – The project has reached a stable, usable
-state and is being actively
-developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-[![license](https://img.shields.io/badge/license-GPL--3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
-[![metacran
-downloads](https://cranlogs.r-pkg.org/badges/AquaBEHER)](https://cran.r-project.org/package=AquaBEHER)
-<!-- badges: end -->
+<a href="https://github.com/RobelTakele/AquaBEHER">
+<img src="https://img.shields.io/github/v/release/RobelTakele/AquaBEHER" alt="GitHub release" height="25">
+</a>
+<a href="https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml">
+<img src="https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check" height="25">
+</a> <a href="https://lifecycle.r-lib.org/articles/stages.html#stable">
+<img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable" height="25">
+</a> <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
+<img src="https://img.shields.io/badge/license-GPL--3-blue.svg" alt="license" height="25">
+</a> <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">
+<img src="https://cranlogs.r-pkg.org/badges/AquaBEHER" alt="metacran downloads" height="25">
+</a> <!-- badges: end -->
+
+</div>
+
+<p id="start" align="center">
+<a href="#start"><img height="10rem" src="inst/www/lines/aqua.png"></a>
+</p>
 
 **AquaBEHER** is an R package designed to **estimate** and **predict**
-the wet season calendar and soil water balance for agricultural
+the wet season calendar (WSC) and soil water balance for agricultural
 applications. The package integrates daily potential evapotranspiration
-(PET) and soil water balance parameters to compute the wet season
-calendar (WSC) for crop and soil water management. Using these
-parameters, AquaBEHER can estimate and predict the onset, cessation, and
-duration of the wet season based on an agroclimatic approach.
+(PET) and soil water balance parameters to compute the WSC for crop and
+soil water management. Using these parameters, AquaBEHER can estimate
+and predict the onset, cessation, and duration of the wet season based
+on an agroclimatic approach.
 
-### Key Features
+### ⛓ Key Features
 
 - **Daily potential evapotranspiration (PET)** estimation using various
   methods.
 - **Daily soil water balance** estimation based on customizable soil
   water holding capacity (soilWHC).
-- **Wet season calendar** estimation including:
+- **Wet season calendar** estimation and seasonal prediction including:
   - Onset of the wet season
   - Cessation of the wet season
   - Duration of the wet season
@@ -54,6 +72,15 @@ install.packages("AquaBEHER")
 # install.packages("devtools")
 devtools::install_github("RobelTakele/AquaBEHER")
 ```
+
+To view the vignettes in RStudio, run:
+
+``` r
+vignette("AquaBEHER", "AquaBEHER")
+```
+
+Further details regarding `AquaBEHER` are available on the package
+website, visit [here](https://robeltakele.github.io/AquaBEHER/).
 
 ------------------------------------------------------------------------
 
@@ -133,26 +160,82 @@ ggplot(watBal.19T20, aes(x = date)) +
 
 <img src="man/figures/README-watBalPlot-1.png" width="100%" />
 
+## :books: Citation
+
+If you used `AquaBEHER` in your work, please cite it. You can view the
+most recent citation by running:
+
+``` r
+citation(package = "AquaBEHER")
+```
+
+    To cite AquaBEHER in publications, please use:
+
+      Robel Takele, Matteo Dell'Acqua (2023). AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil
+      Water Balance for Agriculture. R package version 1.0.0. Available at
+      https://cran.r-project.org/web/packages/AquaBEHER
+
+    A BibTeX entry for LaTeX users is:
+
+      @Manual{,
+        title = {AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture},
+        author = {Robel Takele and Matteo Dell'Acqua},
+        year = {2023},
+        note = {R package version 1.0.0},
+        url = {https://robeltakele.github.io/AquaBEHER/},
+      }
+
+## :earth_africa: Feedback and Contributions 🤝
+
+We appreciate feedback and contributions to improve AquaBEHER. Feel free
+to report bugs, suggest features, or join discussions.
+
+Your contributions make a difference!
+
+> \[!IMPORTANT\] Submit issues
+> [here](https://github.com/RobelTakele/AquaBEHER/issues/) or join
+> discussions
+> [here](https://github.com/RobelTakele/AquaBEHER/discussions).
+
+✤ <i>We appreciate your support and look forward to making our package
+even better with your help!</i>
+
 ------------------------------------------------------------------------
 
 ## :mailbox_with_mail: Contact Us
 
-<img align="right" width="200" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
+<img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png">
 
 The **Genetics Group** at the *Institute of Plant Sciences* is a
-culturally diverse and research-driven team focused on advancing
-agricultural innovation. Our interdisciplinary approach combines crop
-genetics, climate science, and participatory strategies to develop
-sustainable farming solutions.
+culturally diverse, research-driven team focused on advancing
+agricultural innovation. We combine crop genetics, climate science, and
+participatory strategies to develop sustainable farming solutions.
 
 We are based at **Scuola Superiore Sant’Anna**, Pisa, Italy.
 
-For inquiries, reach out to: - [Matteo
+For inquiries, please reach out to: - [Matteo
 Dell’Acqua](mailto:m.dellacqua@santannapisa.it) - [Mario Enrico
 Pè](mailto:m.pe@santannapisa.it)
 
-Learn more about our work on the [group web
+Learn more about our work on the [institute web
 page](https://www.santannapisa.it/en/institute/plant-sciences).
+
+<div align="center">
+
+<a href="https://x.com/intent/tweet?text=Check%20out%20this%20project%20on%20GitHub:%20https://github.com/RobelTakele/AquaBEHER">
+<img src="https://img.shields.io/badge/share-000000?logo=x&logoColor=white" alt="Share on X">
+</a>
+<a href="https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/RobelTakele/AquaBEHER">
+<img src="https://img.shields.io/badge/share-0A66C2?logo=linkedin&logoColor=white" alt="Share on LinkedIn">
+</a>
+<a href="https://www.facebook.com/sharer/sharer.php?u=https://github.com/RobelTakele/AquaBEHER">
+<img src="https://img.shields.io/badge/share-1877F2?logo=facebook&logoColor=white" alt="Share on Facebook">
+</a>
+<a href="https://www.reddit.com/submit?title=Check%20out%20this%20project%20on%20GitHub:%20https://github.com/RobelTakele/AquaBEHER">
+<img src="https://img.shields.io/badge/share-FF4500?logo=reddit&logoColor=white" alt="Share on Reddit">
+</a>
+
+</div>
 
 ------------------------------------------------------------------------
 
@@ -165,4 +248,43 @@ page](https://www.santannapisa.it/en/institute/plant-sciences).
 - [Scuola Superiore
   Sant’Anna](https://www.santannapisa.it/en/institute/plant-sciences)
 
-\`\`\`
+------------------------------------------------------------------------
+
+## 🌟 Show Your Support
+
+If you find **AquaBEHER** helpful or interesting, please consider giving
+us a star on GitHub. Your support helps promote the project and lets
+others know it’s worth checking out.
+
+🙏 Thank you for your support! 👍
+
+[![Star this
+project](https://img.shields.io/github/stars/RobelTakele/AquaBEHER?style=social)](https://github.com/RobelTakele/AquaBEHER/stargazers)
+
+------------------------------------------------------------------------
+
+## 👥 Contributors
+
+<div>
+
+<p>
+👨‍💻 <b>Robel Takele</b><br>       Email:
+<a href="mailto:takelerobel@mail.concordia.ca">takelerobel@mail.concordia.ca</a><br>
+      GitHub: <a href="https://github.com/RobelTakele">@RobelTakele</a>
+</p>
+<p>
+👨‍💻 <b>Matteo Dell’Acqua</b><br>       Email:
+<a href="mailto:m.dellacqua@santannapisa.it">m.dellacqua@santannapisa.it</a><br>
+      GitHub: <a href="https://github.com/mdellh2o">@MatteoDellAcqua</a>
+</p>
+
+</div>
+
+### 🄯 License
+
+This project is licensed under the GNU General Public License,
+[GPL-3](https://cran.r-project.org/web/licenses/GPL-3).
+
+<p align="right">
+<a href="#start"><img width="75rem" src="inst/www/top.png" alt="Back to top"></a>
+</p>

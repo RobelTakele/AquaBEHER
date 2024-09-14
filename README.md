@@ -84,7 +84,7 @@ website, visit [here](https://robeltakele.github.io/AquaBEHER/).
 
 ------------------------------------------------------------------------
 
-## :seedling: Quick Example
+## :fast_forward: Quick Example
 
 Here’s a quick example to estimate daily soil water balance:
 
@@ -160,7 +160,7 @@ ggplot(watBal.19T20, aes(x = date)) +
 
 <img src="man/figures/README-watBalPlot-1.png" width="100%" />
 
-## :books: Citation
+## :memo: Citation
 
 If you used `AquaBEHER` in your work, please cite it. You can view the
 most recent citation by running:
@@ -237,7 +237,7 @@ page](https://www.santannapisa.it/en/institute/plant-sciences).
 
 </div>
 
-## :information_source: Resources
+## :link: Resources
 
 - [AquaBEHER
   Documentation](https://CRAN.R-project.org/package=AquaBEHER)

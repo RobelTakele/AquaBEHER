@@ -237,9 +237,7 @@ page](https://www.santannapisa.it/en/institute/plant-sciences).
 
 </div>
 
-------------------------------------------------------------------------
-
-## ℹ️ Resources
+## :information_source: Resources
 
 - [AquaBEHER
   Documentation](https://CRAN.R-project.org/package=AquaBEHER)

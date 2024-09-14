@@ -210,9 +210,9 @@ Learn more about our work on the [institute web page](https://www.santannapisa.i
   </a>
 </div>
 
----
 
-## ℹ️ Resources
+
+## :information_source: Resources
 
 - [AquaBEHER Documentation](https://CRAN.R-project.org/package=AquaBEHER)
 - [AquaBEHER GitHub Repository](https://github.com/RobelTakele/AquaBEHER)

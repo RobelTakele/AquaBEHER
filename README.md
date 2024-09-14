@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <p id="start" align="center">
-<a href="#start"><img height="300rem" src="inst/www/AquaBEHER.png"></a>
+<a href="#start"><img height="300rem" src="man/figures/AquaBEHER.png"></a>
 </p>
 
 <div align="center">
@@ -15,8 +15,7 @@ a Question</a>
 
 <!-- badges: start -->
 
-<a href="https://github.com/RobelTakele/AquaBEHER">
-<img src="https://img.shields.io/github/v/release/RobelTakele/AquaBEHER" alt="GitHub release" height="25">
+<a href="https://github.com/RobelTakele/AquaBEHER"><img src="https://img.shields.io/github/v/release/RobelTakele/AquaBEHER" alt="GitHub release" height="25">
 </a>
 <a href="https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml">
 <img src="https://github.com/RobelTakele/AquaBEHER/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check" height="25">
@@ -284,5 +283,5 @@ This project is licensed under the GNU General Public License,
 [GPL-3](https://cran.r-project.org/web/licenses/GPL-3).
 
 <p align="right">
-<a href="#start"><img width="75rem" src="inst/www/top.png" alt="Back to top"></a>
+<a href="#start"><img width="70rem" src="man/figures/top.png"></a>
 </p>

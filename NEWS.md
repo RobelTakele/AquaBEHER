@@ -1,8 +1,12 @@
+<p id="start" align="center">
+<a href="#start"></a>
+</p>
+
 # AquaBEHER Changelog
 
 ---
 
-## Version 1.2.0
+# AquaBEHER 1.2.0
 
 ### 🆕 Added
 
@@ -38,7 +42,7 @@
 
 ---
 
-## Version 1.0.0
+# AquaBEHER 1.0.0
 
 ### 🆕 Added
 
@@ -52,11 +56,15 @@
 
 ---
 
-## Version 0.1.0
+# AquaBEHER 0.1.0
 
 ### 🆕 Initial Release
 
 - **🌱 AquaBEHER 0.1.0**: Initial submission to CRAN, introducing essential functionalities for estimating soil water balance and wet season characterization.
 
 ---
+<p align="right">
+<a href="#start"><img width="70rem" src="man/figures/top.png"></a>
+</p>
+
 

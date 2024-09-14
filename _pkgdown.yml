@@ -1,61 +1,81 @@
 url: https://robeltakele.github.io/AquaBEHER/
+
 template:
   bootstrap: 5
   bootswatch: cosmo
-  assets:
-    css: Assets/custom.css
-    js: Assets/custom.js
+  bslib:
+    primary: "#206dea"
+    navbar-light-color: "#5d8aa6"
+  includes:
+    in_header: |
+       <!-- Global site tag (gtag.js) - Google Analytics -->
+       <script async src="https://www.googletagmanager.com/gtag/js?id=G-274QZTFL23"></script>
+       <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
+
+         gtag('config', 'G-274QZTFL23');
+       </script>
+
 title: AquaBEHER
 author:
   name: Robel Takele
   email: takelerobel@gmail.com
   url: https://github.com/RobelTakele
-copyright: © 2024 Institute of Plant Sciences, Sant’Anna School of Advanced Studies,
-  Pisa, Italy
+copyright: © 2024 Institute of Plant Sciences, Sant’Anna School of Advanced Studies, Pisa, Italy
+
+development:
+  mode: auto
+home:
+  sidebar:
+    - text: "© 2024 Sant'Anna School of Advanced Studies"
+      href: "https://www.santannapisa.it/en"
+    - text: "License (GPL-3)"
+      href: "LICENSE"
+    - text: "Source Code"
+      href: "https://github.com/RobelTakele/AquaBEHER"
+    - text: "Contact"
+      href: "mailto:takelerobel@gmail.com"
+    - text: "Twitter"
+      icon: fab fa-twitter
+      href: "https://twitter.com/RobelTakele"
+    - text: "LinkedIn"
+      icon: fab fa-linkedin
+      href: "https://www.linkedin.com/in/robel-takele"
+
+permalink: pretty
+
+toc:
+  depth: 4
+
 navbar:
-  left:
-  - text: Home
-    href: index.html
-  - text: Tutorial
-    href: articles/AquaBEHER.html
-  - text: User Guide
-    href: reference/index.html
-  - text: News
-    href: news/index.html
-  right:
-  - text: GitHub
-    icon: fab fa-github fa-lg
-    href: https://github.com/RobelTakele/AquaBEHER
-    aria-label: GitHub Repo
-  - text: Issues
-    icon: fas fa-exclamation-circle fa-lg
-    href: https://github.com/RobelTakele/AquaBEHER/issues
-    aria-label: Report Issues
-  logo: logo.png
-sidebar:
-  search: yes
-  toc: yes
-footer:
-  left:
-  - text: © 2024 Sant'Anna School of Advanced Studies
-    href: https://www.santannapisa.it/en
-  - text: License (GPL-3)
-    href: LICENSE
-  - text: Source Code
-    href: https://github.com/RobelTakele/AquaBEHER
-  right:
-  - text: Contact
-    href: mailto:takelerobel@gmail.com
-  - text: Twitter
-    icon: fab fa-twitter
-    href: https://twitter.com/RobelTakele
-  - text: LinkedIn
-    icon: fab fa-linkedin
-    href: https://www.linkedin.com/in/robel-takele
+  structure:
+    left:  [home, Tutorial, Functions, News]
+    right: [github]
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      text: Home
+      href: index.html
+    Tutorial:
+      text: Tutorial
+      href: articles/AquaBEHER.html
+    Functions:
+      text: Functions
+      href: reference/index.html
+    News:
+      text: News
+      href: news/index.html
+    github:
+      icon: fab fa-github fa-lg
+      href: https://github.com/RobelTakele/AquaBEHER
+      aria-label: github
+
 meta:
-  description: 'AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil
-    Water Balance for Agriculture.'
+  description: 'AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture.'
   social:
     twitter: '@RobelTakele'
-    linkedin: robel-takele
+    linkedin: 'robel-takele'
+
 

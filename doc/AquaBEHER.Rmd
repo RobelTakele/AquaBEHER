@@ -17,8 +17,8 @@ output:
     df_print: default
     keep_tex: yes
     css: assets/AqB_vignette.css
-    includes:
-      after_body: assets/AqB_footer.html
+    <!-- includes: -->
+    <!--   after_body: assets/AqB_footer.html -->
       
 vignette: >
   %\VignetteIndexEntry{AquaBEHER} 

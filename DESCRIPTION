@@ -10,6 +10,7 @@ Authors@R: c(
     person("Matteo", "Dell'Acqua", , "matteo.dellacqua@santannapisa.it", role = c("aut", "ctb"),
            comment = c(ORCID = "0000-0003-0151-2537"))
   )
+Author: Robel Takele [aut, cre], Matteo Dell'Acqua [aut, ctb]
 Maintainer: Robel Takele <takelerobel@gmail.com>
 Description: The AquaBEHER package provides tools for computing and
     integrating daily potential evapotranspiration (PET) and a soil water

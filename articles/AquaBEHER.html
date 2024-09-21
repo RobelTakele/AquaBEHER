@@ -16,15 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
-<meta property="og:title" content="Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using AquaBEHER">
-<!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=G-274QZTFL23"></script><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-274QZTFL23');
-</script>
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using AquaBEHER">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -34,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">AquaBEHER</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -49,7 +41,12 @@
 <li class="nav-item"><a class="nav-link" href="../news/index.html">News</a></li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/RobelTakele/AquaBEHER" aria-label="github"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/RobelTakele/AquaBEHER/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://x.com/TakeleRobel"><span class="fa fab fa-x"></span> Twitter</a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://www.linkedin.com/in/robel-takele-miteku-9604b432"><span class="fa fab fa-linkedin"></span> LinkedIn</a></li>
       </ul>
 </div>
 
@@ -66,7 +63,7 @@
                         <h4 data-toc-skip class="author">Robel Takele
 and Matteo Dell’Acqua</h4>
             
-            <h4 data-toc-skip class="date">2024-09-14</h4>
+            <h4 data-toc-skip class="date">2024-09-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/RobelTakele/AquaBEHER/blob/master/vignettes/AquaBEHER.Rmd" class="external-link"><code>vignettes/AquaBEHER.Rmd</code></a></small>
       <div class="d-none name"><code>AquaBEHER.Rmd</code></div>
@@ -74,16 +71,8 @@ and Matteo Dell’Acqua</h4>
 
     
     
-<style>
-.infobox {
-    border: 2px solid #007BFF; /* Blue border */
-    background-color: #E9ECEF; /* Light gray background */
-    border-radius: 3px; /* Rounded corners */
-    padding: 15px; /* Space inside the box */
-    margin: 20px 0; /* Space outside the box */
-    font-size: 20px; /* Text size */
-}
-</style>
+<p id="start" align="center">
+</p>
 <div class="section level2">
 <h2 id="introduction">1. Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
@@ -126,15 +115,7 @@ Ensure that Rtools is installed on Windows for full functionality.</p>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/RobelTakele/AquaBEHER" class="external-link">AquaBEHER</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggrepel.slowkow.com/" class="external-link">ggrepel</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="required-climate-data">3. Required Climate Data<a class="anchor" aria-label="anchor" href="#required-climate-data"></a>
@@ -196,7 +177,7 @@ geographical parameters are needed, as shown below:</p>
 management. AquaBEHER offers multiple methods to estimate PET, including
 the FAO Penman-Monteith, Priestley-Taylor, and Hargreaves-Samani
 formulations.</p>
-<p><img align="right" width="300" src="tools/Evapotranspiration.gif" alt="Evapotranspiration cycle"></p>
+<p><img align="right" width="300" src="assets%2FEvapotranspiration.gif" alt="Evapotranspiration cycle"></p>
 <div class="section level4">
 <h4 id="usage">Usage:<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h4>
@@ -204,7 +185,7 @@ formulations.</p>
 “short”)<br>
 str(PET)</p>
 <ul>
-<li>The function returnes a list of
+<li>The function return a list of
 <ul>
 <li>daily estimations of PET in (mm/day)</li>
 <li>daily estimations of extraterrestrial radiation (MJ/m2/day)</li>
@@ -220,12 +201,6 @@ str(PET)</p>
 containing daily values of meteorological parameters:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">PET</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcEto.html">calcEto</a></span><span class="op">(</span><span class="va">AgroClimateData</span>, method <span class="op">=</span> <span class="st">"PM"</span>, crop <span class="op">=</span> <span class="st">"short"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Adjusted 0 instances where Tmin was equal to or greater than Tmax.</span></span>
-<span><span class="co">#&gt; Penman-Monteith FAO56 Reference Crop ET</span></span>
-<span><span class="co">#&gt; Evaporative surface: FAO-56 hypothetical short grass, albedo = 0.23 ; surface resistance = 70 sm^-1; crop height = 0.12 m; roughness height = 0.02 m</span></span>
-<span><span class="co">#&gt; Timestep: daily</span></span>
-<span><span class="co">#&gt; Units: mm</span></span>
-<span><span class="co">#&gt; Time duration: 1982-01-01 to 2022-12-31</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">PET</span><span class="op">)</span></span>
 <span><span class="co">#&gt; List of 7</span></span>
@@ -244,16 +219,9 @@ formulation:</p>
 <code class="sourceCode R"><span><span class="co">## Compute PET using Hargreaves-Samani formulation using the sample data f</span></span>
 <span><span class="co">## rom 'AgroClimateData':</span></span>
 <span><span class="va">Eto.HS</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcEto.html">calcEto</a></span><span class="op">(</span><span class="va">AgroClimateData</span>, method <span class="op">=</span> <span class="st">"HS"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Adjusted 0 instances where Tmin was equal to or greater than Tmax.</span></span>
 <span></span>
 <span><span class="co">## Now compute PET using Penman-Monteith formulation:</span></span>
 <span><span class="va">Eto.PM</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcEto.html">calcEto</a></span><span class="op">(</span><span class="va">AgroClimateData</span>, method <span class="op">=</span> <span class="st">"PM"</span>, Zh <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Adjusted 0 instances where Tmin was equal to or greater than Tmax.</span></span>
-<span><span class="co">#&gt; Penman-Monteith FAO56 Reference Crop ET</span></span>
-<span><span class="co">#&gt; Evaporative surface: FAO-56 hypothetical short grass, albedo = 0.23 ; surface resistance = 70 sm^-1; crop height = 0.12 m; roughness height = 0.02 m</span></span>
-<span><span class="co">#&gt; Timestep: daily</span></span>
-<span><span class="co">#&gt; Units: mm</span></span>
-<span><span class="co">#&gt; Time duration: 1982-01-01 to 2022-12-31</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">Eto.PM</span><span class="op">$</span><span class="va">ET.Daily</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">1000</span><span class="op">]</span>,</span>
 <span>  type <span class="op">=</span> <span class="st">"l"</span>, xlab <span class="op">=</span> <span class="st">"Days since 1996"</span>,</span>
@@ -266,7 +234,7 @@ formulation:</p>
 <span>  lwd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, inset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  xpd <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="AquaBEHER_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<p><img src="AquaBEHER_files/figure-html/PETplot-1.png" width="4000" style="display: block; margin: auto;"></p>
 <p><strong>Key Insight:</strong> The FAO Penman–Monteith formulation
 presents enhanced day-to-day variations of evapotranspiration compared
 to the Hargreaves-Samani formulation.</p>
@@ -298,15 +266,7 @@ covers the soil surface.</li>
 <p>The calcWatBal compute with inputs of data frame containing daily
 values of Rain, Eto and soil water holding capacity.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">AgroClimateData</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">PET</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcEto.html">calcEto</a></span><span class="op">(</span><span class="va">AgroClimateData</span>, method <span class="op">=</span> <span class="st">"PM"</span>, Zh <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Adjusted 0 instances where Tmin was equal to or greater than Tmax.</span></span>
-<span><span class="co">#&gt; Penman-Monteith FAO56 Reference Crop ET</span></span>
-<span><span class="co">#&gt; Evaporative surface: FAO-56 hypothetical short grass, albedo = 0.23 ; surface resistance = 70 sm^-1; crop height = 0.12 m; roughness height = 0.02 m</span></span>
-<span><span class="co">#&gt; Timestep: daily</span></span>
-<span><span class="co">#&gt; Units: mm</span></span>
-<span><span class="co">#&gt; Time duration: 1982-01-01 to 2022-12-31</span></span>
+<code class="sourceCode R"><span><span class="va">PET</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcEto.html">calcEto</a></span><span class="op">(</span><span class="va">AgroClimateData</span>, method <span class="op">=</span> <span class="st">"PM"</span>, Zh <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co">## Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:</span></span>
 <span><span class="va">AgroClimateData</span><span class="op">$</span><span class="va">Eto</span> <span class="op">&lt;-</span> <span class="va">PET</span><span class="op">$</span><span class="va">ET.Daily</span></span>
@@ -393,25 +353,20 @@ values of Rain, Eto and soil water holding capacity.</p>
 <span>    axis.text.x <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">45</span>, hjust <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">"dotted"</span>, color <span class="op">=</span> <span class="st">"grey80"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span></code></pre></div>
-<p><img src="AquaBEHER_files/figure-html/unnamed-chunk-5-1.png" width="700"></p>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="AquaBEHER_files/figure-html/WATBALplot-1.png" width="4000" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="rainy-season-calandar">6. Rainy Season Calandar<a class="anchor" aria-label="anchor" href="#rainy-season-calandar"></a>
+<h2 id="rainy-season-calendar">6. Rainy Season Calendar<a class="anchor" aria-label="anchor" href="#rainy-season-calendar"></a>
 </h2>
 <p>The onset and cessation dates of the wet season were determined for
 each climatological year <code>Figure 1</code>. The term climatological
 year represents the period between two driest periods, which is
-traditionally defined based on a calender year starting from the driest
+traditionally defined based on a calendar year starting from the driest
 month and has a fixed length of 12 months.</p>
 <div class="float">
-<img src="tools/climatologicalYear.png" alt="Figure 1. Example of a climatological yea, the onset and cessation windows"><div class="figcaption">Figure 1. Example of a climatological yea, the
+<img src="assets%2FclimatologicalYear.png" alt="Figure 1. Example of a climatological yea, the onset and cessation windows"><div class="figcaption">Figure 1. Example of a climatological yea, the
 onset and cessation windows</div>
 </div>
 <p>Various methods have been developed to estimate the wet season
@@ -420,16 +375,16 @@ Common method used for crop production applications is the agroclimatic
 approach. As per agroclimatic approach, a normal wet season (growing
 season) is defined as one when there is an excess of precipitation over
 potential evapotranspiration (PET). Such a period meets the
-evapotransiration demands of crops and recharge the moisture of the soil
-profile (FAO 1977; 1978; 1986). Thus, the wet season calendar defined
-accordingly:</p>
+evapotranspiration demands of crops and recharge the moisture of the
+soil profile (FAO 1977; 1978; 1986). Thus, the wet season calendar
+defined accordingly:</p>
 <p><strong>Onset</strong></p>
 <p>The onset of the wet season will start on the first day after
 <code>onsetWind.start</code>, when the actual-to-potential
 evapotranspiration ratio is greater than 0.5 for 7 consecutive days,
 followed by a 20-day period in which plant available water remains above
 wilting over the root zone of the soil layer.</p>
-<p><strong>Cesation</strong></p>
+<p><strong>Cessation</strong></p>
 <p>The wet season will end, cessation, on the first day after
 <code>onsetWind.end</code>, when the actual-to-potential
 evapotranspiration ratio is less than 0.5 for 7 consecutive days,
@@ -439,7 +394,7 @@ water remains below wilting over the root zone of the soil layer.</p>
 <p>The duration of the wet season is the total number of days from onset
 to cessation of the season.</p>
 <div class="float">
-<img src="tools/hypExample_SeasCal.png" alt="Figure 2. Hypotetical example of onset and cessation date determination"><div class="figcaption">Figure 2. Hypotetical example of onset and
+<img src="assets%2FhypExample_SeasCal.png" alt="Figure 2. Hypothetical example of onset and cessation date determination"><div class="figcaption">Figure 2. Hypothetical example of onset and
 cessation date determination</div>
 </div>
 <div class="section level4">
@@ -460,7 +415,6 @@ compute the wet season calendar:</p>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">AgroClimateData</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">PET</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcEto.html">calcEto</a></span><span class="op">(</span><span class="va">AgroClimateData</span>, method <span class="op">=</span> <span class="st">"HS"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Adjusted 0 instances where Tmin was equal to or greater than Tmax.</span></span>
 <span><span class="va">AgroClimateData</span><span class="op">$</span><span class="va">Eto</span> <span class="op">&lt;-</span> <span class="va">PET</span><span class="op">$</span><span class="va">ET.Daily</span></span>
 <span></span>
 <span><span class="va">soilWHC</span> <span class="op">&lt;-</span> <span class="fl">80</span></span>
@@ -569,20 +523,8 @@ compute the wet season calendar:</p>
 <span>      <span class="st">"Onset"</span> <span class="op">=</span> <span class="st">"#1f77b4"</span>,</span>
 <span>      <span class="st">"Cessation"</span> <span class="op">=</span> <span class="st">"red"</span></span>
 <span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_line()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_point()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 1 row containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_text_repel()`).</span></span>
-<span><span class="co">#&gt; Warning: Removed 2 rows containing missing values or values outside the scale range</span></span>
-<span><span class="co">#&gt; (`geom_text_repel()`).</span></span>
-<span><span class="co">#&gt; Warning: ggrepel: 24 unlabeled data points (too many overlaps). Consider increasing max.overlaps</span></span>
-<span><span class="co">#&gt; ggrepel: 24 unlabeled data points (too many overlaps). Consider increasing max.overlaps</span></span></code></pre></div>
-<p><img src="AquaBEHER_files/figure-html/WSC-1.png" width="700"></p>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="AquaBEHER_files/figure-html/WSC-1.png" width="4000" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -592,12 +534,12 @@ compute the wet season calendar:</p>
 Onset and Cessation is produced by using tercile seasonal rainfall
 probabilities as input using using Quantile Bin Resampling (QBR) method.
 QBR is like the concept of analogue forecasting. With this resampling,
-historical WSC simulations are categorised by quantiles of seasonal
+historical WSC simulations are categorized by quantiles of seasonal
 rainfall totals associated with that season (e.g., upper, middle or
 lower tercile). Historical WSC outcomes can then be grouped according to
 these categories. This can transform probabilistic forecasts of rainfall
-quantiles into WSC forecast ensemble of any size. Finaly the ensemble
-members are converted to WSC tercile probabilites.</p>
+quantiles into WSC forecast ensemble of any size. At last, the ensemble
+members are converted to WSC tercile probability.</p>
 <div class="section level4">
 <h4 id="usage-3">Usage:<a class="anchor" aria-label="anchor" href="#usage-3"></a>
 </h4>
@@ -613,12 +555,6 @@ fcstVarName, tercileMethod)</p>
 <span></span>
 <span><span class="co">## Estimate daily PET:</span></span>
 <span><span class="va">PET</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcEto.html">calcEto</a></span><span class="op">(</span><span class="va">AgroClimateData</span>, method <span class="op">=</span> <span class="st">"PM"</span>, Zh <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Adjusted 0 instances where Tmin was equal to or greater than Tmax.</span></span>
-<span><span class="co">#&gt; Penman-Monteith FAO56 Reference Crop ET</span></span>
-<span><span class="co">#&gt; Evaporative surface: FAO-56 hypothetical short grass, albedo = 0.23 ; surface resistance = 70 sm^-1; crop height = 0.12 m; roughness height = 0.02 m</span></span>
-<span><span class="co">#&gt; Timestep: daily</span></span>
-<span><span class="co">#&gt; Units: mm</span></span>
-<span><span class="co">#&gt; Time duration: 1982-01-01 to 2022-12-31</span></span>
 <span></span>
 <span><span class="co">## Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:</span></span>
 <span><span class="va">AgroClimateData</span><span class="op">$</span><span class="va">Eto</span> <span class="op">&lt;-</span> <span class="va">PET</span><span class="op">$</span><span class="va">ET.Daily</span></span>
@@ -713,7 +649,7 @@ fcstVarName, tercileMethod)</p>
 <span>    axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>,</span>
 <span>    legend.position <span class="op">=</span> <span class="st">"none"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="AquaBEHER_files/figure-html/Seasonal%20Forecast%20of%20WSC-1.png" width="700"></p>
+<p><img src="AquaBEHER_files/figure-html/fcstWSC-1.png" width="4000" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -726,19 +662,35 @@ FAO Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998; ISBN
 <p>Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop
 water requirements, Irrigation and Drainage Paper 24, Food and
 Agriculture Organization of the United Nations, Rome, 179 p.</p>
+<p>FAO, 1977. Crop water requirements. FAO Irrigation and Drainage Paper
+No. 24, by Doorenbos J. and W.O. Pruitt. FAO, Rome, Italy.</p>
+<p>FAO, 1986. Early Agrometeorological Crop Yield Forecasting. FAO Plant
+Production and Protection Paper No. 73, by M. Frère and G.F. Popov. FAO,
+Rome.</p>
 <p>Hargreaves, G.H. and Samani, Z.A. (1985) Reference Crop
 Evapotranspiration from Temperature. Applied Engineering in Agriculture,
 1, 96-99.</p>
-<p><span class="math display">$$\\[0.2in]$$</span></p>
+<p>MacLeod D, Quichimbo EA, Michaelides K, Asfaw DT, Rosolem R, Cuthbert
+MO, et al. (2023) Translating seasonal climate forecasts into water
+balance forecasts for decision making. PLOS Clim 2(3): e0000138. <a href="https://doi.org/10.1371/journal.pclm.0000138" class="external-link uri">https://doi.org/10.1371/journal.pclm.0000138</a></p>
+<p>Priestley, C., &amp; Taylor, R. (1972). On the assessment of surface
+heat flux and evaporation using large-scale parameters. Monthly Weather
+Review, 100(2), 81-92.</p>
+<p>van den Dool HM. A New Look at Weather Forecasting through Analogues.
+Monthly Weather Review. 1989; 117(10):2230–2247. <a href="https://doi.org/10.1175/1520-0493(1989)117%3C2230:ANLAWF%3E2.0.CO;2" class="external-link uri">https://doi.org/10.1175/1520-0493(1989)117%3C2230:ANLAWF%3E2.0.CO;2</a></p>
 <p><img align="right" width="300" src="http://www.capitalisegenetics.santannapisa.it/sites/default/files/u65/Logo%20plant%20sciences.png"></p>
 <p>The Genetics Group at the <strong>Institute of Plant
 Sciences</strong> is a geographically and culturally diverse research
-team working on data-driven agicultural innovation combining crop
+team working on data-driven agricultural innovation combining crop
 genetics, climate, and participatory approaches. We are based at
 <strong>Scuola Superiore Sant’Anna</strong>, Pisa, Italy.</p>
 <p>You can contact us sending an email to Matteo Dell’Acqua (<a href="mailto:m.dellacqua@santannapisa.it" class="uri">mailto:m.dellacqua@santannapisa.it</a>) or Mario Enrico Pè
 (<a href="mailto:m.pe@santannapisa.it" class="uri">mailto:m.pe@santannapisa.it</a>). You can find out more
 about us visiting the group web page (<a href="http://www.capitalisegenetics.santannapisa.it/" class="external-link uri">http://www.capitalisegenetics.santannapisa.it/</a>)</p>
+<p align="right">
+<a href="#start"><button style="padding:10px 30px; background-color:#0096FF; color:white; border:none; border-radius:5px; cursor:pointer;">Back
+to Top</button></a>
+</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
@@ -751,7 +703,7 @@ about us visiting the group web page (<a href="http://www.capitalisegenetics.san
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

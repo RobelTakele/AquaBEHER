@@ -1,0 +1,14 @@
+/* custom.css */
+
+.navbar-brand img {
+  height: 40px; /* Adjust the height as needed */
+  display: block;
+  margin: auto;
+}
+
+.navbar-nav .nav-link {
+  font-weight: bold; /* Makes the text bold */
+  font-size: 1.2em;  /* Increases the font size */
+}
+
+

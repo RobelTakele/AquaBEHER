@@ -22,9 +22,9 @@ A data frame containing daily observations of weather variables:
 (°C).
 \item \strong{Rs}: Total amount of energy provided by solar radiation at the surface
 over the period 00-24h local time per unit area and time (MJ/m^2/day).
-\item \strong{Tdew}: Mean dewpoint temperature at a height of 2 metres above the
+\item \strong{Tdew}: Mean dew point temperature at a height of 2 meters above the
 surface over the period 00h-24h local time (°C).
-\item \strong{Uz}: Mean wind speed at a height of 2 metres above the surface over the
+\item \strong{Uz}: Mean wind speed at a height of 2 meters above the surface over the
 period 00h-24h local time (m/s).
 }
 }

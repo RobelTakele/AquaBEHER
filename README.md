@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 <p id="start" align="center">
-<a href="#start"><img height="300rem" src="man/figures/AquaBEHER.png"></a>
+<a href="#start"><img height="300rem" src="man/figures/logo.png"></a>
 </p>
 
 <div align="center">
@@ -29,8 +29,8 @@ a Question</a>
 
 </div>
 
-<p id="start" align="center">
-<a href="#start"><img height="10rem" src="inst/www/lines/aqua.png"></a>
+<p id="line" align="center">
+<a href="#line"><img height="10rem" src="man/figures/aqua.png"></a>
 </p>
 
 **AquaBEHER** is an R package designed to **estimate** and **predict**
@@ -45,8 +45,8 @@ on an agroclimatic approach.
 
 - **Daily potential evapotranspiration (PET)** estimation using various
   methods.
-- **Daily soil water balance** estimation based on customizable soil
-  water holding capacity (soilWHC).
+- **Daily soil water balance** estimation based on adjustable soil water
+  holding capacity (soilWHC).
 - **Wet season calendar** estimation and seasonal prediction including:
   - Onset of the wet season
   - Cessation of the wet season
@@ -221,7 +221,7 @@ page](https://www.santannapisa.it/en/institute/plant-sciences).
 
 <div align="center">
 
-<a href="https://x.com/intent/tweet?text=Check%20out%20this%20project%20on%20GitHub:%20https://github.com/RobelTakele/AquaBEHER">
+<a href="https://twitter.com/intent/tweet?text=Check%20out%20this%20project%20on%20GitHub:%20https://github.com/RobelTakele/AquaBEHER">
 <img src="https://img.shields.io/badge/share-000000?logo=x&logoColor=white" alt="Share on X">
 </a>
 <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://github.com/RobelTakele/AquaBEHER">
@@ -283,5 +283,8 @@ This project is licensed under the GNU General Public License,
 [GPL-3](https://cran.r-project.org/web/licenses/GPL-3).
 
 <p align="right">
-<a href="#start"><img width="70rem" src="man/figures/top.png"></a>
+<a href="#start"><button style="padding:10px 30px; background-color:#0096FF; color:white; border:none; border-radius:5px; cursor:pointer;">Back
+to Top</button></a>
 </p>
+
+------------------------------------------------------------------------

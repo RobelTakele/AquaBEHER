@@ -1,22 +1,11 @@
-## ----include = FALSE----------------------------------------------------------
+## ----setup, include=FALSE-----------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
 )
-
-## ----echo=FALSE, results='asis'-----------------------------------------------
-cat("
-<style>
-.infobox {
-    border: 2px solid #007BFF; /* Blue border */
-    background-color: #E9ECEF; /* Light gray background */
-    border-radius: 3px; /* Rounded corners */
-    padding: 15px; /* Space inside the box */
-    margin: 20px 0; /* Space outside the box */
-    font-size: 20px; /* Text size */
-}
-</style>
-")
 
 ## ----AquaBEHER setup----------------------------------------------------------
 ## Install required packages:
@@ -45,7 +34,7 @@ PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
 
 str(PET)
 
-## -----------------------------------------------------------------------------
+## ----PETplot, fig.height=5, fig.width=10, fig.dpi=400, fig.align='center'-----
 ## Compute PET using Hargreaves-Samani formulation using the sample data f
 ## rom 'AgroClimateData':
 Eto.HS <- calcEto(AgroClimateData, method = "HS")
@@ -65,9 +54,7 @@ legend("bottom", c("Eto: Penman–Monteith", "Eto: Hargreaves-Samani"),
   xpd = TRUE, col = c("black", "blue")
 )
 
-## -----------------------------------------------------------------------------
-data(AgroClimateData)
-
+## ----WATBALplot, fig.height=6, fig.width=10, fig.dpi=400, fig.align='center'----
 PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
 ## Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
@@ -136,7 +123,7 @@ ggplot(data = watBal.19T20, aes(x = date)) +
     panel.grid.major = element_line(linetype = "dotted", color = "grey80")
   )
 
-## ----WSC----------------------------------------------------------------------
+## ----WSC, fig.height=6, fig.width=10, fig.dpi=400, fig.align='center'---------
 ## The wet season calendar is estimated for the onset window ranges from
 ## 01-September to 31-January having a soil with 80mm of soilWHC:
 
@@ -244,7 +231,7 @@ ggplot(seasCal.dF, aes(x = Year)) +
     )
   )
 
-## ----Seasonal Forecast of WSC-------------------------------------------------
+## ----fcstWSC, fig.width=10, fig.height=6, fig.dpi=400, fig.align='center'-----
 ## Load example data:
 data(AgroClimateData)
 

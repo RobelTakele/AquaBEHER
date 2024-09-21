@@ -52,9 +52,9 @@
 #' (°C).
 #' - **Rs**: Total amount of energy provided by solar radiation at the surface
 #' over the period 00-24h local time per unit area and time (MJ/m^2/day).
-#' - **Tdew**: Mean dewpoint temperature at a height of 2 metres above the
+#' - **Tdew**: Mean dew point temperature at a height of 2 meters above the
 #' surface over the period 00h-24h local time (°C).
-#' - **Uz**: Mean wind speed at a height of 2 metres above the surface over the
+#' - **Uz**: Mean wind speed at a height of 2 meters above the surface over the
 #' period 00h-24h local time (m/s).
 #'
 #' @source \url{https://cds.climate.copernicus.eu/cdsapp#!/dataset/sis-agrometeorological-indicators?tab=overview}

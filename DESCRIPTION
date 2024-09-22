@@ -3,14 +3,12 @@ Package: AquaBEHER
 Title: Estimation and Prediction of Wet Season Calendar and Soil Water
     Balance for Agriculture
 Version: 1.4.0
-Date: 2024-09-21
-Authors@R: c(
-    person("Robel", "Takele", , "takelerobel@gmail.com", role = c("aut", "cre", "cph"),
-           comment = c(ORCID = "0000-0003-0151-2537")),
-    person("Matteo", "Dell'Acqua", , "matteo.dellacqua@santannapisa.it", role = c("aut", "ctb"),
-           comment = c(ORCID = "0000-0003-0151-2537"))
-  )
-Author: Robel Takele [aut, cre], Matteo Dell'Acqua [aut, ctb]
+Authors@R: c(person("Robel", "Takele", role = c("aut", "cre"), email = "takelerobel@gmail.com", 
+            comment = c(ORCID = "0000-0003-0151-2537")),
+            person("Matteo", "Dell'Acqua", role = c("aut", "ctb"), email = "matteo.dellacqua@santannapisa.it",
+            comment = c(ORCID = "0000-0001-5703-8382")))
+Author: Robel Takele [aut, cre] (<https://orcid.org/0000-0003-0151-2537>),
+  Matteo Dell'Acqua [aut, ctb] (<https://orcid.org/0000-0001-5703-8382>)
 Maintainer: Robel Takele <takelerobel@gmail.com>
 Description: The AquaBEHER package provides tools for computing and
     integrating daily potential evapotranspiration (PET) and a soil water

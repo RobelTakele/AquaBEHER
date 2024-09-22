@@ -34,7 +34,7 @@ PET <- calcEto(AgroClimateData, method = "PM", crop = "short")
 
 str(PET)
 
-## ----PETplot, fig.height=5, fig.width=10, fig.dpi=400, fig.align='center'-----
+## ----PETplot, fig.height = 4, fig.width = 6, fig.dpi = 300, fig.align = 'center'----
 ## Compute PET using Hargreaves-Samani formulation using the sample data f
 ## rom 'AgroClimateData':
 Eto.HS <- calcEto(AgroClimateData, method = "HS")
@@ -54,7 +54,7 @@ legend("bottom", c("Eto: Penman–Monteith", "Eto: Hargreaves-Samani"),
   xpd = TRUE, col = c("black", "blue")
 )
 
-## ----WATBALplot, fig.height=6, fig.width=10, fig.dpi=400, fig.align='center'----
+## ----WATBALplot, fig.height = 6, fig.width = 10, fig.dpi = 300, fig.align = 'center'----
 PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
 ## Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
@@ -123,7 +123,7 @@ ggplot(data = watBal.19T20, aes(x = date)) +
     panel.grid.major = element_line(linetype = "dotted", color = "grey80")
   )
 
-## ----WSC, fig.height=6, fig.width=10, fig.dpi=400, fig.align='center'---------
+## ----WSC, fig.height = 6, fig.width = 10, fig.dpi = 300, fig.align = 'center'----
 ## The wet season calendar is estimated for the onset window ranges from
 ## 01-September to 31-January having a soil with 80mm of soilWHC:
 
@@ -231,7 +231,7 @@ ggplot(seasCal.dF, aes(x = Year)) +
     )
   )
 
-## ----fcstWSC, fig.width=10, fig.height=6, fig.dpi=400, fig.align='center'-----
+## ----fcstWSC, fig.width = 8, fig.height = 5, fig.dpi = 300, fig.align = 'center'----
 ## Load example data:
 data(AgroClimateData)
 
@@ -317,7 +317,7 @@ ggplot(SeasFcst.dFgg, aes(x = Category, y = Probability, fill = Category)) +
   )) +
   geom_text(aes(label = paste0(Probability, "%")),
     vjust = -0.5,
-    size = 5, fontface = "bold"
+    size = 4, fontface = "bold"
   ) +
   labs(
     title = "Seasonal Forecast of the Onset of the Wet Season",

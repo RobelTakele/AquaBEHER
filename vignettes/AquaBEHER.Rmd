@@ -143,7 +143,7 @@ str(PET)
 Graphical comparison of the evapotranspiration (mm/day) calculated using 
 the FAO Penman–Monteith formulation and the Hargreaves-Samani formulation:
 
-```{r PETplot, fig.height=5, fig.width=10, fig.dpi=400, fig.align='center'}
+```{r PETplot, fig.height = 4, fig.width = 6, fig.dpi = 300, fig.align = 'center'}
 ## Compute PET using Hargreaves-Samani formulation using the sample data f
 ## rom 'AgroClimateData':
 Eto.HS <- calcEto(AgroClimateData, method = "HS")
@@ -189,7 +189,7 @@ calcWatBal(data, soilWHC)
 The calcWatBal compute with inputs of data frame containing daily values of 
 Rain, Eto and soil water holding capacity.
 
-```{r WATBALplot, fig.height=6, fig.width=10, fig.dpi=400, fig.align='center'}
+```{r WATBALplot, fig.height = 6, fig.width = 10, fig.dpi = 300, fig.align = 'center'}
 PET <- calcEto(AgroClimateData, method = "PM", Zh = 10)
 
 ## Add the estimated PET 'ET.Daily' to a new column in AgroClimateData:
@@ -309,7 +309,7 @@ calcSeasCal(data, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC)
 Using the sample climate data provided by the AquaBEHER package, 
 compute the wet season calendar:
 
-```{r WSC, fig.height=6, fig.width=10, fig.dpi=400, fig.align='center'}
+```{r WSC, fig.height = 6, fig.width = 10, fig.dpi = 300, fig.align = 'center'}
 ## The wet season calendar is estimated for the onset window ranges from
 ## 01-September to 31-January having a soil with 80mm of soilWHC:
 
@@ -438,7 +438,7 @@ seasFcstQBR(hisYearStart, hisYearEnd, rainTerc, seasRain,  hisWSCvar,
 
 ### Example:
 
-```{r fcstWSC, fig.width=10, fig.height=6, fig.dpi=400, fig.align='center'}
+```{r fcstWSC, fig.width = 8, fig.height = 5, fig.dpi = 300, fig.align = 'center'}
 ## Load example data:
 data(AgroClimateData)
 
@@ -524,7 +524,7 @@ ggplot(SeasFcst.dFgg, aes(x = Category, y = Probability, fill = Category)) +
   )) +
   geom_text(aes(label = paste0(Probability, "%")),
     vjust = -0.5,
-    size = 5, fontface = "bold"
+    size = 4, fontface = "bold"
   ) +
   labs(
     title = "Seasonal Forecast of the Onset of the Wet Season",

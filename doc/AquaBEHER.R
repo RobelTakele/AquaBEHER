@@ -7,7 +7,7 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 
-## ----AquaBEHER setup----------------------------------------------------------
+## ----`AquaBEHER` setup--------------------------------------------------------
 ## Install required packages:
 # if (!require("pacman")) install.packages("pacman")
 # pacman::p_load(knitr, rmarkdown, prettydoc, dplyr, ggplot2, lubridate,

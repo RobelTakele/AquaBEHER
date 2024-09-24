@@ -17,8 +17,8 @@
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture">
-<meta name="description" content="The AquaBEHER package provides tools for computing and integrating daily potential evapotranspiration (PET) and a soil water balance model. The package allows users to estimate and predict the wet season calendar, including onset, cessation, and duration, based on an agroclimatic approach for a specified period. This functionality helps in managing agricultural water resources more effectively. For detailed methodologies, users can refer to Allen et al. (1998, ISBN:92-5-104219-5); Allen (2005, ISBN:9780784408056); Doorenbos and Pruitt (1975, ISBN:9251002797); Guo et al. (2016) &lt;doi:10.1016/j.envsoft.2015.12.019&gt;; Hargreaves and Samani (1985) &lt;doi:10.13031/2013.26773&gt;; Priestley and Taylor (1972) &lt;https://journals.ametsoc.org/view/journals/apme/18/7/1520-0450_1979_018_0898_tptema_2_0_co_2.xml&gt;.">
-<meta property="og:description" content="The AquaBEHER package provides tools for computing and integrating daily potential evapotranspiration (PET) and a soil water balance model. The package allows users to estimate and predict the wet season calendar, including onset, cessation, and duration, based on an agroclimatic approach for a specified period. This functionality helps in managing agricultural water resources more effectively. For detailed methodologies, users can refer to Allen et al. (1998, ISBN:92-5-104219-5); Allen (2005, ISBN:9780784408056); Doorenbos and Pruitt (1975, ISBN:9251002797); Guo et al. (2016) &lt;doi:10.1016/j.envsoft.2015.12.019&gt;; Hargreaves and Samani (1985) &lt;doi:10.13031/2013.26773&gt;; Priestley and Taylor (1972) &lt;https://journals.ametsoc.org/view/journals/apme/18/7/1520-0450_1979_018_0898_tptema_2_0_co_2.xml&gt;.">
+<meta name="description" content="Computes and integrates daily potential evapotranspiration (PET) and a soil water balance model. It allows users to estimate and predict the wet season calendar, including onset, cessation, and duration, based on an agroclimatic approach for a specified period. This functionality helps in managing agricultural water resources more effectively. For detailed methodologies, users can refer to Allen et al. (1998, ISBN:92-5-104219-5); Allen (2005, ISBN:9780784408056); Doorenbos and Pruitt (1975, ISBN:9251002797); Guo et al. (2016) &lt;doi:10.1016/j.envsoft.2015.12.019&gt;; Hargreaves and Samani (1985) &lt;doi:10.13031/2013.26773&gt;; Priestley and Taylor (1972) &lt;https://journals.ametsoc.org/view/journals/apme/18/7/1520-0450_1979_018_0898_tptema_2_0_co_2.xml&gt;.">
+<meta property="og:description" content="Computes and integrates daily potential evapotranspiration (PET) and a soil water balance model. It allows users to estimate and predict the wet season calendar, including onset, cessation, and duration, based on an agroclimatic approach for a specified period. This functionality helps in managing agricultural water resources more effectively. For detailed methodologies, users can refer to Allen et al. (1998, ISBN:92-5-104219-5); Allen (2005, ISBN:9780784408056); Doorenbos and Pruitt (1975, ISBN:9251002797); Guo et al. (2016) &lt;doi:10.1016/j.envsoft.2015.12.019&gt;; Hargreaves and Samani (1985) &lt;doi:10.13031/2013.26773&gt;; Priestley and Taylor (1972) &lt;https://journals.ametsoc.org/view/journals/apme/18/7/1520-0450_1979_018_0898_tptema_2_0_co_2.xml&gt;.">
 <meta property="og:image" content="https://robeltakele.github.io/AquaBEHER/logo.png">
 </head>
 <body>
@@ -68,7 +68,7 @@
 <p id="line" align="center">
 <a href="#line"><img height="10rem" src="reference/figures/aqua.png"></a>
 </p>
-<p><strong>AquaBEHER</strong> is an R package designed to <strong>estimate</strong> and <strong>predict</strong> the wet season calendar (WSC) and soil water balance for agricultural applications. The package integrates daily potential evapotranspiration (PET) and soil water balance parameters to compute the WSC for crop and soil water management. Using these parameters, AquaBEHER can estimate and predict the onset, cessation, and duration of the wet season based on an agroclimatic approach.</p>
+<p><strong>Estimates</strong> and <strong>predicts</strong> the wet season calendar (WSC) and soil water balance for agricultural applications. It integrates daily potential evapotranspiration (PET) and soil water balance parameters to compute the WSC for crop and soil water management. Using these parameters, <code>AquaBEHER</code> can estimate and predict the onset, cessation, and duration of the wet season based on an agroclimatic approach.</p>
 <div class="section level3">
 <h3 id="id_-key-features">⛓ Key Features<a class="anchor" aria-label="anchor" href="#id_-key-features"></a>
 </h3>
@@ -86,7 +86,7 @@
 </ul>
 </li>
 </ul>
-<p>AquaBEHER is designed to facilitate water-efficient agricultural practices in response to climate variability and change.</p>
+<p><code>AquaBEHER</code> is designed to facilitate water-efficient agricultural practices in response to climate variability and change.</p>
 <hr>
 </div>
 <div class="section level2">
@@ -192,16 +192,16 @@
 <p>If you used <code>AquaBEHER</code> in your work, please cite it. You can view the most recent citation by running:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"AquaBEHER"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>To cite AquaBEHER <span class="cf">in</span> publications, please use<span class="sc">:</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode R"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>To cite <span class="st">`</span><span class="at">AquaBEHER</span><span class="st">`</span> <span class="cf">in</span> publications, please use<span class="sc">:</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  Robel Takele, Matteo Dell<span class="st">'Acqua (2023). AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  Robel Takele, Matteo Dell<span class="st">'Acqua (2023). `AquaBEHER`: Estimation and Prediction of Wet Season Calendar and Soil</span></span>
 <span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="st">  Water Balance for Agriculture. R package version 1.0.0. Available at</span></span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="st">  https://cran.r-project.org/web/packages/AquaBEHER</span></span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a></span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="st">A BibTeX entry for LaTeX users is:</span></span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a></span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="st">  @Manual{,</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="st">    title = {AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture},</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="st">    title = {`AquaBEHER`: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture},</span></span>
 <span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="st">    author = {Robel Takele and Matteo Dell'</span>Acqua<span class="er">}</span>,</span>
 <span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>    year <span class="ot">=</span> {<span class="dv">2023</span>},</span>
 <span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>    note <span class="ot">=</span> {R package version <span class="dv">1</span>.<span class="fl">0.0</span>},</span>
@@ -212,7 +212,7 @@
 <h2 id="earth_africa-feedback-and-contributions-">
 <span class="emoji" data-emoji="earth_africa">🌍</span> Feedback and Contributions 🤝<a class="anchor" aria-label="anchor" href="#earth_africa-feedback-and-contributions-"></a>
 </h2>
-<p>We appreciate feedback and contributions to improve AquaBEHER. Feel free to report bugs, suggest features, or join discussions.</p>
+<p>We appreciate feedback and contributions to improve <code>AquaBEHER</code>. Feel free to report bugs, suggest features, or join discussions.</p>
 <p>Your contributions make a difference!</p>
 <blockquote>
 <p>[!IMPORTANT] Submit issues <a href="https://github.com/RobelTakele/AquaBEHER/issues/" class="external-link">here</a> or join discussions <a href="https://github.com/RobelTakele/AquaBEHER/discussions" class="external-link">here</a>.</p>
@@ -238,8 +238,8 @@
 <span class="emoji" data-emoji="link">🔗</span> Resources<a class="anchor" aria-label="anchor" href="#link-resources"></a>
 </h2>
 <ul>
-<li><a href="https://CRAN.R-project.org/package=AquaBEHER" class="external-link">AquaBEHER Documentation</a></li>
-<li><a href="https://github.com/RobelTakele/AquaBEHER" class="external-link">AquaBEHER GitHub Repository</a></li>
+<li><a href="https://CRAN.R-project.org/package=AquaBEHER" class="external-link"><code>AquaBEHER</code> Documentation</a></li>
+<li><a href="https://github.com/RobelTakele/AquaBEHER" class="external-link"><code>AquaBEHER</code> GitHub Repository</a></li>
 <li><a href="https://www.santannapisa.it/en/institute/plant-sciences" class="external-link">Scuola Superiore Sant’Anna</a></li>
 </ul>
 <hr>
@@ -247,7 +247,7 @@
 <div class="section level2">
 <h2 id="id_-show-your-support">🌟 Show Your Support<a class="anchor" aria-label="anchor" href="#id_-show-your-support"></a>
 </h2>
-<p>If you find <strong>AquaBEHER</strong> helpful or interesting, please consider giving us a star on GitHub. Your support helps promote the project and lets others know it’s worth checking out.</p>
+<p>If you find <strong><code>AquaBEHER</code></strong> helpful or interesting, please consider giving us a star on GitHub. Your support helps promote the project and lets others know it’s worth checking out.</p>
 <p>🙏 Thank you for your support! 👍</p>
 <p><a href="https://github.com/RobelTakele/AquaBEHER/stargazers" class="external-link"><img src="https://img.shields.io/github/stars/RobelTakele/AquaBEHER?style=social" alt="Star this project"></a></p>
 <hr>

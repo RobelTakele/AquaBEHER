@@ -27,7 +27,7 @@
 #' Probabilities using Quantile Bin Resampling (QBR)
 #'
 #' @description
-#' This function generates seasonal forecasts for Wet Season Calendar (WSC)
+#' Generates seasonal forecasts for Wet Season Calendar (WSC)
 #' variables (onset or cessation) using tercile seasonal rainfall probabilities
 #  as input via Quantile Bin Resampling (QBR).
 #
@@ -49,7 +49,7 @@
 #' variable ("BelowNormal", "Normal", and "AboveNormal").
 #'
 #' @details
-#' This function uses QBR (Quantile Bin Resampling) to produce forecasts for
+#' Uses QBR (Quantile Bin Resampling) to produce forecasts for
 #' onset or cessation of the rainy season. It first categorizes historical WSC
 #' simulations based on seasonal rainfall terciles and then resamples based on
 #' given rainfall probabilities to generate ensemble forecasts.
@@ -72,7 +72,6 @@
 #'
 #' @examples
 #' \donttest{
-#'
 #' library(dplyr)
 #'
 #' ## Load example data:

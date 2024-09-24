@@ -25,7 +25,7 @@
 
 #' @title Potential Evapotranspiration
 #'
-#' @description This function calculates Penman-Monteith, Priestley Taylor and
+#' @description Calculates Penman-Monteith, Priestley Taylor and
 #' Hargreaves-Samani Potential Evapotranspiration using the method described by
 #' Allen et al, (1998)
 #'

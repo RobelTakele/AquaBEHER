@@ -27,7 +27,7 @@
 #' @title Daily Weather Data (1996-2020) from Angochen Weather Observing
 #' Station, Mozambique
 #'
-#' @description This R data object contains daily weather data obtained from
+#' @description Contains daily weather data obtained from
 #' Instituto Nacional de Meteorologia (INAM). The sample data includes daily raw
 #' weather data from January 1, 1996, to December 31, 2020, from a weather
 #' station located in Angochen, Nampula province of Mozambique.

@@ -1,6 +1,6 @@
 
 ---
-title: "Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using AquaBEHER"
+title: "Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using ``AquaBEHER``"
 author: "Robel Takele and Matteo Dell'Acqua"
 date: "`r Sys.Date()`"
 
@@ -47,28 +47,28 @@ knitr::opts_chunk$set(
 
 # 1. Introduction
 
-Welcome to the tutorial for **AquaBEHER**, an R package designed to estimate 
+Welcome to the tutorial for **`AquaBEHER`**, an R package designed to estimate 
 and predict the wet season calendar and soil water balance for agricultural 
-applications. This vignette provides a practical guide to using AquaBEHER. The 
+applications. This vignette provides a practical guide to using `AquaBEHER`. The 
 package integrates daily potential evapotranspiration (PET) and soil water 
 balance parameters to compute the wet season calendar (WSC) for crop and soil 
-water management. Using these parameters, AquaBEHER can estimate and predict 
+water management. Using these parameters, `AquaBEHER` can estimate and predict 
 the onset, cessation, and duration of the wet season based on an 
 agroclimatic approach.
 
 In this tutorial, you will learn how to:
 
- * Install and set up AquaBEHER.
+ * Install and set up `AquaBEHER`.
  * Estimate potential evapotranspiration (PET) using different methods.
  * Calculate daily soil water balance.
  * Estimate the wet season calendar using an agroclimatic approach.
 
 # 2. Installation and Loading
 
-To install the latest development version of AquaBEHER, use devtools. Ensure 
+To install the latest development version of `AquaBEHER`, use devtools. Ensure 
 that Rtools is installed on Windows for full functionality.
 
-```{r AquaBEHER setup}
+```{r `AquaBEHER` setup}
 ## Install required packages:
 # if (!require("pacman")) install.packages("pacman")
 # pacman::p_load(knitr, rmarkdown, prettydoc, dplyr, ggplot2, lubridate,
@@ -114,7 +114,7 @@ head(AgroClimateData)
 # 4. Potential Evapotranspiration
 
 Potential evapotranspiration (PET) is vital for agricultural water management. 
-AquaBEHER offers multiple methods to estimate PET, including the 
+`AquaBEHER` offers multiple methods to estimate PET, including the 
 FAO Penman-Monteith, Priestley-Taylor, and Hargreaves-Samani formulations.
 
 <img align="right" width="300" src="assets/Evapotranspiration.gif" alt="Evapotranspiration cycle">
@@ -131,7 +131,7 @@ FAO Penman-Monteith, Priestley-Taylor, and Hargreaves-Samani formulations.
 
 ### Example:
 
-The calcEto function computes PET with inputs of a data frame containing daily 
+The `calcEto` function computes PET with inputs of a data frame containing daily 
 values of meteorological parameters:
 
 ```{r }
@@ -186,7 +186,7 @@ evapotranspiration, runoff and deep drainage.
 calcWatBal(data, soilWHC)
 
 ### Example:
-The calcWatBal compute with inputs of data frame containing daily values of 
+The `calcWatBal` compute with inputs of data frame containing daily values of 
 Rain, Eto and soil water holding capacity.
 
 ```{r WATBALplot, fig.height = 6, fig.width = 10, fig.dpi = 300, fig.align = 'center'}
@@ -306,7 +306,7 @@ calcSeasCal(data, onsetWind.start, onsetWind.end, cessaWind.end, soilWHC)
 
 ### Example:
 
-Using the sample climate data provided by the AquaBEHER package, 
+Using the sample climate data provided by the `AquaBEHER` package, 
 compute the wet season calendar:
 
 ```{r WSC, fig.height = 6, fig.width = 10, fig.dpi = 300, fig.align = 'center'}

@@ -41,7 +41,7 @@ balance calculations.}
 }
 }
 \description{
-This function estimates the daily soil water balance based on a
+Estimates the daily soil water balance based on a
 simple mass balance budget approach. It calculates the amount of water
 available in the root zone  of a homogeneous grass canopy growing on a
 well-drained, homogeneous soil.

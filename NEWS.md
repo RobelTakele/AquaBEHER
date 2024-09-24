@@ -90,7 +90,7 @@
 - **📦 Package Imports**: Transitioned from `raster` to `terra` for more
   efficient spatial data processing.
 
-- **📈 calcWatBal Function**: Now returns a list that includes:
+- **📈 'calcWatBal' Function**: Now returns a list that includes:
 
   - A dataframe with results.
   - A list of warnings for unrealistic or adjusted values in the input

@@ -33,13 +33,12 @@ a Question</a>
 <a href="#line"><img height="10rem" src="man/figures/aqua.png"></a>
 </p>
 
-**AquaBEHER** is an R package designed to **estimate** and **predict**
-the wet season calendar (WSC) and soil water balance for agricultural
-applications. The package integrates daily potential evapotranspiration
-(PET) and soil water balance parameters to compute the WSC for crop and
-soil water management. Using these parameters, AquaBEHER can estimate
-and predict the onset, cessation, and duration of the wet season based
-on an agroclimatic approach.
+**Estimates** and **predicts** the wet season calendar (WSC) and soil
+water balance for agricultural applications. It integrates daily
+potential evapotranspiration (PET) and soil water balance parameters to
+compute the WSC for crop and soil water management. Using these
+parameters, `AquaBEHER` can estimate and predict the onset, cessation,
+and duration of the wet season based on an agroclimatic approach.
 
 ### ⛓ Key Features
 
@@ -52,7 +51,7 @@ on an agroclimatic approach.
   - Cessation of the wet season
   - Duration of the wet season
 
-AquaBEHER is designed to facilitate water-efficient agricultural
+`AquaBEHER` is designed to facilitate water-efficient agricultural
 practices in response to climate variability and change.
 
 ------------------------------------------------------------------------
@@ -168,16 +167,16 @@ most recent citation by running:
 citation(package = "AquaBEHER")
 ```
 
-    To cite AquaBEHER in publications, please use:
+    To cite `AquaBEHER` in publications, please use:
 
-      Robel Takele, Matteo Dell'Acqua (2023). AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil
+      Robel Takele, Matteo Dell'Acqua (2023). `AquaBEHER`: Estimation and Prediction of Wet Season Calendar and Soil
       Water Balance for Agriculture. R package version 1.0.0. Available at
       https://cran.r-project.org/web/packages/AquaBEHER
 
     A BibTeX entry for LaTeX users is:
 
       @Manual{,
-        title = {AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture},
+        title = {`AquaBEHER`: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture},
         author = {Robel Takele and Matteo Dell'Acqua},
         year = {2023},
         note = {R package version 1.0.0},
@@ -186,8 +185,8 @@ citation(package = "AquaBEHER")
 
 ## :earth_africa: Feedback and Contributions 🤝
 
-We appreciate feedback and contributions to improve AquaBEHER. Feel free
-to report bugs, suggest features, or join discussions.
+We appreciate feedback and contributions to improve `AquaBEHER`. Feel
+free to report bugs, suggest features, or join discussions.
 
 Your contributions make a difference!
 
@@ -238,9 +237,9 @@ page](https://www.santannapisa.it/en/institute/plant-sciences).
 
 ## :link: Resources
 
-- [AquaBEHER
+- [`AquaBEHER`
   Documentation](https://CRAN.R-project.org/package=AquaBEHER)
-- [AquaBEHER GitHub
+- [`AquaBEHER` GitHub
   Repository](https://github.com/RobelTakele/AquaBEHER)
 - [Scuola Superiore
   Sant’Anna](https://www.santannapisa.it/en/institute/plant-sciences)
@@ -249,9 +248,9 @@ page](https://www.santannapisa.it/en/institute/plant-sciences).
 
 ## 🌟 Show Your Support
 
-If you find **AquaBEHER** helpful or interesting, please consider giving
-us a star on GitHub. Your support helps promote the project and lets
-others know it’s worth checking out.
+If you find **`AquaBEHER`** helpful or interesting, please consider
+giving us a star on GitHub. Your support helps promote the project and
+lets others know it’s worth checking out.
 
 🙏 Thank you for your support! 👍
 

@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using AquaBEHER • AquaBEHER</title>
+<title>Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using ``AquaBEHER`` • AquaBEHER</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -16,7 +16,7 @@
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using AquaBEHER">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using ``AquaBEHER``">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -59,13 +59,13 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.png" class="logo" alt=""><h1>Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using AquaBEHER</h1>
+      <img src="../logo.png" class="logo" alt=""><h1>Estimation and Prediction of the Wet Season Calendar (WSC) Using a Daily Soil Water Balance Model for Agricultural Applications Using ``AquaBEHER``</h1>
                         <h4 data-toc-skip class="author">Robel Takele
 and Matteo Dell’Acqua</h4>
             
-            <h4 data-toc-skip class="date">2024-09-25</h4>
+            <h4 data-toc-skip class="date">2024-09-26</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/RobelTakele/AquaBEHER/blob/v1.4.0/vignettes/AquaBEHER.Rmd" class="external-link"><code>vignettes/AquaBEHER.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/RobelTakele/AquaBEHER/blob/master/vignettes/AquaBEHER.Rmd" class="external-link"><code>vignettes/AquaBEHER.Rmd</code></a></small>
       <div class="d-none name"><code>AquaBEHER.Rmd</code></div>
     </div>
 
@@ -76,18 +76,18 @@ and Matteo Dell’Acqua</h4>
 <div class="section level2">
 <h2 id="introduction">1. Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Welcome to the tutorial for <strong>AquaBEHER</strong>, an R package
-designed to estimate and predict the wet season calendar and soil water
-balance for agricultural applications. This vignette provides a
-practical guide to using AquaBEHER. The package integrates daily
-potential evapotranspiration (PET) and soil water balance parameters to
-compute the wet season calendar (WSC) for crop and soil water
-management. Using these parameters, AquaBEHER can estimate and predict
-the onset, cessation, and duration of the wet season based on an
-agroclimatic approach.</p>
+<p>Welcome to the tutorial for <strong><code>AquaBEHER</code></strong>,
+an R package designed to estimate and predict the wet season calendar
+and soil water balance for agricultural applications. This vignette
+provides a practical guide to using <code>AquaBEHER</code>. The package
+integrates daily potential evapotranspiration (PET) and soil water
+balance parameters to compute the wet season calendar (WSC) for crop and
+soil water management. Using these parameters, <code>AquaBEHER</code>
+can estimate and predict the onset, cessation, and duration of the wet
+season based on an agroclimatic approach.</p>
 <p>In this tutorial, you will learn how to:</p>
 <ul>
-<li>Install and set up AquaBEHER.</li>
+<li>Install and set up <code>AquaBEHER</code>.</li>
 <li>Estimate potential evapotranspiration (PET) using different
 methods.</li>
 <li>Calculate daily soil water balance.</li>
@@ -98,8 +98,9 @@ approach.</li>
 <div class="section level2">
 <h2 id="installation-and-loading">2. Installation and Loading<a class="anchor" aria-label="anchor" href="#installation-and-loading"></a>
 </h2>
-<p>To install the latest development version of AquaBEHER, use devtools.
-Ensure that Rtools is installed on Windows for full functionality.</p>
+<p>To install the latest development version of <code>AquaBEHER</code>,
+use devtools. Ensure that Rtools is installed on Windows for full
+functionality.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Install required packages:</span></span>
 <span><span class="co"># if (!require("pacman")) install.packages("pacman")</span></span>
@@ -174,9 +175,9 @@ geographical parameters are needed, as shown below:</p>
 <h2 id="potential-evapotranspiration">4. Potential Evapotranspiration<a class="anchor" aria-label="anchor" href="#potential-evapotranspiration"></a>
 </h2>
 <p>Potential evapotranspiration (PET) is vital for agricultural water
-management. AquaBEHER offers multiple methods to estimate PET, including
-the FAO Penman-Monteith, Priestley-Taylor, and Hargreaves-Samani
-formulations.</p>
+management. <code>AquaBEHER</code> offers multiple methods to estimate
+PET, including the FAO Penman-Monteith, Priestley-Taylor, and
+Hargreaves-Samani formulations.</p>
 <p><img align="right" width="300" src="assets%2FEvapotranspiration.gif" alt="Evapotranspiration cycle"></p>
 <div class="section level4">
 <h4 id="usage">Usage:<a class="anchor" aria-label="anchor" href="#usage"></a>
@@ -197,8 +198,8 @@ str(PET)</p>
 <div class="section level4">
 <h4 id="example">Example:<a class="anchor" aria-label="anchor" href="#example"></a>
 </h4>
-<p>The calcEto function computes PET with inputs of a data frame
-containing daily values of meteorological parameters:</p>
+<p>The <code>calcEto</code> function computes PET with inputs of a data
+frame containing daily values of meteorological parameters:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">PET</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcEto.html">calcEto</a></span><span class="op">(</span><span class="va">AgroClimateData</span>, method <span class="op">=</span> <span class="st">"PM"</span>, crop <span class="op">=</span> <span class="st">"short"</span><span class="op">)</span></span>
 <span></span>
@@ -234,7 +235,7 @@ formulation:</p>
 <span>  lwd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span>, inset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  xpd <span class="op">=</span> <span class="cn">TRUE</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="AquaBEHER_files/figure-html/PETplot-1.png" width="4000" style="display: block; margin: auto;"></p>
+<p><img src="AquaBEHER_files/figure-html/PETplot-1.png" width="1800" style="display: block; margin: auto;"></p>
 <p><strong>Key Insight:</strong> The FAO Penman–Monteith formulation
 presents enhanced day-to-day variations of evapotranspiration compared
 to the Hargreaves-Samani formulation.</p>
@@ -263,8 +264,9 @@ covers the soil surface.</li>
 <div class="section level4">
 <h4 id="example-1">Example:<a class="anchor" aria-label="anchor" href="#example-1"></a>
 </h4>
-<p>The calcWatBal compute with inputs of data frame containing daily
-values of Rain, Eto and soil water holding capacity.</p>
+<p>The <code>calcWatBal</code> compute with inputs of data frame
+containing daily values of Rain, Eto and soil water holding
+capacity.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">PET</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/calcEto.html">calcEto</a></span><span class="op">(</span><span class="va">AgroClimateData</span>, method <span class="op">=</span> <span class="st">"PM"</span>, Zh <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
 <span></span>
@@ -354,7 +356,7 @@ values of Rain, Eto and soil water holding capacity.</p>
 <span>    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>linetype <span class="op">=</span> <span class="st">"dotted"</span>, color <span class="op">=</span> <span class="st">"grey80"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="AquaBEHER_files/figure-html/WATBALplot-1.png" width="4000" style="display: block; margin: auto;"></p>
+<p><img src="AquaBEHER_files/figure-html/WATBALplot-1.png" width="3000" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -406,8 +408,8 @@ soilWHC)</p>
 <div class="section level4">
 <h4 id="example-2">Example:<a class="anchor" aria-label="anchor" href="#example-2"></a>
 </h4>
-<p>Using the sample climate data provided by the AquaBEHER package,
-compute the wet season calendar:</p>
+<p>Using the sample climate data provided by the <code>AquaBEHER</code>
+package, compute the wet season calendar:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## The wet season calendar is estimated for the onset window ranges from</span></span>
 <span><span class="co">## 01-September to 31-January having a soil with 80mm of soilWHC:</span></span>
@@ -524,7 +526,7 @@ compute the wet season calendar:</p>
 <span>      <span class="st">"Cessation"</span> <span class="op">=</span> <span class="st">"red"</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="AquaBEHER_files/figure-html/WSC-1.png" width="4000" style="display: block; margin: auto;"></p>
+<p><img src="AquaBEHER_files/figure-html/WSC-1.png" width="3000" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
@@ -635,7 +637,7 @@ fcstVarName, tercileMethod)</p>
 <span>  <span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">Probability</span>, <span class="st">"%"</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>    vjust <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span>,</span>
-<span>    size <span class="op">=</span> <span class="fl">5</span>, fontface <span class="op">=</span> <span class="st">"bold"</span></span>
+<span>    size <span class="op">=</span> <span class="fl">4</span>, fontface <span class="op">=</span> <span class="st">"bold"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Seasonal Forecast of the Onset of the Wet Season"</span>,</span>
@@ -649,7 +651,7 @@ fcstVarName, tercileMethod)</p>
 <span>    axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">14</span><span class="op">)</span>,</span>
 <span>    legend.position <span class="op">=</span> <span class="st">"none"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p><img src="AquaBEHER_files/figure-html/fcstWSC-1.png" width="4000" style="display: block; margin: auto;"></p>
+<p><img src="AquaBEHER_files/figure-html/fcstWSC-1.png" width="2400" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">

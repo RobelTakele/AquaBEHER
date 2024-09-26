@@ -1,0 +1,61 @@
+url: https://robeltakele.github.io/AquaBEHER/
+
+template:
+  bootstrap: 5
+  bootswatch: cosmo
+  params:
+    mathjax: true
+  assets:
+    css:
+      - AqB_extra.css
+    includes:
+      after_body:
+      - AqB_footer.html
+
+title: AquaBEHER
+author:
+  name: Robel Takele
+  email: takelerobel@gmail.com
+  url: https://github.com/RobelTakele
+copyright: © 2024 Institute of Plant Sciences, Sant’Anna School of Advanced Studies, Pisa, Italy
+
+navbar:
+  structure:
+    left: [home, Tutorial, Functions, News]
+    right: [search, github, Twitter, LinkedIn]
+  components:
+    home:
+      icon: fas fa-home fa-lg
+      text: Home
+      href: index.html
+    Tutorial:
+      text: Tutorial
+      href: articles/AquaBEHER.html
+    Functions:
+      text: Functions
+      href: reference/index.html
+    News:
+      text: News
+      href: news/index.html
+    Twitter:
+      text: Twitter
+      icon: fab fa-x
+      href: "https://x.com/TakeleRobel"
+    LinkedIn:
+      text: LinkedIn
+      icon: fab fa-linkedin
+      href: "https://www.linkedin.com/in/robel-takele-miteku-9604b432"
+
+permalink: pretty
+
+toc:
+  depth: 3
+
+meta:
+  description: 'AquaBEHER: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture.'
+  social:
+    twitter: '@RobelTakele'
+    linkedin: 'robel-takele'
+
+
+

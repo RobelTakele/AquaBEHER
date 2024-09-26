@@ -46,7 +46,7 @@ curve (kPa/°C).
 }
 }
 \description{
-This function calculates Penman-Monteith, Priestley Taylor and
+Calculates Penman-Monteith, Priestley Taylor and
 Hargreaves-Samani Potential Evapotranspiration using the method described by
 Allen et al, (1998)
 }

@@ -25,7 +25,7 @@
 
 #' @title Potential Evapotranspiration
 #'
-#' @description This function calculates Penman-Monteith, Priestley Taylor and
+#' @description Calculates Penman-Monteith, Priestley Taylor and
 #' Hargreaves-Samani Potential Evapotranspiration using the method described by
 #' Allen et al, (1998)
 #'
@@ -114,7 +114,6 @@
 ###############################################################################
 
 calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
-
   ## ***** Function to check missing data:
 
   checkMissing <- function(data.var, var) {
@@ -139,7 +138,7 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
     }
   }
 
-###############################################################################
+  ###############################################################################
 
   ## *****  Validate parameters:
 
@@ -201,11 +200,11 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
     "instances where Tmin was equal to or greater than Tmax."
   ))
 
-###############################################################################
-###############################################################################
+  ###############################################################################
+  ###############################################################################
 
   if (method == "HS") {
-###############################################################################
+    ###############################################################################
     # ***** Hargreaves-Samani
 
     ## ***** universal constants *****
@@ -237,7 +236,7 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
 
     P <- 101.3 * ((293 - 0.0065 * Elev) / 293)^5.26
 
-  ## Slope of saturation vapor pressure curve at air temperature Tavg (kPa/ °C)
+    ## Slope of saturation vapor pressure curve at air temperature Tavg (kPa/ °C)
 
     delta <- 4098 * (0.6108 *
       exp((17.27 * Tavg) / (Tavg + 237.3))) / ((Tavg + 237.3)^2)
@@ -265,7 +264,7 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
     # ***** Extraterrestrial radiation (MJ m-2 day-1)
 
     Ra <- (1440 / pi) * dr * Gsc * (Ws * sin(lat.rad) * sin(SDc) +
-                                      cos(lat.rad) * cos(SDc) * sin(Ws))
+      cos(lat.rad) * cos(SDc) * sin(Ws))
 
     # ***** empirical coefficient by Hargreaves and Samani (1985)
 
@@ -295,11 +294,9 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
     class(results) <- "PEToutList"
     return(results)
 
-###############################################################################
-###############################################################################
-
-    } else if (method == "PT") {
-
+    ###############################################################################
+    ###############################################################################
+  } else if (method == "PT") {
     # ***** universal constants *****
 
     lambda <- 2.45 # Latent heat of evaporation (MJ.kg^-1 at 20°C)
@@ -406,7 +403,7 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
     # ***** Extraterrestrial radiation (MJ m-2 day-1)
 
     Ra <- (1440 / pi) * dr * Gsc * (Ws * sin(lat.rad) * sin(SDc) +
-                                      cos(lat.rad) * cos(SDc) * sin(Ws))
+      cos(lat.rad) * cos(SDc) * sin(Ws))
 
     # ***** Clear-sky solar radiation (MJ m-2 day-1)
 
@@ -430,8 +427,8 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
 
     # ***** Potential Evapotranspiration (mm/day) *****
 
- E.PT.Daily <- alphaPT * (delta / (delta + gamma) * Rng / lambda - G / lambda)
- ET.Daily <- E.PT.Daily
+    E.PT.Daily <- alphaPT * (delta / (delta + gamma) * Rng / lambda - G / lambda)
+    ET.Daily <- E.PT.Daily
 
     ## ***** Generate summary message for results
 
@@ -447,8 +444,10 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
       message("Evaporative surface: ", Surface)
       message("Timestep: daily")
       message("Units: mm")
-      message("Time duration: ", date.vec[1], " to ",
-              date.vec[length(date.vec)])
+      message(
+        "Time duration: ", date.vec[1], " to ",
+        date.vec[length(date.vec)]
+      )
     }
 
     results <- list(
@@ -464,11 +463,9 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
     class(results) <- "PEToutList"
     return(results)
 
-###############################################################################
-###############################################################################
-
-     } else if (method == "PM") {
-
+    ###############################################################################
+    ###############################################################################
+  } else if (method == "PM") {
     # ***** Universal Constants *****
 
     lambda <- 2.45 # Latent heat of evaporation (MJ.kg^-1 at 20°C)
@@ -518,7 +515,7 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
     # ***** check user-input crop type and specify Alberto
 
     if (!crop %in% c("short", "tall")) {
-     stop("Please enter 'short' or 'tall' for the desired reference crop type")
+      stop("Please enter 'short' or 'tall' for the desired reference crop type")
     } else {
       alpha <- 0.23
       z0 <- ifelse(crop == "short", 0.02, 0.1)
@@ -582,7 +579,7 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
     # ***** Extraterrestrial radiation (MJ m-2 day-1)
 
     Ra <- (1440 / pi) * dr * Gsc * (Ws * sin(lat.rad) * sin(SDc) +
-                                      cos(lat.rad) * cos(SDc) * sin(Ws))
+      cos(lat.rad) * cos(SDc) * sin(Ws))
 
     # ***** Clear-sky solar radiation (MJ m-2 day-1)
 
@@ -616,8 +613,8 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
 
     if (crop == "short") {
       ET.RC.Daily <- (0.408 * delta * (Rng - G) + gamma * 900 * U2 *
-                        (Es - Ea) / (Tavg + 273)) / (delta + gamma *
-                                                       (1 + 0.34 * U2))
+        (Es - Ea) / (Tavg + 273)) / (delta + gamma *
+        (1 + 0.34 * U2))
 
       ET.formulation <- "Penman-Monteith FAO56"
       ET.type <- "Reference Crop ET"
@@ -628,8 +625,8 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
       )
     } else {
       ET.RC.Daily <- (0.408 * delta * (Rng - G) + gamma * 1600 * U2 *
-                        (Es - Ea) / (Tavg + 273)) / (delta + gamma *
-                                                       (1 + 0.38 * U2))
+        (Es - Ea) / (Tavg + 273)) / (delta + gamma *
+        (1 + 0.38 * U2))
       ET.formulation <- "Penman-Monteith ASCE-EWRI Standardised"
       ET.type <- "Reference Crop ET"
       Surface <- paste(
@@ -646,8 +643,10 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
       message("Evaporative surface: ", Surface)
       message("Timestep: daily")
       message("Units: mm")
-      message("Time duration: ", date.vec[1], " to ",
-              date.vec[length(date.vec)])
+      message(
+        "Time duration: ", date.vec[1], " to ",
+        date.vec[length(date.vec)]
+      )
     }
 
     results <- list(
@@ -664,7 +663,7 @@ calcEto <- function(data, method = "PM", crop = "short", Zh = NULL) {
     return(results)
   }
 
-###############################################################################
+  ###############################################################################
 }
 
 ###############################################################################

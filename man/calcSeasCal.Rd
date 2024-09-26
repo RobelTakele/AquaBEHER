@@ -87,11 +87,12 @@ onsetWind.start <- "09-01"
 onsetWind.end <- "01-31"
 cessaWind.end <- "06-30"
 
-seasCal.dF <- calcSeasCal(data = watBal, onsetWind.start, onsetWind.end,
-cessaWind.end, soilWHC)
+seasCal.dF <- calcSeasCal(
+  data = watBal, onsetWind.start, onsetWind.end,
+  cessaWind.end, soilWHC
+)
 
- str(seasCal.dF)
-
+str(seasCal.dF)
 }
 }
 \references{

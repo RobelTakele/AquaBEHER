@@ -1,6 +1,4 @@
-
 test_that("calcWatBal throws errors for missing data", {
-
   ## ***** Define a mock data frame:
 
   data <- data.frame(
@@ -16,24 +14,28 @@ test_that("calcWatBal throws errors for missing data", {
 
   ## ***** Test for missing 'Rain':
 
-  expect_error(calcWatBal(data, soilWHC = 100),
-               "Missing values detected in 'Rain', 'Eto', or 'soilWHC'")
+  expect_error(
+    calcWatBal(data, soilWHC = 100),
+    "Missing values detected in 'Rain', 'Eto', or 'soilWHC'"
+  )
 
   ## ***** Test for missing 'Eto':
 
   data$Eto <- NA
-  expect_error(calcWatBal(data, soilWHC = 100),
-               "Missing values detected in 'Rain', 'Eto', or 'soilWHC'")
+  expect_error(
+    calcWatBal(data, soilWHC = 100),
+    "Missing values detected in 'Rain', 'Eto', or 'soilWHC'"
+  )
 
   ## ***** Test for missing 'soilWHC':
 
-  expect_error(calcWatBal(data, soilWHC = NULL),
-               "Required data missing for 'Rain', 'Eto', or 'soilWHC'")
-
+  expect_error(
+    calcWatBal(data, soilWHC = NULL),
+    "Required data missing for 'Rain', 'Eto', or 'soilWHC'"
+  )
 })
 
 test_that("calcWatBal throws errors for unrealistic values", {
-
   data <- data.frame(
     Lat = 45,
     Lon = 12,
@@ -47,43 +49,53 @@ test_that("calcWatBal throws errors for unrealistic values", {
 
   ## ***** Test for low soilWHC:
 
-  expect_error(calcWatBal(data, soilWHC = 10),
-               "The soil has very low water holding capacity")
+  expect_error(
+    calcWatBal(data, soilWHC = 10),
+    "The soil has very low water holding capacity"
+  )
 
   ## ***** Test for high soilWHC:
 
-  expect_warning(result <- calcWatBal(data, soilWHC = 350),
-                 "The soil water holding capacity exceeded
-    realistic limits and has been set to the upper limit .")
+  expect_warning(
+    result <- calcWatBal(data, soilWHC = 350),
+    "The soil water holding capacity exceeded
+    realistic limits and has been set to the upper limit ."
+  )
 
-  expect_equal(result$warnings[["soilWHC"]],
-  "The soil water holding capacity exceeded
-    realistic limits and has been set to the upper limit (300 mm).")
+  expect_equal(
+    result$warnings[["soilWHC"]],
+    "The soil water holding capacity exceeded
+    realistic limits and has been set to the upper limit (300 mm)."
+  )
 
   ## ***** Test for excessive Rain values:
 
   data$Rain <- c(10, 2500, 10)
 
-  expect_warning(result <- calcWatBal(data, soilWHC = 100),
-                 "Some 'Rain' values exceeded 2000 mm and were set to this limit.")
+  expect_warning(
+    result <- calcWatBal(data, soilWHC = 100),
+    "Some 'Rain' values exceeded 2000 mm and were set to this limit."
+  )
 
-  expect_equal(result$warnings[["Rain"]],
-               "Some 'Rain' values exceeded 2000 mm and were set to this limit.")
+  expect_equal(
+    result$warnings[["Rain"]],
+    "Some 'Rain' values exceeded 2000 mm and were set to this limit."
+  )
 
   ## ***** Test for excessive Eto values:
 
   data$Rain <- c(10, 250, 10)
   data$Eto <- c(25, 2, 1)
 
-  expect_warning(result <- calcWatBal(data, soilWHC = 100),
-                 "Some 'Eto' values exceeded 20 mm/day and were set to this limit.")
+  expect_warning(
+    result <- calcWatBal(data, soilWHC = 100),
+    "Some 'Eto' values exceeded 20 mm/day and were set to this limit."
+  )
 
   expect_equal(result$warnings[["Eto"]], "Some 'Eto' values exceeded 20 mm/day and were set to this limit.")
-
 })
 
 test_that("calcWatBal processes valid data correctly", {
-
   data <- data.frame(
     Lat = 45,
     Lon = 12,
@@ -108,16 +120,16 @@ test_that("calcWatBal processes valid data correctly", {
 
   ## ***** Check that result contains the expected columns:
 
-  expected_columns <- c("Lat", "Lon", "Elev", "Year", "Month", "Day", "Rain",
-                        "Eto", "RUNOFF", "DRAIN", "TRAN", "AVAIL", "R")
+  expected_columns <- c(
+    "Lat", "Lon", "Elev", "Year", "Month", "Day", "Rain",
+    "Eto", "RUNOFF", "DRAIN", "TRAN", "AVAIL", "R"
+  )
 
   expect_true(all(expected_columns %in% colnames(result$data)))
-
 })
 
 test_that("calcWatBal calculates runoff, drainage, transpiration, and
           available soil moisture correctly", {
-
   data <- data.frame(
     Lat = c(-15, -15, -15),
     Lon = c(38, 38, 38),
@@ -139,7 +151,7 @@ test_that("calcWatBal calculates runoff, drainage, transpiration, and
     Eto = c(5, 5, 5),
     RUNOFF = c(0, 0.966, 0.152),
     DRAIN = c(0, 0, 0),
-    TRAN = c( 0, 1.347, 2.643),
+    TRAN = c(0, 1.347, 2.643),
     AVAIL = c(10, 27.687, 39.892),
     R = c(0, 0.269, 0.529)
   )
@@ -157,12 +169,10 @@ test_that("calcWatBal calculates runoff, drainage, transpiration, and
   expect_equal(result$data$TRAN, round(result$data$TRAN, 3))
   expect_equal(result$data$DRAIN, round(result$data$DRAIN, 3))
   expect_equal(result$data$RUNOFF, round(result$data$RUNOFF, 3))
-
 })
 
 
 test_that("calcWatBal handles boundary conditions correctly", {
-
   ## ***** Test with extreme values for Rain and Eto:
 
   data <- data.frame(
@@ -172,8 +182,8 @@ test_that("calcWatBal handles boundary conditions correctly", {
     Year = c(2023, 2023),
     Month = c(9, 9),
     Day = c(1, 2),
-    Rain = c(0, 0),  # Extreme case: no rain
-    Eto = c(0, 0)    # Extreme case: no evaporation
+    Rain = c(0, 0), # Extreme case: no rain
+    Eto = c(0, 0) # Extreme case: no evaporation
   )
 
   soilWHC <- 100
@@ -201,7 +211,6 @@ test_that("calcWatBal handles boundary conditions correctly", {
 })
 
 test_that("calcWatBal handles small rainfall values correctly", {
-
   data <- data.frame(
     Lat = c(-15, -15),
     Lon = c(32, 32),
@@ -209,7 +218,7 @@ test_that("calcWatBal handles small rainfall values correctly", {
     Year = c(2023, 2023),
     Month = c(9, 9),
     Day = c(1, 2),
-    Rain = c(1, 1),  ##  Small rainfall values
+    Rain = c(1, 1), ##  Small rainfall values
     Eto = c(5, 5)
   )
 
@@ -245,4 +254,3 @@ test_that("calcWatBal handles small rainfall values correctly", {
 ###############################################################################
 #                >>>>>>>>>>   End of code   <<<<<<<<<<                        #
 ###############################################################################
-

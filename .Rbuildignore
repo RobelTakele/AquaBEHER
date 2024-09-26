@@ -1,20 +1,17 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^data-raw$
 ^LICENSE\.md$
 ^README\.Rmd$
 ^doc$
 ^Meta$
 ^_pkgdown\.yml$
 ^docs$
+^inst\doc$
 ^pkgdown$
 ^\.github$
-<<<<<<< HEAD
+^\.git$
 ^Makefile$
 ^Jenkinsfile$
-^revdep$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
-=======
 
->>>>>>> 5bf4ef90266654cfdc6ded681017190829d9c65a

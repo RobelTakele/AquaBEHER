@@ -41,7 +41,7 @@ balance calculations.}
 }
 }
 \description{
-This function estimates the daily soil water balance based on a
+Estimates the daily soil water balance based on a
 simple mass balance budget approach. It calculates the amount of water
 available in the root zone  of a homogeneous grass canopy growing on a
 well-drained, homogeneous soil.
@@ -59,7 +59,6 @@ AgroClimateData$Eto <- PET.PM$ET.Daily
 
 # Estimate daily soil water balance for a soil with 100 mm WHC
 watBal <- calcWatBal(data = AgroClimateData, soilWHC = 100)
-
 }
 
 }

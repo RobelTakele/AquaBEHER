@@ -1,6 +1,4 @@
-
 testthat::test_that("calcEto warns for unrealistic temperature values", {
-
   ## Create mock dataset with unrealistic temperatures
 
   data <- data.frame(
@@ -17,11 +15,9 @@ testthat::test_that("calcEto warns for unrealistic temperature values", {
   ## Expect a warning about unrealistic temperatures
 
   expect_warning(calcEto(data, method = "HS"))
-
 })
 
 testthat::test_that("calcEto stops for missing required data (Tmax, Tmin)", {
-
   ## Create data with missing Tmax and Tmin
 
   data <- data.frame(
@@ -36,11 +32,9 @@ testthat::test_that("calcEto stops for missing required data (Tmax, Tmin)", {
   ## Expect an error about missing data
 
   expect_error(calcEto(data))
-
 })
 
 testthat::test_that("calcEto adjusts inconsistent temperature data", {
-
   ## Create mock data with Tmin greater than Tmax
 
   data <- data.frame(
@@ -65,11 +59,9 @@ testthat::test_that("calcEto adjusts inconsistent temperature data", {
   ## Expect a message about adjusting inconsistent temperatures
 
   testthat::expect_true(any(stringr::str_detect(output, "Adjusted")))
-
 })
 
 testthat::test_that("calcEto stops for invalid method", {
-
   ## Create data
 
   data <- data.frame(
@@ -86,11 +78,9 @@ testthat::test_that("calcEto stops for invalid method", {
   ## Test with invalid method
 
   expect_error(calcEto(data, method = "invalid"))
-
 })
 
 test_that("calcEto handles valid input correctly", {
-
   ## ***** Create a mock dataset
 
   data <- data.frame(
@@ -108,7 +98,6 @@ test_that("calcEto handles valid input correctly", {
   )
 
   testthat::test_that("calcEto calculates Hargreaves-Samani ET (HS)", {
-
     # Create mock data
     data <- data.frame(
       Tmax = c(25, 20, 25),
@@ -133,11 +122,9 @@ test_that("calcEto handles valid input correctly", {
     ## the expected values
 
     testthat::expect_equal(result$ET.Daily, expected_et, tolerance = 0.001)
-
   })
 
   testthat::test_that("Universal constants and calculations are correct", {
-
     ## Create mock data
 
     data <- data.frame(
@@ -214,7 +201,7 @@ test_that("calcEto handles valid input correctly", {
 
     # ***** Extraterrestrial radiation *****
     Ra <- (1440 / pi) * dr * Gsc * (Ws * sin(lat.rad) * sin(SDc) +
-                                      cos(lat.rad) * cos(SDc) * sin(Ws))
+      cos(lat.rad) * cos(SDc) * sin(Ws))
 
     # ***** Clear-sky solar radiation *****
     Rso <- (0.75 + (2 * 10^-5) * Elev) * Ra
@@ -233,7 +220,7 @@ test_that("calcEto handles valid input correctly", {
     Rng <- Rnsg - Rnl
 
     # ***** Potential Evapotranspiration *****
-  E.PT.Daily <- alphaPT * (delta / (delta + gamma) * Rng / lambda - G / lambda)
+    E.PT.Daily <- alphaPT * (delta / (delta + gamma) * Rng / lambda - G / lambda)
 
     # Run the actual function and capture the result
     result <- calcEto(data, method = "PT")
@@ -251,11 +238,11 @@ test_that("calcEto handles valid input correctly", {
 
   ## ***** Call the function with "short" crop
 
-   result <- calcEto(data, crop = "short")
+  result <- calcEto(data, crop = "short")
 
   ## ***** Check that the result is a list
 
-   expect_s3_class(result, "PEToutList")
+  expect_s3_class(result, "PEToutList")
 
   ## ***** Check that all required components are present in the result
 
@@ -268,11 +255,9 @@ test_that("calcEto handles valid input correctly", {
   ## Check for non-NA values in the output
   expect_false(any(is.na(result$ET.Daily)))
   expect_false(any(is.na(result$Ra.Daily)))
-
 })
 
 test_that("calcEto handles missing data correctly", {
-
   ## Create a mock dataset with missing Rs
 
   data_missing <- data.frame(
@@ -298,7 +283,6 @@ test_that("calcEto handles missing data correctly", {
 })
 
 test_that("calcEto handles different crop types correctly", {
-
   ## Create a mock dataset
 
   data <- data.frame(
@@ -354,37 +338,49 @@ testthat::test_that("Universal constants and conversions are correct", {
 
   # Validate results for the short crop
   testthat::expect_true(inherits(result_short, "PEToutList"))
-  testthat::expect_true(all(c("ET.Daily", "Ra.Daily", "Slope.Daily",
-                              "Ea.Daily", "Es.Daily", "ET.formulation",
-                              "ET.type") %in% names(result_short)))
+  testthat::expect_true(all(c(
+    "ET.Daily", "Ra.Daily", "Slope.Daily",
+    "Ea.Daily", "Es.Daily", "ET.formulation",
+    "ET.type"
+  ) %in% names(result_short)))
 
   # Test valid calculation for "tall" crop
   result_tall <- calcEto(data, crop = "tall", method = "PM", Zh = 10)
 
   # Validate results for the tall crop
   testthat::expect_true(inherits(result_tall, "PEToutList"))
-  testthat::expect_true(all(c("ET.Daily", "Ra.Daily", "Slope.Daily",
-                              "Ea.Daily", "Es.Daily", "ET.formulation",
-                              "ET.type") %in% names(result_tall)))
+  testthat::expect_true(all(c(
+    "ET.Daily", "Ra.Daily", "Slope.Daily",
+    "Ea.Daily", "Es.Daily", "ET.formulation",
+    "ET.type"
+  ) %in% names(result_tall)))
 
   # Ensure function handles missing solar radiation data
   data_no_Rs <- data
   data_no_Rs$Rs <- NULL
 
-  testthat::expect_error({
-    calcEto(data_no_Rs, crop = "short", method = "PM", Zh = 10)
-  }, "Required data missing for 'Rs'")
+  testthat::expect_error(
+    {
+      calcEto(data_no_Rs, crop = "short", method = "PM", Zh = 10)
+    },
+    "Required data missing for 'Rs'"
+  )
 
   # Ensure function handles missing wind speed data
   data_no_U2 <- data
   data_no_U2$U2 <- NULL
 
-  testthat::expect_error({
-    calcEto(data_no_U2, crop = "short", method = "PM", Zh = 10)
-  }, "Required data missing for 'Uz' or 'U2'")
+  testthat::expect_error(
+    {
+      calcEto(data_no_U2, crop = "short", method = "PM", Zh = 10)
+    },
+    "Required data missing for 'Uz' or 'U2'"
+  )
 
 
   # Test message output
-  testthat::expect_message(calcEto(data, crop = "short", method = "PM",
-                                   Zh = 10), "Penman-Monteith FAO56")
+  testthat::expect_message(calcEto(data,
+    crop = "short", method = "PM",
+    Zh = 10
+  ), "Penman-Monteith FAO56")
 })

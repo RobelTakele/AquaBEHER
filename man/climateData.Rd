@@ -29,7 +29,7 @@ INAM - Instituto Nacional de Meteorologia, Mozambique
 data(climateData)
 }
 \description{
-This R data object contains daily weather data obtained from
+Contains daily weather data obtained from
 Instituto Nacional de Meteorologia (INAM). The sample data includes daily raw
 weather data from January 1, 1996, to December 31, 2020, from a weather
 station located in Angochen, Nampula province of Mozambique.

@@ -1,36 +1,56 @@
+Type: Package
 Package: AquaBEHER
-Title: Estimation and Prediction of Wet Season Calendar and Soil Water Balance for Agriculture
-Version: 1.0.0
-Authors@R: c(
-  person("Robel", "Takele", role = c("aut", "cre"), email = "takelerobel@gmail.com", 
-          comment = c(ORCID = "0000-0003-0151-2537")),
-  person("Matteo", "Dell'Acqua", role = c("aut", "ctb"), email = "matteo.dellacqua@santannapisa.it", 
-          comment = c(ORCID = "0000-0003-0151-2537")))
-Author: Robel Takele [aut, cre], Matteo Dell'Acqua [aut, ctb]
+Title: Estimation and Prediction of Wet Season Calendar and Soil Water
+    Balance for Agriculture
+Version: 1.4.0
+Authors@R: c(person("Robel", "Takele", role = c("aut", "cre"), email = "takelerobel@gmail.com", 
+            comment = c(ORCID = "0000-0003-0151-2537")),
+            person("Matteo", "Dell'Acqua", role = c("aut", "ctb"), email = "matteo.dellacqua@santannapisa.it",
+            comment = c(ORCID = "0000-0001-5703-8382")))
+Author: Robel Takele [aut, cre] (<https://orcid.org/0000-0003-0151-2537>),
+  Matteo Dell'Acqua [aut, ctb] (<https://orcid.org/0000-0001-5703-8382>)
 Maintainer: Robel Takele <takelerobel@gmail.com>
-Description: The AquaBEHER package provides tools for computing and integrating daily reference evapotranspiration (Eto) and a soil water balance model. It estimates parameters for crop and soil water balances relevant to agricultural crops. The package allows users to estimate and predict the wet season calendar, including onset, cessation, and duration, based on an agroclimatic approach for a specified period. This functionality helps in managing agricultural water resources more effectively. For detailed methodologies, users can refer to Allen et al. (1998, ISBN:92-5-104219-5); Allen (2005, ISBN:9780784408056); Doorenbos and Pruitt (1975, ISBN:9251002797); Guo et al. (2016) doi:10.1016/j.envsoft.2015.12.019; Hargreaves and Samani (1985) doi:10.13031/2013.26773; and Priestley and Taylor (1972) https://journals.ametsoc.org/view/journals/apme/18/7/1520-0450_1979_018_0898_tptema_2_0_co_2.xml.
+Description: The AquaBEHER package provides tools for computing and
+    integrating daily potential evapotranspiration (PET) and a soil water
+    balance model. The package allows users to estimate and predict the
+    wet season calendar, including onset, cessation, and duration, based
+    on an agroclimatic approach for a specified period. This functionality
+    helps in managing agricultural water resources more effectively. For
+    detailed methodologies, users can refer to Allen et al. (1998,
+    ISBN:92-5-104219-5); Allen (2005, ISBN:9780784408056); Doorenbos and
+    Pruitt (1975, ISBN:9251002797); Guo et al. (2016)
+    <doi:10.1016/j.envsoft.2015.12.019>; Hargreaves and Samani (1985)
+    <doi:10.13031/2013.26773>; Priestley and Taylor (1972)
+    <https://journals.ametsoc.org/view/journals/apme/18/7/1520-0450_1979_018_0898_tptema_2_0_co_2.xml>.
 License: GPL (>= 3)
-Encoding: UTF-8
-Language: en-US
-LazyData: true
-RoxygenNote: 7.3.2
-Roxygen: list(markdown = TRUE)
-Suggests:
-    knitr,
-    rmarkdown,
-    prettydoc,
-    stringr,
-    testthat (>= 3.0.0)
-VignetteBuilder: knitr
+URL: https://github.com/RobelTakele/AquaBEHER,
+    https://robeltakele.github.io/AquaBEHER/
+BugReports: https://github.com/RobelTakele/AquaBEHER/issues
 Depends:
     R (>= 3.5.0)
 Imports:
     dplyr,
-    ggplot2,
     lubridate,
-    raster,
-    sp
-URL: https://github.com/RobelTakele/AquaBEHER,
-    https://robeltakele.github.io/AquaBEHER/
-BugReports: https://github.com/RobelTakele/AquaBEHER/issues
+    magrittr,
+    rlang,
+    sp,
+    terra,
+    zoo
+Suggests:
+    ggplot2,
+    ggrepel,
+    knitr,
+    learnr,
+    prettydoc,
+    rmarkdown,
+    scales,
+    stringr,
+    testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
 Config/testthat/edition: 3
+Encoding: UTF-8
+Language: en-US
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

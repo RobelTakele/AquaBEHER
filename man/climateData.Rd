@@ -48,8 +48,4 @@ head(climateData)
 \seealso{
 \code{\link{AgroClimateData}}, \code{\link{calcEto}}
 }
-\keyword{Mozambique,}
-\keyword{climate,}
-\keyword{datasets,}
-\keyword{meteorology}
-\keyword{weather,}
+\keyword{datasets}

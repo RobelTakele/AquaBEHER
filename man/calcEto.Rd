@@ -65,13 +65,13 @@ Hargreaves-Samani formulation is used for estimating reference crop
 evapotranspiration (Hargreaves and Samani, 1985).
 }
 \examples{
-# Load example data:
+## Load sample data:
 data(climateData)
-calcEto(climateData, method = "HS")
+PET.HS <- calcEto(climateData, method = "HS")
 
-# Load example data:
+## Load sample data:
 data(AgroClimateData)
-calcEto(AgroClimateData, method = "PM", crop = "short")
+PET.PM <- calcEto(AgroClimateData, method = "PM", crop = "short")
 
 }
 \references{

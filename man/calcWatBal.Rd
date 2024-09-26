@@ -2,61 +2,75 @@
 % Please edit documentation in R/calcWatBal.R
 \name{calcWatBal}
 \alias{calcWatBal}
-\title{Soil Water Balance}
+\title{Daily Soil Water Balance Estimation}
 \usage{
 calcWatBal(data, soilWHC)
 }
 \arguments{
-\item{data}{a dataframe containing the required variables: Columns must
-contain the following parameters:
+\item{data}{A data frame containing the required input variables. The data
+frame must include the following columns:
+\itemize{
+\item \strong{Lat}: Latitude of the site (decimal degrees).
+\item \strong{Lon}: Longitude of the site (decimal degrees).
+\item \strong{Elev}: Elevation above sea level (meters).
+\item \strong{Year}: Year of the record ("YYYY").
+\item \strong{Month}: Month of the record ("MM").
+\item \strong{Day}: Day of the record ("DD").
+\item \strong{Rain}: Daily rainfall (mm).
+\item \strong{Eto}: Daily potential evapotranspiration (mm).
+}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{   Lat: latitude of the site in decimal degrees.
-   Lon: longitude of the site in decimal degrees.
-   Elev: elevation above sea level in (meters).
-   Year: year of record "YYYY".
-   Month: month of record "MM".
-   Day: day of record "DD".
-   Rain: daily rainfall in (mm).
-   Eto: daily potential evapotranspiration in (mm).
-}\if{html}{\out{</div>}}}
-
-\item{soilWHC}{\verb{  }Water holding capacity of the soil in (mm).}
+\item{soilWHC}{Numeric. Water holding capacity of the soil (mm).}
 }
 \value{
-The function generates a data frame containing the following
-components:
-
-\emph{\code{DRAIN: amount of deep drainage in (mm).}}
-
-\emph{\code{TRAN: amount of water lost by transpiration in (mm).}}
-
-\emph{\code{RUNOFF: surface runoff in (mm).}}
-
-\emph{\code{AVAIL: available soil moisture storage in (mm).}}
-
-\emph{\code{R: actual-to-potential evapotranspiration ratio.}}
+A list with the following components:
+\describe{
+\item{\strong{data}}{A data frame containing the results of the water
+balance calculations, with the following columns:
+\itemize{
+\item \strong{DRAIN}: Deep drainage (mm).
+\item \strong{TRAN}: Water lost by transpiration (mm).
+\item \strong{RUNOFF}: Surface runoff (mm).
+\item \strong{AVAIL}: Available soil moisture storage (mm).
+\item \strong{R}: Ratio of actual to potential evapotranspiration.
+}
+}
+\item{\strong{warnings}}{A list of warnings related to any unrealistic
+or adjusted values in the input data or parameters used during the water
+balance calculations.}
+}
 }
 \description{
-Function to estimate a budget-based daily soil water balance.
-It calculates the amount of water present in the root zone of a homogeneous
-grass canopy growing on a well-drained and homogeneous soil.
+This function estimates the daily soil water balance based on a
+simple mass balance budget approach. It calculates the amount of water
+available in the root zone  of a homogeneous grass canopy growing on a
+well-drained, homogeneous soil.
 }
 \examples{
 \donttest{
-# load example data:
+## Load sample data
 data(AgroClimateData)
+
+# Estimate daily PET using the Penman-Monteith method
+PET.PM <- calcEto(AgroClimateData, method = "PM", Zh = 10)
+
+# Add the estimated PET to the AgroClimateData frame
+AgroClimateData$Eto <- PET.PM$ET.Daily
+
+# Estimate daily soil water balance for a soil with 100 mm WHC
+watBal <- calcWatBal(data = AgroClimateData, soilWHC = 100)
 }
+
 }
 \references{
-Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. Crop
-Evapotranspiration: Guidelines for Computing Crop Water Requirements; FAO
-Irrigation and Drainage Paper no. 56; FAO: Rome, Italy, 1998;
-ISBN 92-5-104219-5.
+Allen, R.G.; Pereira, L.S.; Raes, D.; Smith, M. (1998). \emph{Crop
+Evapotranspiration: Guidelines for Computing Crop Water Requirements.} FAO
+Irrigation and Drainage Paper no. 56, FAO: Rome, Italy. ISBN 92-5-104219-5.
 
-Doorenbos, J. and Pruitt, W.O. 1975. Guidelines for predicting crop water
-requirements, Irrigation and Drainage Paper 24, Food and Agriculture
+Doorenbos, J., & Pruitt, W.O. (1975). \emph{Guidelines for Predicting Crop
+Water Requirements.} Irrigation and Drainage Paper 24, Food and Agriculture
 Organization of the United Nations, Rome, 179 p.
 }
 \seealso{
-\code{\link{calcEto}, \link{calcSeasCal}}
+\code{\link{calcEto}}, \code{\link{calcSeasCal}}
 }

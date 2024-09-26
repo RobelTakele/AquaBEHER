@@ -133,3 +133,5 @@
 - **🌱 AquaBEHER 0.1.0**: Initial submission to CRAN, introducing
   essential functionalities for estimating soil water balance and wet
   season characterization.
+  
+ ---

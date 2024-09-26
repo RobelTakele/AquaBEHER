@@ -1,0 +1,39 @@
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #007bff; /* Blue background */
+  padding: 20px;
+  text-align: center;
+}
+
+header h1 {
+  color: #ffffff; /* White text */
+  font-weight: bold;
+  margin: 0;
+  font-size: 2.5em;
+}
+
+footer {
+  background-color: #f8f9fa;
+  padding: 20px;
+  font-size: 0.9em;
+  color: #6c757d;
+  text-align: left; /* Align content to the left */
+}
+
+footer div {
+  width: 100%;
+}
+
+footer img {
+  vertical-align: middle;
+}
+
+footer p {
+  margin: 0;
+}

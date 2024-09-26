@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   AquaBEHER: AquaBEHER.html
-last_built: 2024-09-26T19:27Z
+last_built: 2024-09-26T20:07Z
 urls:
   reference: https://robeltakele.github.io/AquaBEHER/reference
   article: https://robeltakele.github.io/AquaBEHER/articles

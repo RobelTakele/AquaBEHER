@@ -265,7 +265,7 @@ project](https://img.shields.io/github/stars/RobelTakele/AquaBEHER?style=social)
 
 <p>
 👨‍💻 <b>Robel Takele</b><br>       Email:
-<a href="mailto:takelerobel@mail.concordia.ca">takelerobel@mail.concordia.ca</a><br>
+<a href="mailto:takelerobel@gmail.com">takelerobel@gmail.com</a><br>
       GitHub: <a href="https://github.com/RobelTakele">@RobelTakele</a>
 </p>
 <p>

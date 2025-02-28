@@ -234,7 +234,7 @@ If you find **`AquaBEHER`** helpful or interesting, please consider giving us a 
 <div>
   <p>
     👨‍💻 <b>Robel Takele</b><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email: <a href="mailto:takelerobel@mail.concordia.ca">takelerobel@mail.concordia.ca</a><br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Email: <a href="mailto:takelerobel@gmail.com">takelerobel@gmail.com</a><br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GitHub: <a href="https://github.com/RobelTakele">@RobelTakele</a>
   </p>
 
